@@ -9,6 +9,14 @@ const Allapi = {
       url: `${backapi}/api/login`,
       method: "POST",
     },
+    logout: {
+      url: `${backapi}/logout`,
+      method: "POST",
+    },
+    editPorfile: {
+      url: `${backapi}/api/edit-profile`,
+      method:"PUT",
+    }
 
 }
 
