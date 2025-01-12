@@ -1,0 +1,331 @@
+import React, { useState } from 'react';
+import { LogIn, Mail, Lock, ArrowLeft, User, Phone, MapPin } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
+import grdcirclelogo from "../../assets/logos/grdlogo.png";
+import Allapi from '../../common';
+
+function Login() {
+  const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
+  const [formData, setFormData] = useState({
+    name: '',
+    phoneNumber: '',
+    emailAddress: '',
+    password: '',
+    address: {
+      doorNo: '',
+      street: '',
+      city: '',
+      pincode: '',
+      state: ''
+    }
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name.includes('.')) {
+      const [parent, child] = name.split('.');
+      setFormData(prev => ({
+        ...prev,
+        [parent]: {
+          ...prev[parent],
+          [child]: value
+        }
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+  
+    try {
+      const endpoint = isLogin ? Allapi.login.url : Allapi.signup.url;
+      const response = await fetch(endpoint, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'application/json' }, 
+        body: JSON.stringify(formData) 
+      });
+  
+      const data = await response.json(); 
+      console.log("data is :", data);
+  
+      if (!response.ok) {
+        throw new Error(data.message || `${isLogin ? 'Login' : 'Signup'} failed`);
+      }
+  
+      if (isLogin) {
+        localStorage.setItem('token', data.token);
+        if (data.user.role === "admin") {
+          navigate('/adminPanel');  // Redirect to the admin panel if the user is an admin
+        } else {
+          navigate('/');  // Redirect to the home page for regular users
+        }
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+  const toggleMode = () => {
+    setIsLogin(!isLogin);
+    setError('');
+    setFormData({
+      name: '',
+      phoneNumber: '',
+      emailAddress: '',
+      password: '',
+      address: {
+        doorNo: '',
+        street: '',
+        city: '',
+        pincode: '',
+        state: ''
+      }
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex flex-col">
+      <div className="p-3 sm:p-4">
+        <Link to="/" className="inline-flex items-center text-green-700 hover:text-green-800 text-sm sm:text-base">
+          <ArrowLeft className="w-5 h-5 mr-2" strokeWidth={2} />
+          Back to Home
+        </Link>
+      </div>
+
+      <div className="flex-grow flex items-center justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="max-w-md w-full space-y-6 sm:space-y-8 bg-white p-6 sm:p-8 rounded-lg shadow-md">
+          <div>
+            <img
+              className="mx-auto h-12 sm:h-16 w-auto"
+              src={grdcirclelogo}
+              alt="GRD Naturals"
+            />
+            <h2 className="mt-4 sm:mt-6 text-center text-2xl sm:text-3xl font-extrabold text-gray-900">
+              {isLogin ? 'Welcome Back' : 'Create Account'}
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-600">
+              {isLogin ? 'Sign in to your GRD Naturals account' : 'Join GRD Naturals today'}
+            </p>
+          </div>
+
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded relative text-sm" role="alert">
+              <span className="block sm:inline">{error}</span>
+            </div>
+          )}
+
+          <form className="mt-6 sm:mt-8 space-y-4 sm:space-y-6" onSubmit={handleSubmit}>
+            <div className="rounded-md shadow-sm space-y-3 sm:space-y-4">
+              {!isLogin && (
+                <>
+                  <div>
+                    <label htmlFor="name" className="sr-only">Full Name</label>
+                    <div className="flex items-center space-x-3">
+                      <User className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                      <input
+                        id="name"
+                        name="name"
+                        type="text"
+                        required={!isLogin}
+                        className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                        placeholder="Full Name"
+                        value={formData.name}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="phoneNumber" className="sr-only">Phone Number</label>
+                    <div className="flex items-center space-x-3">
+                      <Phone className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                      <input
+                        id="phoneNumber"
+                        name="phoneNumber"
+                        type="tel"
+                        required={!isLogin}
+                        className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                        placeholder="Phone Number"
+                        value={formData.phoneNumber}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              <div>
+                <label htmlFor="emailAddress" className="sr-only">Email address</label>
+                <div className="flex items-center space-x-3">
+                  <Mail className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                  <input
+                    id="emailAddress"
+                    name="emailAddress"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="appearance-none  rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                    placeholder="Email address"
+                    value={formData.emailAddress}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="password" className="sr-only">Password</label>
+                <div className="flex items-center space-x-3">
+                  <Lock className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    autoComplete={isLogin ? "current-password" : "new-password"}
+                    required
+                    className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                </div>
+              </div>
+
+              {!isLogin && (
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                    <input
+                      name="address.doorNo"
+                      type="text"
+                      required={!isLogin}
+                      className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                      placeholder="Door No"
+                      value={formData.address.doorNo}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                    <input
+                      name="address.street"
+                      type="text"
+                      required={!isLogin}
+                      className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                      placeholder="Street"
+                      value={formData.address.street}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="flex items-center space-x-3">
+                      <MapPin className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                      <input
+                        name="address.city"
+                        type="text"
+                        required={!isLogin}
+                        className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                        placeholder="City"
+                        value={formData.address.city}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <div className="flex items-center space-x-3">
+                      <MapPin className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                      <input
+                        name="address.pincode"
+                        type="text"
+                        required={!isLogin}
+                        className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                        placeholder="Pincode"
+                        value={formData.address.pincode}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <MapPin className="h-5 w-5 text-gray-900" strokeWidth={2} />
+                    <input
+                      name="address.state"
+                      type="text"
+                      required={!isLogin}
+                      className="appearance-none rounded-md relative block w-full pl-3 px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-200 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 text-sm sm:text-base"
+                      placeholder="State"
+                      value={formData.address.state}
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {isLogin && (
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+                <div className="flex items-center">
+                  <input
+                    id="remember-me"
+                    name="remember-me"
+                    type="checkbox"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
+                  />
+                  <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-400">
+                    Remember me
+                  </label>
+                </div>
+
+                <div className="text-sm">
+                  <a href="#" className="font-medium text-green-600 hover:text-green-500">
+                    Forgot your password?
+                  </a>
+                </div>
+              </div>
+            )}
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-2 sm:py-2.5 px-4 border border-transparent text-sm sm:text-base font-medium rounded-md text-white bg-green-700 hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+              >
+                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
+                  <LogIn className="h-5 w-5 text-green-500 group-hover:text-green-500" strokeWidth={2} />
+                </span>
+                {loading ? (isLogin ? 'Signing in...' : 'Signing up...') : (isLogin ? 'Sign in' : 'Sign up')}
+              </button>
+            </div>
+          </form>
+
+          <div className="text-center">
+            <p className="text-sm">
+              {isLogin ? "Don't have an account?" : "Already have an account?"}{' '}
+              <button
+                onClick={toggleMode}
+                className="font-medium text-green-600 hover:text-green-500"
+              >
+                {isLogin ? 'Sign up' : 'Sign in'}
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <footer className="mt-auto bg-green-800 text-white py-3 sm:py-4">
+        <div className="text-center text-green-100 text-sm sm:text-base">
+          <p>&copy; {new Date().getFullYear()} GRD Naturals. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+export default Login;
