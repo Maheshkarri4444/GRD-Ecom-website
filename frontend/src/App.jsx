@@ -4,7 +4,7 @@ import grdcirclelogo from "../src/assets/logos/grdlogo.png";
 import grdfulllogo from "../src/assets/logos/grdfulllogo.png";
 import { Link } from 'react-router-dom';
 import { useMyContext } from './utils/MyContext.jsx';
-// import jwt_decode from "jwt-decode";
+// import {jwtDecode} from "jwt-decode";
 
 // Create a simple Profile component
 function Profile() {
@@ -22,10 +22,10 @@ function App() {
 
   // const token = localStorage.getItem('token');
   // if(token){
-  //   const decoded = jwt_decode(token);
+    // const decoded = jwtDecode(token);
 
   //   // You can now access the token payload, for example:
-  //   console.log(decoded);
+    // console.log("decoded is",decoded);
 
   //   const expiryTime = decoded.exp * 1000; // exp is in seconds, multiply by 1000 to get milliseconds
 
@@ -52,7 +52,9 @@ function App() {
             {/* Desktop Navigation */}
             <div className="hidden space-x-8 md:flex">
               <NavLink active><Leaf className="w-4 h-4 mr-1" />Home</NavLink>
-              <NavLink><ShoppingBag className="w-4 h-4 mr-1" />Shop</NavLink>
+              <Link to="/shop">
+                <NavLink><ShoppingBag className="w-4 h-4 mr-1" />Shop</NavLink>
+              </Link>
               <NavLink><Droplets className="w-4 h-4 mr-1" />Blobs</NavLink>
               <NavLink><Brain className="w-4 h-4 mr-1" />AI</NavLink>
               {user ? (

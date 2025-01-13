@@ -5,6 +5,10 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const database = require("./config/database");
 const userRoutes = require("./routes/userRoutes")
+const categoryRoutes = require("./routes/categoryRoutes");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const bannerRoutes = require("./routes/bannerRoutes")
 
 app.use(cors());
 app.use(cors({
@@ -18,6 +22,11 @@ app.use(express.json());
 Port = process.env.PORT
 
 app.use("/api",userRoutes)
+app.use("/api/cart",cartRoutes);
+
+app.use("/api/admin/category",categoryRoutes)
+app.use("/api/admin/product",productRoutes);
+app.use("/api/admin/banner",bannerRoutes);
 
 database().then(
     app.listen(process.env.PORT, () => {

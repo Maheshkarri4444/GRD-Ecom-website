@@ -1,45 +1,73 @@
 const User = require('../models/User');
+const Cart = require('../models/Cart');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 exports.signup = async (req, res) => {
-    try {
-        const { role, name, phoneNumber, emailAddress, password, address } = req.body;
+  try {
+      const { role, name, phoneNumber, emailAddress, password, address } = req.body;
 
-        if (emailAddress) {
+      // Check if the email already exists
+      if (emailAddress) {
           const existingUser = await User.findOne({ emailAddress });
           if (existingUser) {
-            return res.status(400).json({
-              success: false,
-              message: "email already exists",
-            });
+              return res.status(400).json({
+                  success: false,
+                  message: "Email already exists",
+              });
           }
-        }
+      }
 
-        // Create new user
-        const user = new User({
-            name,
-            role,
-            phoneNumber,
-            emailAddress,
-            password,
-            address,
-        });
+      // Create a new user
+      const user = new User({
+          name,
+          role,
+          phoneNumber,
+          emailAddress,
+          password,
+          address,
+      });
 
-        await user.save();
+      // Save the user
+      await user.save();
 
-        // Exclude password from user response
-        const userWithoutPassword = user.toObject();
-        delete userWithoutPassword.password;
+      // Create a cart for the user
+      const cart = new Cart({
+          userId: user._id,
+          products: [],
+      });
+      await cart.save();
 
-        res.status(201).json({ message: 'User registered successfully', user: userWithoutPassword });
-    } catch (error) {
-        if (error.code === 11000) {
-            return res.status(400).json({ message: 'Email already exists' });
-        }
-        res.status(500).json({ message: 'Internal Server Error', error });
-    }
+      // Link the cart to the user
+      user.cart = cart._id;
+      await user.save();
+
+      // Generate a JWT token with user info
+      const token = jwt.sign(
+          { id: user._id, name: user.name, role: user.role, emailAddress: user.emailAddress  },
+          process.env.JWT_SECRET,
+          { expiresIn: '1h' }
+      );
+
+      // Exclude password from the user response
+      const userWithoutPassword = user.toObject();
+      delete userWithoutPassword.password;
+
+      // Return the token and user info
+      res.status(201).json({
+          message: 'User registered successfully',
+          token,
+          user: userWithoutPassword,
+      });
+  } catch (error) {
+      if (error.code === 11000) {
+          return res.status(400).json({ message: 'Email already exists' });
+      }
+      res.status(500).json({ message: 'Internal Server Error', error });
+  }
 };
+
+
 
 exports.login = async (req, res) => {
     try {

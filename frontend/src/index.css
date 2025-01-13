@@ -26,11 +26,12 @@
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-green-700 text-white rounded-md hover:bg-green-800 transition-colors;
+    @apply px-4 py-2 text-white transition-colors bg-green-700 rounded-md hover:bg-green-800;
   }
   
   .btn-secondary {
-    @apply px-4 py-2 bg-green-100 text-green-700 rounded-md hover:bg-green-200 transition-colors;
+    @apply px-4 py-2 text-green-700 transition-colors bg-green-100 rounded-md hover:bg-green-200;
   }
 }
+
 

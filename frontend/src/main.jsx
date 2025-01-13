@@ -46,6 +46,10 @@ import Login from './components/User/Login.jsx';
 import { MyProvider } from './utils/MyContext.jsx';
 import Profile from './components/User/Profile.jsx';
 import AdminLayout from './components/Admin/AdminLayout.jsx';
+import ProductAdmin from './components/Admin/ProductAdmin.jsx';
+import CategoriesAdmin from './components/Admin/CategoriesAdmin.jsx';
+import Shop from './components/User/Shop.jsx';
+import BannersAdmin from './components/Admin/BannersAdmin.jsx';
 createRoot(document.getElementById('root')).render(
   <MyProvider>
   <StrictMode>
@@ -53,9 +57,13 @@ createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/shop" element={<Shop />} />
         <Route path="/profile" element={<Profile/>} />
-        <Route path='/admin' element={<AdminLayout/>}/>
-
+        <Route path='/admin' element={<AdminLayout/>}>
+          <Route path="products" element={<ProductAdmin/>} />
+          <Route path="categories" element={<CategoriesAdmin/>} />
+          <Route path="banners" element={<BannersAdmin/>} />
+        </Route>
       </Routes>
     </Router>
   </StrictMode>
