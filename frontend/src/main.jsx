@@ -50,6 +50,8 @@ import ProductAdmin from './components/Admin/ProductAdmin.jsx';
 import CategoriesAdmin from './components/Admin/CategoriesAdmin.jsx';
 import Shop from './components/User/Shop.jsx';
 import BannersAdmin from './components/Admin/BannersAdmin.jsx';
+import BlobsAdmin from './components/Admin/BlobsAdmin.jsx';
+import Blobs from './components/User/Blobs.jsx';
 createRoot(document.getElementById('root')).render(
   <MyProvider>
   <StrictMode>
@@ -58,11 +60,13 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/login" element={<Login />} />
         <Route path="/shop" element={<Shop />} />
+        <Route path='/blobs' element={ <Blobs/>}/>
         <Route path="/profile" element={<Profile/>} />
         <Route path='/admin' element={<AdminLayout/>}>
           <Route path="products" element={<ProductAdmin/>} />
           <Route path="categories" element={<CategoriesAdmin/>} />
           <Route path="banners" element={<BannersAdmin/>} />
+          <Route path="blobs" element={<BlobsAdmin/>} />
         </Route>
       </Routes>
     </Router>

@@ -4,11 +4,13 @@ const app = express();
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const database = require("./config/database");
+
 const userRoutes = require("./routes/userRoutes")
 const categoryRoutes = require("./routes/categoryRoutes");
 const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const bannerRoutes = require("./routes/bannerRoutes")
+const blobRoutes = require("./routes/blobRoutes");
 
 app.use(cors());
 app.use(cors({
@@ -27,6 +29,7 @@ app.use("/api/cart",cartRoutes);
 app.use("/api/admin/category",categoryRoutes)
 app.use("/api/admin/product",productRoutes);
 app.use("/api/admin/banner",bannerRoutes);
+app.use("/api/admin/blob",blobRoutes);
 
 database().then(
     app.listen(process.env.PORT, () => {

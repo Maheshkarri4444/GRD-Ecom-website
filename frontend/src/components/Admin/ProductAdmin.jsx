@@ -116,7 +116,9 @@ const removeImage = (index, isExistingImage) => {
       const data = await response.json();
       
       if (data.success) {
-        setCategories(data.categories);
+        const filteredCategories = data.categories.filter(category => category.name !== "Non Product Category");
+        // console.log("categories are : ",filteredCategories)
+        setCategories(filteredCategories);
       }
     } catch (err) {
       setError('Failed to fetch categories');

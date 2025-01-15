@@ -13,7 +13,6 @@ const BannersAdmin = () => {
   // Form states
   const [formData, setFormData] = useState({
     title: '',
-    description: '',
     banner: ''
   });
 
@@ -24,6 +23,7 @@ const BannersAdmin = () => {
   // Fetch banners
   const fetchBanners = async () => {
     try {
+      setLoading(true);
       const response = await fetch(Allapi.getAllBanners.url, {
         method: 'GET',
         headers: {
@@ -31,14 +31,19 @@ const BannersAdmin = () => {
         }
       });
       const data = await response.json();
-
-      if (data.success) {
+      // console.log("banners data: ", data);
+      // Check if data is an array directly
+      if (Array.isArray(data)) {
+        setBanners(data);
+      } else if (data.success && Array.isArray(data.banners)) {
         setBanners(data.banners);
       } else {
-        setError(data.message);
+        setError('Invalid data format received');
+        console.error('Invalid data format:', data);
       }
     } catch (err) {
       setError('Failed to fetch banners');
+      console.error('Fetch banners error:', err);
     } finally {
       setLoading(false);
     }
@@ -48,11 +53,11 @@ const BannersAdmin = () => {
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'grd-website-ecommerce'); // Replace with your Cloudinary upload preset
+    formData.append('upload_preset', 'grd-website-ecommerce');
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dcpxmuyvp/image/upload`, // Replace with your Cloudinary cloud name
+        `https://api.cloudinary.com/v1_1/dcpxmuyvp/image/upload`,
         {
           method: 'POST',
           body: formData,
@@ -61,6 +66,7 @@ const BannersAdmin = () => {
       const data = await response.json();
       return data.secure_url;
     } catch (err) {
+      console.error('Cloudinary upload error:', err);
       throw new Error('Failed to upload image');
     }
   };
@@ -69,11 +75,11 @@ const BannersAdmin = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     try {
       let uploadedImageUrl = formData.banner;
 
-      // Upload new image if selected
       if (imageFile) {
         uploadedImageUrl = await uploadToCloudinary(imageFile);
       }
@@ -96,13 +102,14 @@ const BannersAdmin = () => {
 
       const data = await response.json();
 
-      if (data.success) {
-        await fetchBanners();
+      if (response.ok) {
         resetForm();
+        await fetchBanners();
       } else {
-        setError(data.message);
+        setError(data.message || 'Failed to save banner');
       }
     } catch (err) {
+      console.error('Submit error:', err);
       setError('Failed to save banner');
     } finally {
       setLoading(false);
@@ -114,6 +121,7 @@ const BannersAdmin = () => {
     if (!window.confirm('Are you sure you want to delete this banner?')) return;
 
     try {
+      setLoading(true);
       const response = await fetch(Allapi.deleteBanner.url(id), {
         method: 'DELETE',
         headers: {
@@ -122,49 +130,41 @@ const BannersAdmin = () => {
       });
       const data = await response.json();
 
-      if (data.success) {
-        setBanners(banners.filter(banner => banner._id !== id));
+      if (response.ok) {
+        await fetchBanners();
       } else {
         setError(data.message);
       }
     } catch (err) {
+      console.error('Delete error:', err);
       setError('Failed to delete banner');
+    } finally {
+      setLoading(false);
     }
   };
 
   // Handle edit mode
   const handleEdit = (banner) => {
     setEditingBanner(banner);
-
     setFormData({
       title: banner.title,
-      description: banner.description,
       banner: banner.banner
     });
-
     setPreviewUrl(banner.banner);
-    setImageFile(null); // Reset file input for new image
+    setImageFile(null);
   };
 
   // Reset form
   const resetForm = () => {
     setFormData({
       title: '',
-      description: '',
       banner: ''
     });
     setPreviewUrl('');
     setImageFile(null);
     setEditingBanner(null);
+    setError(null);
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="w-12 h-12 border-b-2 border-green-700 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="p-6 rounded-lg shadow-md bg-green-50">
@@ -172,28 +172,15 @@ const BannersAdmin = () => {
 
       {/* Banner Form */}
       <form onSubmit={handleSubmit} className="mb-8 space-y-4">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Title</label>
-            <input
-              type="text"
-              value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              className="block w-full mt-1 bg-white border border-green-400 rounded-md shadow-sm focus:border-green-500 focus:ring-green-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description</label>
-            <textarea
-              value={formData.description}
-              onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              rows={3}
-              className="block w-full mt-1 bg-white border border-green-400 rounded-md shadow-sm focus:border-green-500 focus:ring-green-500"
-              required
-            />
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Title</label>
+          <input
+            type="text"
+            value={formData.title}
+            onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+            className="block w-full mt-1 bg-white border border-green-400 rounded-md shadow-sm focus:border-green-500 focus:ring-green-500"
+            required
+          />
         </div>
 
         <div>
@@ -201,11 +188,14 @@ const BannersAdmin = () => {
 
           {/* Preview Section */}
           {previewUrl && (
-            <div className="mb-4">
-              <img src={previewUrl} alt="Banner Preview" className="object-cover w-full h-32 rounded-lg" />
+            <div className="relative mb-4">
+              <img src={previewUrl} alt="Banner Preview" className="object-cover w-full rounded-lg h-96" />
               <button
                 type="button"
-                onClick={() => setPreviewUrl('')}
+                onClick={() => {
+                  setPreviewUrl('');
+                  setImageFile(null);
+                }}
                 className="absolute p-1 text-white bg-red-500 rounded-full top-1 right-1 hover:bg-red-600"
               >
                 <X size={16} />
@@ -226,8 +216,10 @@ const BannersAdmin = () => {
                     className="sr-only"
                     onChange={(e) => {
                       const file = e.target.files[0];
-                      setImageFile(file);
-                      setPreviewUrl(URL.createObjectURL(file));
+                      if (file) {
+                        setImageFile(file);
+                        setPreviewUrl(URL.createObjectURL(file));
+                      }
                     }}
                   />
                 </label>
@@ -249,9 +241,10 @@ const BannersAdmin = () => {
           )}
           <button
             type="submit"
-            className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            disabled={loading}
+            className="px-4 py-2 text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50"
           >
-            {editingBanner ? 'Update Banner' : 'Add Banner'}
+            {loading ? 'Processing...' : editingBanner ? 'Update Banner' : 'Add Banner'}
           </button>
         </div>
       </form>
@@ -266,31 +259,40 @@ const BannersAdmin = () => {
       {/* Banners List */}
       <div className="mt-8">
         <h3 className="mb-4 text-lg font-medium text-gray-900">Banners List</h3>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {loading && (
+          <div className="flex items-center justify-center h-32">
+            <div className="w-12 h-12 border-b-2 border-green-700 rounded-full animate-spin"></div>
+          </div>
+        )}
+        {!loading && banners.length === 0 && (
+          <p className="text-center text-gray-500">No banners found</p>
+        )}
+        <div className="grid grid-cols-1 gap-6">
           {banners.map((banner) => (
-            <div key={banner._id} className="overflow-hidden transition-shadow border rounded-lg shadow-sm hover:shadow-md">
-              {banner.image && (
+            <div key={banner._id} className="overflow-hidden transition-shadow bg-white border rounded-lg shadow-sm hover:shadow-md">
+              {banner.banner && (
                 <div className="relative">
                   <img
                     src={banner.banner}
                     alt={banner.title}
-                    className="object-cover w-full h-48"
+                    className="object-cover w-full h-96"
                   />
                 </div>
               )}
               <div className="p-4">
                 <h4 className="mb-2 text-lg font-semibold">{banner.title}</h4>
-                <p className="mb-2 text-sm text-gray-600">{banner.description}</p>
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={() => handleEdit(banner)}
                     className="p-1 text-gray-500 hover:text-green-600"
+                    disabled={loading}
                   >
                     <Pencil size={20} />
                   </button>
                   <button
                     onClick={() => handleDelete(banner._id)}
                     className="p-1 text-gray-500 hover:text-red-600"
+                    disabled={loading}
                   >
                     <Trash2 size={20} />
                   </button>

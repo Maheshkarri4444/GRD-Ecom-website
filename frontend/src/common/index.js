@@ -73,7 +73,26 @@ const Allapi = {
       url:(id)=> `${backapi}/api/admin/banner/banners/${id}`,
       method:"PUT",
     },
-    
+    deleteBanner:{
+      url:(id)=> `${backapi}/api/admin/banner/banners/${id}`,
+      method:"DELETE",
+    },
+    getAllBlobs:{
+      url: `${backapi}/api/admin/blob/blobs`,
+      method:"GET",
+    },
+    createBlob:{
+      url: `${backapi}/api/admin/blob/blobs`,
+      method:"POST",
+    },
+    updateBlob:{
+      url: `${backapi}/api/admin/blob/blobs`,
+      method:"PUT",
+    },
+    deleteBlob:{
+      url: `${backapi}/api/admin/blob/blobs`,
+      method:"DELETE",
+    },
 }
 
 export default Allapi;

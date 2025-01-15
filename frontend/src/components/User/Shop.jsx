@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Search, Filter, X, Plus, Minus , Home} from 'lucide-react';
+import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, ChevronRight } from 'lucide-react';
 import grdcirclelogo from '../../assets/logos/grdlogo.png';
 import Allapi from '../../common';
 import { Link } from 'react-router-dom';
@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [currentBanner, setCurrentBanner] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,6 +16,43 @@ const Shop = () => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [cart, setCart] = useState([]);
+  console.log("current banner",currentBanner);
+
+  useEffect(() => {
+    if (banners.length > 1) {
+      const interval = setInterval(() => {
+        setCurrentBanner((prev) => (prev + 1) % banners.length);
+      }, 6000);
+      return () => clearInterval(interval);
+    }
+  }, [banners.length]);
+
+  const nextBanner = () => {
+    setCurrentBanner((prev) => (prev + 1) % banners.length);
+  };
+
+  const prevBanner = () => {
+    setCurrentBanner((prev) => (prev - 1 + banners.length) % banners.length);
+  };
+
+  const fetchBanners = async () => {
+    try {
+      const response = await fetch(Allapi.getAllBanners.url, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      const data = await response.json();
+      if (Array.isArray(data)) {
+        setBanners(data);
+      } else if (data.success && Array.isArray(data.banners)) {
+        setBanners(data.banners);
+      }
+    } catch (err) {
+      console.error('Fetch banners error:', err);
+    }
+  };
 
   const fetchCart = async () => {
     try {
@@ -46,7 +85,7 @@ const Shop = () => {
     }
   };
 
-  // Fetch products and categories
+  // Fetch products and categories and banners
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -83,11 +122,13 @@ const Shop = () => {
           setProducts(productsData.products);
         }
         if (categoriesData.success) {
-          setCategories(categoriesData.categories);
+          const filteredCategories = categoriesData.categories.filter(category => category.name !== "Non Product Category");
+          // console.log("categories are : ",filteredCategories)
+          setCategories(filteredCategories);
         }
 
-        // Fetch cart data after products and categories
-        await fetchCart();
+        // Fetch banners and cart data
+        await Promise.all([fetchBanners(), fetchCart()]);
       } catch (err) {
         console.error('Fetch error:', err);
         setError(err.message || 'Failed to fetch data');
@@ -190,18 +231,18 @@ const Shop = () => {
   return (
     <div className="min-h-screen bg-green-50">
       {/* Navigation Bar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+      <nav className="fixed top-0 left-0 right-0 z-50 shadow-md bg-green-50">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="items-center hidden sm:flex"> 
               <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
             </div>
             <Link
-        to="/"
-        className=" inline-flex items-center px-1.5 py-1.5 text-sm font-medium text-green-700 bg-white rounded-md shadow-sm left-2 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      >
-        <Home className="relative w-8 h-8 " />
-      </Link>
+              to="/"
+              className=" inline-flex items-center px-1.5 py-1.5 text-sm font-medium text-green-700 bg-green-50 rounded-md shadow-lg left-2 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+            >
+              <Home className="relative w-8 h-8 " />
+            </Link>
             {/* Search Bar */}
             <div className="flex-1 max-w-xl mx-4">
               <div className="relative">
@@ -346,43 +387,105 @@ const Shop = () => {
       )}
 
       {/* Products Grid */}
-      <div className="px-4 pt-20 pb-12 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        {error && (
-          <div className="p-4 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-md">
-            {error}
-          </div>
-        )}
+      <div className="pt-16">
+        {/* Banners Carousel */}
+{/* Banners Carousel */}
+<div className="relative w-full overflow-hidden bg-black">
+  <div 
+    className="flex transition-transform duration-500 ease-in-out"
+    style={{ 
+      transform: `translateX(-${currentBanner * 100}%)`
+    }}
+  >
+    {banners.map((banner) => (
+      <div
+        key={banner._id}
+        className="relative flex-shrink-0 w-full h-[500px]" // Fix width and height
+      >
+        <img
+          src={banner.banner}
+          alt={banner.title}
+          className="object-cover w-full h-full"
+        />
+        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 hover:opacity-100">
+          <h3 className="text-4xl font-bold text-white">{banner.title}</h3>
+        </div>
+      </div>
+    ))}
+  </div>
 
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filteredProducts.map((product) => (
-            <div key={product._id} className="overflow-hidden transition-shadow bg-white border rounded-lg shadow-sm hover:shadow-md">
-              {product.images && product.images.length > 0 && (
-                <img
-                  src={product.images[0]}
-                  alt={product.name}
-                  className="object-cover w-full h-48"
-                />
-              )}
-              <div className="p-4">
-                <h3 className="mb-2 text-lg font-semibold text-gray-900">{product.name}</h3>
-                <p className="mb-4 text-sm text-gray-600 line-clamp-2">
-                  {product.description}
-                </p>
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span>
-                    <span className="ml-2 text-lg font-bold text-green-600">₹{product.salePrice}</span>
+  {/* Navigation Buttons */}
+  <button
+    onClick={prevBanner}
+    className="absolute left-0 p-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 top-1/2"
+  >
+    <ChevronLeft className="w-8 h-8 text-white" />
+  </button>
+  <button
+    onClick={nextBanner}
+    className="absolute right-0 p-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 top-1/2"
+  >
+    <ChevronRight className="w-8 h-8 text-white" />
+  </button>
+
+  {/* Dots Indicator */}
+  <div className="absolute flex space-x-2 transform -translate-x-1/2 bottom-4 left-1/2">
+    {banners.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => setCurrentBanner(index)}
+        className={`w-3 h-3 rounded-full transition-colors duration-300 ${
+          currentBanner === index ? 'bg-white' : 'bg-white/50'
+        }`}
+      />
+    ))}
+  </div>
+</div>
+
+
+        {/* Products Section */}
+        <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
+          {error && (
+            <div className="p-4 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-md">
+              {error}
+            </div>
+          )}
+
+          <h2 className="mb-6 text-2xl font-bold text-gray-900">Our Products</h2>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredProducts.map((product) => (
+              <div key={product._id} className="overflow-hidden transition-shadow bg-white border rounded-lg shadow-sm hover:shadow-md">
+                {product.images && product.images.length > 0 && (
+                  <div className="relative overflow-hidden group">
+                    <img
+                      src={product.images[0]}
+                      alt={product.name}
+                      className="object-cover w-full h-48 transition-transform duration-300 group-hover:scale-105"
+                    />
                   </div>
-                  <button 
-                    className="px-4 py-2 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                    onClick={() => addToCart(product)}
-                  >
-                    Add to Cart
-                  </button>
+                )}
+                <div className="p-4">
+                  <h3 className="mb-2 text-lg font-semibold text-gray-900">{product.name}</h3>
+                  <p className="mb-4 text-sm text-gray-600 line-clamp-2">
+                    {product.description}
+                  </p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span>
+                      <span className="ml-2 text-lg font-bold text-green-600">₹{product.salePrice}</span>
+                    </div>
+                    <button 
+                      className="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                      onClick={() => addToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </div>
