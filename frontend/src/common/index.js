@@ -46,7 +46,7 @@ const Allapi = {
       method:"GET",
     },
     editProduct:{
-      url:(id)=> `${backapi}/api/admin/product/update/${id}`,
+      url:`${backapi}/api/admin/product/update`,
       method:"PUT",
     },
     deleteProduct:{
@@ -93,6 +93,18 @@ const Allapi = {
       url: `${backapi}/api/admin/blob/blobs`,
       method:"DELETE",
     },
+    getOrdersByUserId:{
+      url: `${backapi}/api/order/user`,
+      method:"GET",
+    },
+    placeOrder:{
+      url: `${backapi}/api/order`,
+      method: "POST"
+    },
+    updateOrder:{
+      url: `${backapi}/api/order`,
+      method :"PUT",
+    }
 }
 
 export default Allapi;

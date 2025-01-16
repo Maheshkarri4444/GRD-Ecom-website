@@ -225,6 +225,7 @@
 
 import React, { useState } from 'react';
 import { Leaf, ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
+import { FiShoppingCart } from 'react-icons/fi';
 import grdcirclelogo from "../src/assets/logos/grdlogo.png";
 import grdfulllogo from "../src/assets/logos/grdfulllogo.png";
 import { Link } from 'react-router-dom';
@@ -233,7 +234,7 @@ import { useMyContext } from './utils/MyContext.jsx';
 function Profile() {
   return (
     <div className="flex items-center">
-      <span className="text-gray-700">Profile</span>
+      <span className="">Profile</span>
     </div>
   );
 }
@@ -251,8 +252,6 @@ function App() {
           <div className="flex items-center p-2 bg-green-50" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
             <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
           </div>
-
-
             {/* Desktop Navigation */}
             <div className="hidden space-x-8 md:flex">
               <NavLink active><Leaf className="w-4 h-4 mr-1" />Home</NavLink>
@@ -261,6 +260,9 @@ function App() {
               </Link>
               <Link to="/blobs">
                 <NavLink><Droplets className="w-4 h-4 mr-1" />Blobs</NavLink>
+              </Link>
+              <Link to="/checkout">
+                <NavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</NavLink>
               </Link>
               <NavLink><Brain className="w-4 h-4 mr-1" />AI</NavLink>
               {user ? (
@@ -296,6 +298,9 @@ function App() {
               </Link>
               <Link to="/blobs">
                 <MobileNavLink><Droplets className="w-4 h-4 mr-2" />Blobs</MobileNavLink>
+              </Link>
+              <Link to="/checkout">
+                <MobileNavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</MobileNavLink>
               </Link>
               <MobileNavLink><Brain className="w-4 h-4 mr-2" />AI</MobileNavLink>
               {user ? (

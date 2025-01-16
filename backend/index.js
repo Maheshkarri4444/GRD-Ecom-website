@@ -11,6 +11,7 @@ const productRoutes = require("./routes/productRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const bannerRoutes = require("./routes/bannerRoutes")
 const blobRoutes = require("./routes/blobRoutes");
+const orderRoutes =require("./routes/orderRoutes");
 
 app.use(cors());
 app.use(cors({
@@ -25,6 +26,7 @@ Port = process.env.PORT
 
 app.use("/api",userRoutes)
 app.use("/api/cart",cartRoutes);
+app.use("/api/order",orderRoutes)
 
 app.use("/api/admin/category",categoryRoutes)
 app.use("/api/admin/product",productRoutes);

@@ -52,6 +52,7 @@ import Shop from './components/User/Shop.jsx';
 import BannersAdmin from './components/Admin/BannersAdmin.jsx';
 import BlobsAdmin from './components/Admin/BlobsAdmin.jsx';
 import Blobs from './components/User/Blobs.jsx';
+import Checkout from './components/User/Checkout.jsx';
 createRoot(document.getElementById('root')).render(
   <MyProvider>
   <StrictMode>
@@ -62,6 +63,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/shop" element={<Shop />} />
         <Route path='/blobs' element={ <Blobs/>}/>
         <Route path="/profile" element={<Profile/>} />
+        <Route path='/checkout' element={<Checkout/>}/>
         <Route path='/admin' element={<AdminLayout/>}>
           <Route path="products" element={<ProductAdmin/>} />
           <Route path="categories" element={<CategoriesAdmin/>} />

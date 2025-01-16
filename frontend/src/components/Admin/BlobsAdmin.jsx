@@ -245,13 +245,13 @@ const BlobsAdmin = () => {
     };
 
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-50">
         <div className="relative w-full max-w-3xl p-6 mx-4 bg-white rounded-lg max-h-[90vh] overflow-y-auto">
           <button
             onClick={onClose}
-            className="absolute p-1 text-gray-500 rounded-full hover:bg-gray-100 top-4 right-4"
+            className="absolute z-50 p-1 text-gray-500 transition-colors duration-150 rounded-full size-10 hover:bg-gray-100 top-4 right-4"
           >
-            <X size={24} />
+            ✕
           </button>
           
           {/* Image Carousel */}
