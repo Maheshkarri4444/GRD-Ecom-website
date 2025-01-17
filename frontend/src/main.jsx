@@ -53,6 +53,10 @@ import BannersAdmin from './components/Admin/BannersAdmin.jsx';
 import BlobsAdmin from './components/Admin/BlobsAdmin.jsx';
 import Blobs from './components/User/Blobs.jsx';
 import Checkout from './components/User/Checkout.jsx';
+import OrdersAdmin from './components/Admin/OrdersAdmin.jsx';
+import UsersAdmin from './components/Admin/UsersAdmin.jsx';
+import AnalysisAdmin from './components/Admin/AnalysisAdmin.jsx';
+import AiChat from './components/User/AiChat.jsx';
 createRoot(document.getElementById('root')).render(
   <MyProvider>
   <StrictMode>
@@ -64,11 +68,15 @@ createRoot(document.getElementById('root')).render(
         <Route path='/blobs' element={ <Blobs/>}/>
         <Route path="/profile" element={<Profile/>} />
         <Route path='/checkout' element={<Checkout/>}/>
+        <Route path='/aichat' element={<AiChat/>}/>
         <Route path='/admin' element={<AdminLayout/>}>
+          <Route path="orders" element={<OrdersAdmin/>} />
           <Route path="products" element={<ProductAdmin/>} />
           <Route path="categories" element={<CategoriesAdmin/>} />
+          <Route path="users" element={<UsersAdmin/>} />
           <Route path="banners" element={<BannersAdmin/>} />
           <Route path="blobs" element={<BlobsAdmin/>} />
+          <Route path='analysis' element={<AnalysisAdmin/>}/>
         </Route>
       </Routes>
     </Router>

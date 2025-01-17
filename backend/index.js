@@ -12,6 +12,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const bannerRoutes = require("./routes/bannerRoutes")
 const blobRoutes = require("./routes/blobRoutes");
 const orderRoutes =require("./routes/orderRoutes");
+const analysisRoutes = require("./routes/analysisRoutes");
 
 app.use(cors());
 app.use(cors({
@@ -32,6 +33,8 @@ app.use("/api/admin/category",categoryRoutes)
 app.use("/api/admin/product",productRoutes);
 app.use("/api/admin/banner",bannerRoutes);
 app.use("/api/admin/blob",blobRoutes);
+app.use("/api/admin/analysis",analysisRoutes);
+
 
 database().then(
     app.listen(process.env.PORT, () => {

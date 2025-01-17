@@ -4,7 +4,7 @@ const orderController = require('../controllers/orderController');
 const { authAdminMiddleware, authMiddleware } = require("../middleware/authMiddleware");
 
 // Get all orders
-router.get('/', authMiddleware ,orderController.getAllOrders);
+router.get('/', authAdminMiddleware ,orderController.getAllOrders);
 
 // Get orders by userId
 router.get('/user/:userId', authMiddleware,orderController.getOrdersByUserId);

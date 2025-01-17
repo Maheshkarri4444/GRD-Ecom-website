@@ -3,10 +3,14 @@ import { useMyContext } from '../../utils/MyContext.jsx';
 import { Phone } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import Allapi from '../../common/index.js';
+import QRCodeGenerator from './QRCodeGenerator';
+import { Link } from 'react-router-dom';
+import { Home } from 'lucide-react';
+
 
 const Checkout = () => {
   const { user } = useMyContext();
-  const [view, setView] = useState('current'); // 'current' or 'history'
+  const [view, setView] = useState('current');
   const [selectedProducts, setSelectedProducts] = useState({});
   const [userOrders, setUserOrders] = useState([]);
   const [showPaymentForm, setShowPaymentForm] = useState(false);
@@ -105,7 +109,7 @@ const Checkout = () => {
       const orderData = {
         userId: user._id,
         name: user.name,
-        emailAddress: user.email,
+        emailAddress: user.emailAddress,
         phoneNumber: user.phoneNumber,
         address: addressWithoutId,
         products: selectedProductsArray,
@@ -120,12 +124,10 @@ const Checkout = () => {
         },
         body: JSON.stringify(orderData)
       });
-      console.log("response data: ",response);
       const data = await response.json();
       if (response.ok) {
         setCurrentOrder(data);
         setShowPaymentForm(true);
-        // Refresh cart after placing order
         fetchCart();
       } else {
         throw new Error(data.message || 'Failed to place order');
@@ -152,7 +154,7 @@ const Checkout = () => {
         body: JSON.stringify({
           amountPaid: parseFloat(paymentDetails.amountPaid),
           transactionId: paymentDetails.transactionId,
-          paymentStatus: 'pending'
+          paymentStatus: 'done'
         })
       });
 
@@ -162,6 +164,10 @@ const Checkout = () => {
         setShowPaymentForm(false);
         setCurrentOrder(null);
         setSelectedProducts({});
+        setPaymentDetails({
+          amountPaid: '',
+          transactionId: ''
+        });
         // Refresh orders
         const ordersResponse = await fetch(`${Allapi.getOrdersByUserId.url}/${user._id}`, {
           headers: {
@@ -179,7 +185,14 @@ const Checkout = () => {
     }
   };
 
+  const handlePayNow = (order) => {
+    setCurrentOrder(order);
+    setShowPaymentForm(true);
+    setView('current');
+  };
+
   const getStatusColor = (order) => {
+    if (order.orderStatus === 'wrong order') return 'bg-red-500 text-white';
     if (order.paymentStatus === 'pending') return 'bg-red-100';
     if (order.orderStatus === 'delivered') return 'bg-green-100';
     return 'bg-orange-100';
@@ -188,6 +201,13 @@ const Checkout = () => {
   return (
     <div className="min-h-screen p-6 bg-gray-50">
       <div className="max-w-4xl mx-auto">
+      <Link
+        to="/"
+        className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-sm top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+      >
+        <Home className="w-5 h-5 mr-2" />
+        <span className="font-medium">Back to Home</span>
+      </Link>
         {/* Toggle View */}
         <div className="flex mb-6 space-x-4">
           <button
@@ -228,13 +248,8 @@ const Checkout = () => {
                   </span>
                 </div>
 
-                {/* PhonePe Details */}
-                <div className="flex items-center p-4 space-x-3 rounded-lg bg-purple-50">
-                  <Phone className="w-6 h-6 text-purple-600" />
-                  <span className="text-purple-800">
-                    Pay to PhonePe number: +91 9876543210
-                  </span>
-                </div>
+                {/* PhonePe QR Code */}
+                <QRCodeGenerator amount={currentOrder.bill} />
 
                 {/* Payment Form */}
                 <div className="space-y-4">
@@ -249,7 +264,7 @@ const Checkout = () => {
                         ...prev,
                         amountPaid: e.target.value
                       }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 bg-white border border-green-500 rounded-md focus:ring-green-500 focus:border-green-500"
                       placeholder="Enter amount paid"
                     />
                   </div>
@@ -264,7 +279,7 @@ const Checkout = () => {
                         ...prev,
                         transactionId: e.target.value
                       }))}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-3 py-2 bg-white border border-green-500 rounded-md focus:ring-green-500 focus:border-green-500"
                       placeholder="Enter transaction ID"
                     />
                   </div>
@@ -336,7 +351,7 @@ const Checkout = () => {
               >
                 <div className="flex justify-between mb-4">
                   <h3 className="text-lg font-semibold">
-                    Order #{order._id.slice(-6)}
+                  Order #{order.orderStatus === 'wrong order' ? 'Deprecated' : order._id.slice(-6)}
                   </h3>
                   <span className="text-sm text-gray-600">
                     {new Date(order.createdAt).toLocaleDateString()}
@@ -365,7 +380,17 @@ const Checkout = () => {
                 <div className="grid grid-cols-2 gap-4 p-4 bg-white rounded-lg">
                   <div>
                     <p className="text-sm text-gray-600">Payment Status</p>
-                    <p className="font-medium">{order.paymentStatus}</p>
+                    <div className="flex items-center justify-between">
+                      {order.paymentStatus !== 'pending' && (<p className="font-medium">{order.paymentStatus}</p>)}
+                      {order.paymentStatus === 'pending' && order.orderStatus !== 'wrong order' && (
+                        <button
+                          onClick={() => handlePayNow(order)}
+                          className="px-4 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700"
+                        >
+                          Pay Now
+                        </button>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <p className="text-sm text-gray-600">Order Status</p>

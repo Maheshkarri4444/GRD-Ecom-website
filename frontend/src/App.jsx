@@ -258,13 +258,15 @@ function App() {
               <Link to="/shop">
                 <NavLink><ShoppingBag className="w-4 h-4 mr-1" />Shop</NavLink>
               </Link>
-              <Link to="/blobs">
-                <NavLink><Droplets className="w-4 h-4 mr-1" />Blobs</NavLink>
-              </Link>
               <Link to="/checkout">
                 <NavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</NavLink>
               </Link>
+              <Link to="/blobs">
+                <NavLink><Droplets className="w-4 h-4 mr-1" />Blobs</NavLink>
+              </Link>
+              <Link to="/aichat">
               <NavLink><Brain className="w-4 h-4 mr-1" />AI</NavLink>
+              </Link>
               {user ? (
                 <Link to="/profile">
                   <NavLink><Profile className="w-4 h-4 mr-1" /></NavLink>
@@ -296,13 +298,15 @@ function App() {
               <Link to="/shop">
                 <MobileNavLink><ShoppingBag className="w-4 h-4 mr-2" />Shop</MobileNavLink>
               </Link>
-              <Link to="/blobs">
-                <MobileNavLink><Droplets className="w-4 h-4 mr-2" />Blobs</MobileNavLink>
-              </Link>
               <Link to="/checkout">
                 <MobileNavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</MobileNavLink>
               </Link>
-              <MobileNavLink><Brain className="w-4 h-4 mr-2" />AI</MobileNavLink>
+              <Link to="/blobs">
+                <MobileNavLink><Droplets className="w-4 h-4 mr-2" />Blobs</MobileNavLink>
+              </Link>
+              <Link to="/aichat">
+                <MobileNavLink><Brain className="w-4 h-4 mr-2" />AI</MobileNavLink>
+              </Link>
               {user ? (
                 <Link to="/profile">
                   <MobileNavLink><Profile className="w-4 h-4 mr-2" /></MobileNavLink>

@@ -66,6 +66,7 @@ function Login() {
   
       if (isLogin) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('user', JSON.stringify(data.user));
         updateUser(data.user);
         if (data.user.role === "admin") {
           navigate('/admin');  // Redirect to the admin panel if the user is an admin

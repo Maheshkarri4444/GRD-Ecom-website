@@ -159,3 +159,60 @@ exports.editProfile = async (req, res) => {
     });
   }
 };
+
+
+exports.assignAdmin = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+      const user = await User.findById(userId);
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      if (user.role === 'admin') {
+          return res.status(400).json({ message: 'User is already an admin' });
+      }
+
+      user.role = 'admin';
+      await user.save();
+
+      res.status(200).json({ message: 'User has been assigned admin role', user });
+  } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+// Remove Admin Controller
+exports.removeAdmin = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+      const user = await User.findById(userId);
+
+      if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+      }
+
+      if (user.role !== 'admin') {
+          return res.status(400).json({ message: 'User is not an admin' });
+      }
+
+      user.role = 'user';
+      await user.save();
+
+      res.status(200).json({ message: 'Admin role has been removed from the user', user });
+  } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};
+
+exports.getAllUsers = async (req, res) => {
+  try {
+      const users = await User.find({}, '-password'); // Exclude passwords from the response
+      res.status(200).json({ message: 'Users retrieved successfully', users });
+  } catch (error) {
+      res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+};

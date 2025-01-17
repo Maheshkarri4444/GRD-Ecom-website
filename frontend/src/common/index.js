@@ -93,6 +93,10 @@ const Allapi = {
       url: `${backapi}/api/admin/blob/blobs`,
       method:"DELETE",
     },
+    getAllOrders:{
+      url: `${backapi}/api/order`,
+      method: "GET"
+    },
     getOrdersByUserId:{
       url: `${backapi}/api/order/user`,
       method:"GET",
@@ -104,7 +108,31 @@ const Allapi = {
     updateOrder:{
       url: `${backapi}/api/order`,
       method :"PUT",
-    }
+    },
+    getAllUsers:{
+      url: `${backapi}/api/all-users`,
+      method: "GET"
+    },
+    assignAdmin:{
+      url: `${backapi}/api/assign-admin`,
+      method: "PUT"
+    },
+    removeAdmin:{
+      url: `${backapi}/api/remove-admin`,
+      method: "PUT"
+    },
+    getOrderAnalytics:{
+      url: `${backapi}/api/admin/analysis/orderAnalytics`,
+      method: "GET"
+    },
+    getRevenueAnalytics:{
+      url: `${backapi}/api/admin/analysis/revenueAnalytics`,
+      method: "GET"
+    },
+    getTopProducts:{
+      url: `${backapi}/api/admin/analysis/topProducts`,
+      method: "GET"
+    },
 }
 
 export default Allapi;
