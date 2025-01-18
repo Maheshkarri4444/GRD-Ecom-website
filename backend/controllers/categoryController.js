@@ -1,4 +1,7 @@
 const Category = require("../models/Category");
+const Product = require("../models/Products");
+const Cart = require("../models/Cart");
+const Order = require("../models/Order.js");
 
 // Add a new category
 exports.addCategory = async (req, res) => {
@@ -79,6 +82,7 @@ exports.deleteCategory = async (req, res) => {
   const { id } = req.params;
 
   try {
+    // Find and delete the category by ID
     const deletedCategory = await Category.findByIdAndDelete(id);
 
     if (!deletedCategory) {
@@ -89,19 +93,34 @@ exports.deleteCategory = async (req, res) => {
       });
     }
 
+    // Mark all products associated with the deleted category as deleted
+    const updatedProducts = await Product.updateMany(
+      { category: id },
+      { deleted: true }
+    );
+
+    // Remove the deleted products from all carts
+    if (updatedProducts.modifiedCount > 0) {
+      await Cart.updateMany(
+        { "products.productId": { $in: updatedProducts.ids } },
+        { $pull: { products: { productId: { $in: updatedProducts.ids } } } }
+      );
+    }
+
     res.status(200).json({
       error: false,
       success: true,
-      message: "Category deleted successfully",
+      message: "Category deleted successfully, associated products marked as deleted, and carts updated",
     });
   } catch (error) {
     res.status(500).json({
       error: true,
       success: false,
-      message: "Failed to delete category",
+      message: "Failed to delete category and mark associated products as deleted",
     });
   }
 };
+
 
 exports.getAllCategories = async (req, res) => {
     try {

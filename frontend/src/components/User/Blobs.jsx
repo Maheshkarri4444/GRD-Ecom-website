@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 
 // Category icons/symbols
 const categoryIcons = {
-  'Oil': '🫒',
+  'Oils': '🫒',
   'Millets': '🌾',
   'Pulses': '🫘',
   'Spices': '🌶️',
+  'Sweets':'🍬',
+  'Protocols': '😊',
   'default': '📦'
 };
 

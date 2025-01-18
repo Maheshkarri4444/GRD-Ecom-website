@@ -21,7 +21,7 @@ exports.updateCart = async (req, res) => {
         const { productId, quantity } = req.body;
 
         // Validate input
-        if (!productId || quantity <= 0) {
+        if (!productId || quantity < 0) {
             return res.status(400).json({ message: 'Invalid product ID or quantity' });
         }
 
@@ -29,12 +29,16 @@ exports.updateCart = async (req, res) => {
         let cart = await Cart.findOne({ userId });
         if (!cart) {
             // Create a new cart if it doesn't exist
-            cart = new Cart({
-                userId,
-                products: [{ productId, quantity }],
-            });
-            await cart.save();
-            return res.status(201).json({ message: 'Cart created and product added', cart });
+            if (quantity > 0) {
+                cart = new Cart({
+                    userId,
+                    products: [{ productId, quantity }],
+                });
+                await cart.save();
+                return res.status(201).json({ message: 'Cart created and product added', cart });
+            } else {
+                return res.status(400).json({ message: 'Quantity must be greater than 0 to add a product' });
+            }
         }
 
         // Check if the product already exists in the cart
@@ -43,14 +47,25 @@ exports.updateCart = async (req, res) => {
         );
 
         if (existingProduct) {
-            // Update quantity if the product exists in the cart
-            existingProduct.quantity = quantity;
+            if (quantity === 0) {
+                // Remove the product from the cart if quantity is 0
+                cart.products = cart.products.filter(
+                    (item) => item.productId.toString() !== productId.toString()
+                );
+            } else {
+                // Update quantity if the product exists in the cart
+                existingProduct.quantity = quantity;
+            }
         } else {
-            // Add new product to the cart
-            cart.products.push({ productId, quantity });
+            if (quantity > 0) {
+                // Add new product to the cart
+                cart.products.push({ productId, quantity });
+            } else {
+                return res.status(400).json({ message: 'Quantity must be greater than 0 to add a product' });
+            }
         }
 
-        // Save the cart
+        // Save the updated cart
         await cart.save();
 
         res.status(200).json({ message: 'Cart updated successfully', cart });

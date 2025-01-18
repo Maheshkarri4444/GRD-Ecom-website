@@ -58,21 +58,21 @@ function Login() {
       });
   
       const data = await response.json(); 
-      // console.log("data is :", data.user);
   
       if (!response.ok) {
         throw new Error(data.message || `${isLogin ? 'Login' : 'Signup'} failed`);
       }
   
-      if (isLogin) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        updateUser(data.user);
-        if (data.user.role === "admin") {
-          navigate('/admin');  // Redirect to the admin panel if the user is an admin
-        } else {
-          navigate('/');  // Redirect to the home page for regular users
-        }
+      // Store token and user data for both login and signup
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      updateUser(data.user);
+  
+      // Navigate based on user role for both login and signup
+      if (data.user.role === "admin") {
+        navigate('/admin');  // Redirect to admin panel for admin users
+      } else {
+        navigate('/');  // Redirect to home page for regular users
       }
     } catch (err) {
       setError(err.message);
@@ -100,7 +100,7 @@ function Login() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
+    <div className="flex flex-col min-h-screen bg-green-50">
       <div className="p-3 sm:p-4">
         <Link to="/" className="inline-flex items-center text-sm text-green-700 hover:text-green-800 sm:text-base">
           <ArrowLeft className="w-5 h-5 mr-2" strokeWidth={2} />
@@ -206,7 +206,7 @@ function Login() {
               </div>
 
               {!isLogin && (
-                <div className="space-y-3">
+                <div className="space-y-3 ">
                   <div className="flex items-center space-x-3">
                     <MapPin className="w-5 h-5 text-gray-900" strokeWidth={2} />
                     <input

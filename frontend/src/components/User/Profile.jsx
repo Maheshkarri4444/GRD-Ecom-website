@@ -97,11 +97,11 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-12 bg-gray-50 sm:px-6 lg:px-8">
+    <div className="min-h-screen px-4 py-12 bg-green-50 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
         <Link 
           to="/"
-          className="inline-flex items-center px-4 py-2 mb-4 text-sm font-medium text-green-700 bg-white rounded-md shadow-sm hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          className="inline-flex items-center px-4 py-2 mb-4 text-sm font-medium text-green-700 bg-white rounded-md shadow-lg hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
           <Home className="w-4 h-4 mr-2" />
           Back to Home

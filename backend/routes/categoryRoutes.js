@@ -17,6 +17,6 @@ router.put("/edit/:id", authAdminMiddleware, editCategory);
 // Route to delete a category
 router.delete("/delete/:id", authAdminMiddleware, deleteCategory);
 
-router.get("/all",authMiddleware, getAllCategories);
+router.get("/all", getAllCategories);
 
 module.exports = router;

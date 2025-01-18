@@ -33,6 +33,10 @@ const ProductSchema = new mongoose.Schema({
       type: String, // Array of image links
     },
   ],
+  deleted: {
+    type: Boolean,
+    default: false, // Default value set to false
+  },
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

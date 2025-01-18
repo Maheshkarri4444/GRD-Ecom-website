@@ -13,6 +13,8 @@ const bannerRoutes = require("./routes/bannerRoutes")
 const blobRoutes = require("./routes/blobRoutes");
 const orderRoutes =require("./routes/orderRoutes");
 const analysisRoutes = require("./routes/analysisRoutes");
+const chatRoutes = require("./routes/chat");
+
 
 app.use(cors());
 app.use(cors({
@@ -28,6 +30,7 @@ Port = process.env.PORT
 app.use("/api",userRoutes)
 app.use("/api/cart",cartRoutes);
 app.use("/api/order",orderRoutes)
+app.use("/api/chat",chatRoutes)
 
 app.use("/api/admin/category",categoryRoutes)
 app.use("/api/admin/product",productRoutes);

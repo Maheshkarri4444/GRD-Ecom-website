@@ -13,7 +13,7 @@ const {
 router.post("/add", authAdminMiddleware, addProduct);
 
 // Route to get all products
-router.get("/all", authMiddleware, getAllProducts);
+router.get("/all",  getAllProducts);
 
 // Route to get a product by ID
 router.get("/:id", authMiddleware, getProductById);

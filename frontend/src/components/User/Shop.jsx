@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, ChevronRight, Bot } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 import grdcirclelogo from '../../assets/logos/grdlogo.png';
 import Allapi from '../../common';
-import { Link } from 'react-router-dom';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -19,6 +19,13 @@ const Shop = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState({});
   const [showBlobModal, setShowBlobModal] = useState(false);
   const [selectedBlob, setSelectedBlob] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    setIsAuthenticated(!!token);
+  }, []);
 
   useEffect(() => {
     if (banners.length > 1) {
@@ -29,7 +36,6 @@ const Shop = () => {
     }
   }, [banners.length]);
 
-  // Initialize image indices for products
   useEffect(() => {
     const initialIndices = {};
     products.forEach(product => {
@@ -62,12 +68,7 @@ const Shop = () => {
 
   const fetchBanners = async () => {
     try {
-      const response = await fetch(Allapi.getAllBanners.url, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
+      const response = await fetch(Allapi.getAllBanners.url);
       const data = await response.json();
       if (Array.isArray(data)) {
         setBanners(data);
@@ -80,12 +81,10 @@ const Shop = () => {
   };
 
   const fetchCart = async () => {
+    if (!isAuthenticated) return;
+
     try {
       const token = localStorage.getItem('token');
-      if (!token) {
-        throw new Error('No authentication token found');
-      }
-
       const response = await fetch(Allapi.getCart.url, {
         method: "GET",
         headers: {
@@ -108,30 +107,12 @@ const Shop = () => {
     }
   };
 
-  // Fetch products and categories and banners
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          throw new Error('No authentication token found');
-        }
-
         const [productsResponse, categoriesResponse] = await Promise.all([
-          fetch(Allapi.getAllProducts.url, {
-            method: "GET",
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
-          }),
-          fetch(Allapi.getAllCategories.url, {
-            method: "GET",
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            }
-          })
+          fetch(Allapi.getAllProducts.url),
+          fetch(Allapi.getAllCategories.url)
         ]);
 
         if (!productsResponse.ok || !categoriesResponse.ok) {
@@ -145,11 +126,17 @@ const Shop = () => {
           setProducts(productsData.products);
         }
         if (categoriesData.success) {
-          const filteredCategories = categoriesData.categories.filter(category => category.name !== "Non Product Category");
+          const excludedCategories = ["Non Product Category", "Protocols"];
+          const filteredCategories = categoriesData.categories.filter(
+            category => !excludedCategories.includes(category.name)
+          );
           setCategories(filteredCategories);
         }
 
-        await Promise.all([fetchBanners(), fetchCart()]);
+        await fetchBanners();
+        if (isAuthenticated) {
+          await fetchCart();
+        }
       } catch (err) {
         console.error('Fetch error:', err);
         setError(err.message || 'Failed to fetch data');
@@ -159,9 +146,22 @@ const Shop = () => {
     };
 
     fetchData();
-  }, []);
+  }, [isAuthenticated]);
+
+  const handleCartAction = () => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    setIsCartOpen(true);
+  };
 
   const addToCart = async (product) => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     try {
       const token = localStorage.getItem('token');
       const existingItem = cart.find(item => item.productId._id === product._id);
@@ -194,7 +194,6 @@ const Shop = () => {
   };
 
   const updateQuantity = async (productId, newQuantity) => {
-    if (newQuantity < 1) return;
     
     try {
       const token = localStorage.getItem('token');
@@ -228,13 +227,11 @@ const Shop = () => {
     return cart.reduce((total, item) => total + (item.productId.salePrice * item.quantity), 0);
   };
 
-  // Filter products based on search query and category
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
     (!selectedCategory || product.category._id === selectedCategory)
   );
 
-  // Modal Component for ViewFullBlob
   const BlobModal = ({ blob, onClose }) => {
     const [modalImageIndex, setModalImageIndex] = useState(0);
 
@@ -256,7 +253,6 @@ const Shop = () => {
             <X size={24} />
           </button>
           
-          {/* Image Carousel */}
           {blob.images.length > 0 && (
             <div className="relative z-30 mb-6 aspect-video">
               <img
@@ -320,11 +316,10 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-green-50">
-      {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 shadow-md bg-green-50">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="items-center hidden sm:flex"> 
+            <div className="items-center hidden sm:flex">
               <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
             </div>
             <Link
@@ -333,7 +328,7 @@ const Shop = () => {
             >
               <Home className="relative w-8 h-8" />
             </Link>
-            {/* Search Bar */}
+
             <div className="flex-1 max-w-xl mx-4">
               <div className="relative">
                 <input
@@ -347,7 +342,6 @@ const Shop = () => {
               </div>
             </div>
 
-            {/* Filter and Cart */}
             <div className="flex items-center space-x-4">
               <div className="relative">
                 <button
@@ -388,11 +382,11 @@ const Shop = () => {
               </div>
 
               <button 
-                onClick={() => setIsCartOpen(true)}
+                onClick={handleCartAction}
                 className="relative p-2 text-gray-700 hover:text-green-700"
               >
                 <ShoppingCart className="w-6 h-6" />
-                {cart.length > 0 && (
+                {isAuthenticated && cart.length > 0 && (
                   <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs text-white bg-green-600 rounded-full">
                     {cart.length}
                   </span>
@@ -403,8 +397,7 @@ const Shop = () => {
         </div>
       </nav>
 
-      {/* Cart Sidebar */}
-      {isCartOpen && (
+      {isAuthenticated && isCartOpen && (
         <>
           <div 
             className="fixed inset-0 z-50 bg-black bg-opacity-50"
@@ -466,8 +459,16 @@ const Shop = () => {
                 </div>
                 <Link
                   to="/checkout"
-                  className="w-full px-4 py-2 text-white bg-green-600 rounded-lg hover:bg-green-700"
-                  disabled={cart.length === 0}
+                  className={`block w-full px-4 py-2 text-center text-white rounded-lg ${
+                    cart.length === 0
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-green-600 hover:bg-green-700'
+                  }`}
+                  onClick={(e) => {
+                    if (cart.length === 0) {
+                      e.preventDefault();
+                    }
+                  }}
                 >
                   Checkout
                 </Link>
@@ -477,15 +478,11 @@ const Shop = () => {
         </>
       )}
 
-      {/* Products Grid */}
       <div className="pt-16">
-        {/* Banners Carousel */}
         <div className="relative w-full overflow-hidden bg-black">
           <div 
             className="flex transition-transform duration-500 ease-in-out"
-            style={{ 
-              transform: `translateX(-${currentBanner * 100}%)`
-            }}
+            style={{ transform: `translateX(-${currentBanner * 100}%)` }}
           >
             {banners.map((banner) => (
               <div
@@ -495,7 +492,7 @@ const Shop = () => {
                 <img
                   src={banner.banner}
                   alt={banner.title}
-                  className="w-full h-full "
+                  className="w-full h-full"
                 />
                 <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-300 opacity-0 bg-black/40 hover:opacity-100">
                   <h3 className="text-4xl font-bold text-white">{banner.title}</h3>
@@ -504,7 +501,6 @@ const Shop = () => {
             ))}
           </div>
 
-          {/* Navigation Buttons */}
           <button
             onClick={prevBanner}
             className="absolute left-0 p-2 transform -translate-y-1/2 bg-black/30 hover:bg-black/50 top-1/2"
@@ -518,7 +514,6 @@ const Shop = () => {
             <ChevronRight className="w-8 h-8 text-white" />
           </button>
 
-          {/* Dots Indicator */}
           <div className="absolute flex space-x-2 transform -translate-x-1/2 bottom-4 left-1/2">
             {banners.map((_, index) => (
               <button
@@ -532,11 +527,16 @@ const Shop = () => {
           </div>
         </div>
 
-        {/* Products Section */}
         <div className="px-4 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8">
           {error && (
             <div className="p-4 mb-4 text-red-700 bg-red-100 border border-red-400 rounded-md">
               {error}
+            </div>
+          )}
+
+          {!isAuthenticated && (
+            <div className="p-4 mb-4 text-blue-700 bg-blue-100 border border-blue-400 rounded-md">
+              Please <Link to="/login" className="px-2 py-1 font-medium text-white no-underline bg-blue-700 rounded-lg">login</Link> to use the cart and checkout features.
             </div>
           )}
 
@@ -594,38 +594,35 @@ const Shop = () => {
                     {product.description}
                   </p>
                   <div className="flex flex-col justify-between mb-4">
-                {/* Price Section */}
-                <div>
-                  <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span>
-                  <span className="ml-2 text-lg font-bold text-green-600">₹{product.salePrice}</span>
-                </div>
+                    <div>
+                      <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span>
+                      <span className="ml-2 text-lg font-bold text-green-600">₹{product.salePrice}</span>
+                    </div>
 
-                {/* Buttons Section */}
-                <div className="flex justify-between mt-4">
-                  <div>
-                    {product.blobId && (
-                      <button
-                        onClick={() => {
-                          setSelectedBlob(product.blobId);
-                          setShowBlobModal(true);
-                        }}
-                        className="px-3 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                      >
-                        View Details
-                      </button>
-                    )}
+                    <div className="flex justify-between mt-4">
+                      <div>
+                        {product.blobId && (
+                          <button
+                            onClick={() => {
+                              setSelectedBlob(product.blobId);
+                              setShowBlobModal(true);
+                            }}
+                            className="px-3 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          >
+                            View Blob
+                          </button>
+                        )}
+                      </div>
+                      <div>
+                        <button
+                          onClick={() => addToCart(product)}
+                          className="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <button
-                      className="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                      onClick={() => addToCart(product)}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
                 </div>
               </div>
             ))}
@@ -633,7 +630,6 @@ const Shop = () => {
         </div>
       </div>
 
-      {/* Blob Modal */}
       {showBlobModal && selectedBlob && (
         <BlobModal
           blob={selectedBlob}

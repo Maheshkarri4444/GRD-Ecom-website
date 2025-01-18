@@ -6,7 +6,7 @@ const { authAdminMiddleware,authMiddleware } = require('../middleware/authMiddle
 router.post('/banners',authAdminMiddleware, bannerController.createBanner);
 
 // Get all banners
-router.get('/banners', authMiddleware, bannerController.getBanners);
+router.get('/banners', bannerController.getBanners);
 
 // Update a banner by ID
 router.put('/banners/:id',authAdminMiddleware, bannerController.updateBanner);

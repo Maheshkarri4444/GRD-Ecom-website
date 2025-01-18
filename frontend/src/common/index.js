@@ -10,7 +10,7 @@ const Allapi = {
       method: "POST",
     },
     logout: {
-      url: `${backapi}/logout`,
+      url: `${backapi}/api/logout`,
       method: "POST",
     },
     editPorfile: {
@@ -133,6 +133,10 @@ const Allapi = {
       url: `${backapi}/api/admin/analysis/topProducts`,
       method: "GET"
     },
+    aiChat:{
+      url: `${backapi}/api/chat`,
+      method: "POST"
+    }
 }
 
 export default Allapi;

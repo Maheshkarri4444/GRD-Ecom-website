@@ -100,7 +100,7 @@ const CategoriesAdmin = () => {
 
   // Delete category
   const handleDeleteCategory = async (id) => {
-    if (!window.confirm('Are you sure you want to delete this category?')) return;
+    if (!window.confirm('If you delete the category all the products associated in this category will be deleted. So Are you sure?')) return;
 
     setDeleteLoading(id);
     try {

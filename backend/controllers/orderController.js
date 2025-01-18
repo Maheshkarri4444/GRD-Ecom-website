@@ -81,16 +81,18 @@ exports.updateOrder = async (req, res) => {
 
     if (!updatedOrder) return res.status(404).json({ message: 'Order not found' });
 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'maheshkarrifake@gmail.com', // Your email
+        pass: 'tqsl iqju cwlk eaur', // Your email password or App Password
+      },
+    });
+
     // Check if paymentStatus is 'done' and send email to Mahesh
     if (paymentStatus === 'done') {
       // Create the email transporter
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'maheshkarrifake@gmail.com', // Your email
-          pass: 'tqsl iqju cwlk eaur', // Your email password or App Password
-        },
-      });
+
 
       // Prepare email content
       const mailOptions = {
@@ -102,6 +104,7 @@ exports.updateOrder = async (req, res) => {
           <p><strong>Order ID:</strong> ${updatedOrder._id}</p>
           <p><strong>User:</strong> ${updatedOrder.userId.name}</p>
           <p><strong>Email:</strong> ${updatedOrder.userId.emailAddress}</p>
+          <p><strong>Phone Number:</strong> ${updatedOrder.userId.phoneNumber}</p>
           <p><strong>Total Bill:</strong> ${updatedOrder.bill}</p>
           <p><strong>Amount Paid:</strong> ${updatedOrder.amountPaid}</p>
           <p><strong>Transaction ID:</strong> ${updatedOrder.transactionId}</p>

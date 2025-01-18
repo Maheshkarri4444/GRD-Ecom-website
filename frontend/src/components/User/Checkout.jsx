@@ -6,6 +6,8 @@ import Allapi from '../../common/index.js';
 import QRCodeGenerator from './QRCodeGenerator';
 import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
+import { User } from 'lucide-react';
+
 
 
 const Checkout = () => {
@@ -199,11 +201,11 @@ const Checkout = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 bg-gray-50">
+    <div className="min-h-screen p-6 bg-green-50">
       <div className="max-w-4xl mx-auto">
       <Link
         to="/"
-        className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-sm top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-lg top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
       >
         <Home className="w-5 h-5 mr-2" />
         <span className="font-medium">Back to Home</span>
@@ -212,20 +214,20 @@ const Checkout = () => {
         <div className="flex mb-6 space-x-4">
           <button
             onClick={() => setView('current')}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 shadow-lg py-2 rounded-lg ${
               view === 'current' 
                 ? 'bg-green-600 text-white' 
-                : 'bg-white text-gray-600 hover:bg-green-50'
+                : 'bg-white text-gray-600 hover:bg-green-50 shadow-lg'
             }`}
           >
             Current Order
           </button>
           <button
             onClick={() => setView('history')}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 shadow-lg rounded-lg ${
               view === 'history' 
                 ? 'bg-green-600 text-white' 
-                : 'bg-white text-gray-600 hover:bg-green-50'
+                : 'bg-white text-gray-600 hover:bg-green-50 shadow-lg'
             }`}
           >
             Your Orders
@@ -240,6 +242,12 @@ const Checkout = () => {
                   Total Bill: ₹{currentOrder.bill}
                 </h2>
                 
+                <div className="flex items-center p-4 space-x-3 bg-red-100 rounded-lg">
+                  <User className="w-6 h-6 text-red-700" />
+                  <span className="text-red-800">
+                    Will be delivered to your current Adress. You can edit it in Profile section
+                  </span>
+                </div>
                 {/* Contact for Discount */}
                 <div className="flex items-center p-4 space-x-3 rounded-lg bg-green-50">
                   <FaWhatsapp className="w-6 h-6 text-green-600" />

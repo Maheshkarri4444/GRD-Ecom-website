@@ -1,5 +1,6 @@
 const Product = require("../models/Products");
 const Cart = require("../models/Cart");
+const Order = require("../models/Order.js");
 
 // Add a new product
 exports.addProduct = async (req, res) => {
@@ -50,7 +51,7 @@ exports.addProduct = async (req, res) => {
 // Get all products
 exports.getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find()
+    const products = await Product.find({ deleted: false })
       .populate("category", "name") // Populate category name
       .populate("blobId"); // Populate blob if needed
     res.status(200).json({
@@ -115,7 +116,7 @@ exports.updateProduct = async (req, res) => {
       .populate("category", "name")
       .populate("blobId");
 
-    console.log(updatedProduct);
+    // console.log(updatedProduct);
 
     if (!updatedProduct) {
       return res.status(404).json({
@@ -147,9 +148,14 @@ exports.deleteProduct = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedProduct = await Product.findByIdAndDelete(id);
+    // Find the product by ID and update the deleted field to true
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { deleted: true },
+      { new: true } // Return the updated document
+    );
 
-    if (!deletedProduct) {
+    if (!updatedProduct) {
       return res.status(404).json({
         error: true,
         success: false,
@@ -157,6 +163,7 @@ exports.deleteProduct = async (req, res) => {
       });
     }
 
+    // Remove the product from all carts
     await Cart.updateMany(
       { "products.productId": id },
       { $pull: { products: { productId: id } } }
@@ -165,13 +172,15 @@ exports.deleteProduct = async (req, res) => {
     res.status(200).json({
       error: false,
       success: true,
-      message: "Product deleted successfully and removed from all carts",
+      message: "Product marked as deleted successfully, removed from all carts",
     });
   } catch (error) {
     res.status(500).json({
       error: true,
       success: false,
-      message: "Failed to delete product",
+      message: "Failed to mark product as deleted",
     });
   }
 };
+
+

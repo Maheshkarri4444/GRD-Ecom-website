@@ -165,7 +165,13 @@ const OrdersAdmin = () => {
                     Order #{order._id.slice(-6)}
                   </h3>
                   <p className="text-sm text-gray-600">
-                    Customer: {order.name} ({order.emailAddress})
+                    Customer: {order.name} 
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Phone: {order.phoneNumber} 
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    email: {order.emailAddress}
                   </p>
                 </div>
                 <span className="text-sm text-gray-600">
@@ -208,7 +214,7 @@ const OrdersAdmin = () => {
                           onClick={() => handlePaymentStatusUpdate(order._id, 'verified')}
                           className="px-3 py-1 text-sm text-white bg-green-600 rounded hover:bg-green-700"
                         >
-                          Verify
+                          Verified
                         </button>
                         <button
                           onClick={() => handlePaymentStatusUpdate(order._id, 'nopayment')}

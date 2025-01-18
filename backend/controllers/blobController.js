@@ -1,4 +1,5 @@
 const Blob = require('../models/blob');
+const Product = require("../models/Products");
 
 // Create a new blob
 exports.createBlob = async (req, res) => {
@@ -46,9 +47,20 @@ exports.updateBlob = async (req, res) => {
 // Delete a blob
 exports.deleteBlob = async (req, res) => {
     try {
+        // Find and delete the Blob by its ID
         const deletedBlob = await Blob.findByIdAndDelete(req.params.id);
-        if (!deletedBlob) return res.status(404).json({ message: 'Blob not found' });
-        res.status(200).json({ message: 'Blob deleted successfully' });
+
+        if (!deletedBlob) {
+            return res.status(404).json({ message: 'Blob not found' });
+        }
+
+        // After deleting the blob, update the associated products
+        await Product.updateMany(
+            { blobId: req.params.id }, // Find products associated with the deleted blob
+            { $set: { blobId: null } }  // Set their blobId to null
+        );
+
+        res.status(200).json({ message: 'Blob deleted successfully, associated products updated' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

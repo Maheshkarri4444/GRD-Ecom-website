@@ -46,7 +46,7 @@ exports.signup = async (req, res) => {
       const token = jwt.sign(
           { id: user._id, name: user.name, role: user.role, emailAddress: user.emailAddress  },
           process.env.JWT_SECRET,
-          { expiresIn: '1h' }
+          { expiresIn: '24h' }
       );
 
       // Exclude password from the user response
@@ -88,7 +88,7 @@ exports.login = async (req, res) => {
         }
 
         // Generate JWT token
-        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '24h' });
 
         // Exclude password from user response
         const userWithoutPassword = user.toObject();
