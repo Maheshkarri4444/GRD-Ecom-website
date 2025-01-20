@@ -358,7 +358,7 @@ const Blobs = () => {
         <section className="pt-12 mt-12 border-t border-green-200">
           <BlobsList 
             blobs={nonProductBlobs} 
-            title="Additional Blobs" 
+            title="Our GRD Blobs" 
           />
         </section>
       )}

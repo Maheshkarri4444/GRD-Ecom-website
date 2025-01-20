@@ -8,8 +8,6 @@ import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
 import { User } from 'lucide-react';
 
-
-
 const Checkout = () => {
   const { user } = useMyContext();
   const [view, setView] = useState('current');
@@ -62,7 +60,11 @@ const Checkout = () => {
           }
         });
         const data = await response.json();
-        setUserOrders(data);
+        // Sort orders by date (latest first)
+        const sortedOrders = data.sort((a, b) => 
+          new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUserOrders(sortedOrders);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -95,7 +97,10 @@ const Checkout = () => {
       .filter(item => selectedProducts[item.productId._id])
       .map(item => ({
         productId: item.productId._id,
-        quantity: item.quantity
+        productName: item.productId.name,
+        images: item.productId.images,
+        quantity: item.quantity,
+        productBill: item.productId.salePrice * item.quantity
       }));
   };
 
@@ -170,14 +175,17 @@ const Checkout = () => {
           amountPaid: '',
           transactionId: ''
         });
-        // Refresh orders
+        // Refresh orders with latest first sorting
         const ordersResponse = await fetch(`${Allapi.getOrdersByUserId.url}/${user._id}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('token')}`
           }
         });
         const ordersData = await ordersResponse.json();
-        setUserOrders(ordersData);
+        const sortedOrders = ordersData.sort((a, b) => 
+          new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setUserOrders(sortedOrders);
       } else {
         throw new Error(data.message || 'Failed to update payment details');
       }
@@ -203,13 +211,14 @@ const Checkout = () => {
   return (
     <div className="min-h-screen p-6 bg-green-50">
       <div className="max-w-4xl mx-auto">
-      <Link
-        to="/"
-        className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-lg top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      >
-        <Home className="w-5 h-5 mr-2" />
-        <span className="font-medium">Back to Home</span>
-      </Link>
+        <Link
+          to="/"
+          className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-lg top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+        >
+          <Home className="w-5 h-5 mr-2" />
+          <span className="font-medium">Back to Home</span>
+        </Link>
+        
         {/* Toggle View */}
         <div className="flex mb-6 space-x-4">
           <button
@@ -245,7 +254,7 @@ const Checkout = () => {
                 <div className="flex items-center p-4 space-x-3 bg-red-100 rounded-lg">
                   <User className="w-6 h-6 text-red-700" />
                   <span className="text-red-800">
-                    Will be delivered to your current Adress. You can edit it in Profile section
+                    Will be delivered to your current Address. You can edit it in Profile section
                   </span>
                 </div>
                 {/* Contact for Discount */}
@@ -359,7 +368,7 @@ const Checkout = () => {
               >
                 <div className="flex justify-between mb-4">
                   <h3 className="text-lg font-semibold">
-                  Order #{order.orderStatus === 'wrong order' ? 'Deprecated' : order._id.slice(-6)}
+                    Order #{order.orderStatus === 'wrong order' ? 'Deprecated' : order._id.slice(-6)}
                   </h3>
                   <span className="text-sm text-gray-600">
                     {new Date(order.createdAt).toLocaleDateString()}
@@ -367,20 +376,20 @@ const Checkout = () => {
                 </div>
                 <div className="grid gap-4 mb-4">
                   {order.products.map((product) => (
-                    <div key={product.productId._id} className="flex items-center">
+                    <div key={product._id} className="flex items-center">
                       <img
-                        src={product.productId.images[0]}
-                        alt={product.productId.name}
+                        src={product.images[0]}
+                        alt={product.productName}
                         className="object-cover w-12 h-12 mr-4 rounded"
                       />
                       <div className="flex-1">
-                        <h4 className="font-medium">{product.productId.name}</h4>
+                        <h4 className="font-medium">{product.productName}</h4>
                         <p className="text-sm text-gray-600">
                           Quantity: {product.quantity}
                         </p>
                       </div>
                       <span className="font-semibold">
-                        ₹{product.productId.salePrice * product.quantity}
+                        ₹{product.productBill}
                       </span>
                     </div>
                   ))}

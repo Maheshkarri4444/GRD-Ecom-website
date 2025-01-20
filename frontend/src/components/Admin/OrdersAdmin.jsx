@@ -182,20 +182,20 @@ const OrdersAdmin = () => {
               {/* Products */}
               <div className="grid gap-4 mb-4">
                 {order.products.map((product) => (
-                  <div key={product.productId._id} className="flex items-center">
+                  <div key={product._id} className="flex items-center">
                     <img
-                      src={product.productId.images[0]}
-                      alt={product.productId.name}
+                      src={product.images[0]}
+                      alt={product.productName}
                       className="object-cover w-12 h-12 mr-4 rounded"
                     />
                     <div className="flex-1">
-                      <h4 className="font-medium">{product.productId.name}</h4>
+                      <h4 className="font-medium">{product.productName}</h4>
                       <p className="text-sm text-gray-600">
                         Quantity: {product.quantity}
                       </p>
                     </div>
                     <span className="font-semibold">
-                      ₹{product.productId.salePrice * product.quantity}
+                      ₹{product.productBill}
                     </span>
                   </div>
                 ))}

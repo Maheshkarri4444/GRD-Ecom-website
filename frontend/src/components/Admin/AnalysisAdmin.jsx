@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line, Bar, Pie } from 'react-chartjs-2';
-import { TrendingUp, DollarSign, Package, Users, ShoppingBag, CreditCard } from 'lucide-react';
+import { TrendingUp, DollarSign, Package, Users, ShoppingBag, CreditCard, AlertTriangle } from 'lucide-react';
 import Allapi from '../../common/index.js';
 
 // Register ChartJS components
@@ -41,7 +41,12 @@ const AnalysisAdmin = () => {
     topProducts: [],
     topCustomers: [],
     salesTrends: {},
-    productCategories: {}
+    fakeOrdersAnalysis: {
+      totalFakeOrders: 0,
+      totalFakeAmount: 0,
+      fakeOrdersByCustomer: [],
+      fakeOrdersTrend: {}
+    }
   });
 
   // Fetch orders data
@@ -87,9 +92,24 @@ const AnalysisAdmin = () => {
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
       return (
-        (timeframe === 'daily' && diffDays <= 1) ||
+        order.orderStatus !== 'wrong order' && // Exclude fake orders
+        ((timeframe === 'daily' && diffDays <= 1) ||
         (timeframe === 'weekly' && diffDays <= 7) ||
-        (timeframe === 'monthly' && diffDays <= 30)
+        (timeframe === 'monthly' && diffDays <= 30))
+      );
+    });
+
+    // Filter fake orders separately
+    const fakeOrders = ordersData.filter(order => {
+      const orderDate = new Date(order.createdAt);
+      const diffTime = Math.abs(now - orderDate);
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+      return (
+        order.orderStatus === 'wrong order' &&
+        ((timeframe === 'daily' && diffDays <= 1) ||
+        (timeframe === 'weekly' && diffDays <= 7) ||
+        (timeframe === 'monthly' && diffDays <= 30))
       );
     });
 
@@ -156,6 +176,36 @@ const AnalysisAdmin = () => {
       salesByDate.set(date, (salesByDate.get(date) || 0) + order.bill);
     });
 
+    // Analyze fake orders
+    const fakeOrdersByCustomer = new Map();
+    const fakeOrdersTrend = new Map();
+    
+    fakeOrders.forEach(order => {
+      // Track fake orders by customer
+      const customerId = order.emailAddress;
+      const customerStats = fakeOrdersByCustomer.get(customerId) || {
+        email: order.emailAddress,
+        name: order.name,
+        totalAmount: 0,
+        orderCount: 0
+      };
+      customerStats.totalAmount += order.bill;
+      customerStats.orderCount += 1;
+      fakeOrdersByCustomer.set(customerId, customerStats);
+
+      // Track fake orders trend
+      const date = new Date(order.createdAt).toLocaleDateString();
+      fakeOrdersTrend.set(date, (fakeOrdersTrend.get(date) || 0) + 1);
+    });
+
+    const fakeOrdersAnalysis = {
+      totalFakeOrders: fakeOrders.length,
+      totalFakeAmount: fakeOrders.reduce((sum, order) => sum + order.bill, 0),
+      fakeOrdersByCustomer: Array.from(fakeOrdersByCustomer.values())
+        .sort((a, b) => b.orderCount - a.orderCount),
+      fakeOrdersTrend: Object.fromEntries(fakeOrdersTrend)
+    };
+
     setAnalytics({
       totalSales,
       totalAmountPaid,
@@ -163,7 +213,8 @@ const AnalysisAdmin = () => {
       averageOrderValue,
       topProducts,
       topCustomers,
-      salesTrends: Object.fromEntries(salesByDate)
+      salesTrends: Object.fromEntries(salesByDate),
+      fakeOrdersAnalysis
     });
   };
 
@@ -204,9 +255,20 @@ const AnalysisAdmin = () => {
     }]
   };
 
+  const fakeOrdersTrendData = {
+    labels: Object.keys(analytics.fakeOrdersAnalysis.fakeOrdersTrend),
+    datasets: [{
+      label: 'Fake Orders',
+      data: Object.values(analytics.fakeOrdersAnalysis.fakeOrdersTrend),
+      fill: false,
+      borderColor: 'rgb(239, 68, 68)',
+      tension: 0.1
+    }]
+  };
+
   // Tooltip component
-  const StatCard = ({ icon: Icon, label, value, prefix = '' }) => (
-    <div className="p-6 bg-white rounded-lg shadow-lg">
+  const StatCard = ({ icon: Icon, label, value, prefix = '', className = '' }) => (
+    <div className={`p-6 bg-white rounded-lg shadow-lg ${className}`}>
       <div className="flex items-start gap-4">
         <div className="p-3 bg-green-100 rounded-full">
           <Icon className="w-6 h-6 text-green-600" />
@@ -251,6 +313,7 @@ const AnalysisAdmin = () => {
           <StatCard icon={CreditCard} label="Amount Paid" value={analytics.totalAmountPaid} prefix="₹" />
           <StatCard icon={ShoppingBag} label="Total Orders" value={analytics.totalOrders} />
           <StatCard icon={Package} label="Avg Order Value" value={analytics.averageOrderValue.toFixed(2)} prefix="₹" />
+          <StatCard icon={Package} label="Avg Paid Value" value={(analytics.totalAmountPaid / analytics.totalOrders).toFixed(2)} prefix="₹" />
           <StatCard icon={Users} label="Active Customers" value={analytics.topCustomers.length} />
         </div>
 
@@ -343,6 +406,77 @@ const AnalysisAdmin = () => {
                       <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{customer.orderCount}</td>
                       <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">₹{customer.totalSpent.toLocaleString()}</td>
                       <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">₹{customer.amountPaid.toLocaleString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        {/* Fake Orders Analysis */}
+        <div className="mt-8">
+          <h2 className="mb-6 text-2xl font-bold text-red-800">Fake Orders Analysis</h2>
+          
+          {/* Fake Orders Stats */}
+          <div className="grid grid-cols-1 gap-6 mb-8 md:grid-cols-3">
+            <StatCard 
+              icon={AlertTriangle} 
+              label="Total Fake Orders" 
+              value={analytics.fakeOrdersAnalysis.totalFakeOrders}
+              className="border-2 border-red-200"
+            />
+            <StatCard 
+              icon={DollarSign} 
+              label="Total Fake Amount" 
+              value={analytics.fakeOrdersAnalysis.totalFakeAmount} 
+              prefix="₹"
+              className="border-2 border-red-200"
+            />
+            <StatCard 
+              icon={Users} 
+              label="Customers with Fake Orders" 
+              value={analytics.fakeOrdersAnalysis.fakeOrdersByCustomer.length}
+              className="border-2 border-red-200"
+            />
+          </div>
+
+          {/* Fake Orders Trend */}
+          <div className="p-6 mb-8 bg-white rounded-lg shadow-lg">
+            <h2 className="mb-4 text-xl font-semibold text-red-800">Fake Orders Trend</h2>
+            <Line data={fakeOrdersTrendData} options={{
+              responsive: true,
+              plugins: {
+                legend: {
+                  position: 'top',
+                },
+              },
+            }} />
+          </div>
+
+          {/* Customers with Fake Orders */}
+          <div className="p-6 bg-white rounded-lg shadow-lg">
+            <h2 className="mb-4 text-xl font-semibold text-red-800">Customers with Fake Orders</h2>
+            <div className="overflow-x-auto">
+              <table className="min-w-full divide-y divide-red-200">
+                <thead className="bg-red-50">
+                  <tr>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-red-700 uppercase">Customer</th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-red-700 uppercase">Fake Orders</th>
+                    <th className="px-6 py-3 text-xs font-medium tracking-wider text-left text-red-700 uppercase">Total Amount</th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-red-100">
+                  {analytics.fakeOrdersAnalysis.fakeOrdersByCustomer.map((customer, index) => (
+                    <tr key={index} className="hover:bg-red-50">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-medium text-gray-900">{customer.name}</span>
+                          <span className="text-sm text-gray-500">{customer.email}</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">{customer.orderCount}</td>
+                      <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">₹{customer.totalAmount.toLocaleString()}</td>
                     </tr>
                   ))}
                 </tbody>

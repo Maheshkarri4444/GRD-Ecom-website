@@ -27,7 +27,14 @@ exports.getOrdersByUserId = async (req, res) => {
 exports.placeOrder = async (req, res) => {
   try {
     const { userId, name, emailAddress, phoneNumber, address, products, bill } = req.body;
-    // console.log("place order: ",req.body)
+
+    const detailedProducts = products.map(product => ({
+      productId: product.productId,
+      productName: product.productName,
+      images: product.images || [],
+      quantity: product.quantity,
+      productBill: product.productBill
+    }));
 
     const newOrder = new Order({
       userId,
@@ -35,16 +42,15 @@ exports.placeOrder = async (req, res) => {
       emailAddress,
       phoneNumber,
       address,
-      products,
+      products: detailedProducts,
       bill,
       amountPaid: 0,
       transactionId: null,
       paymentStatus: 'pending',
       orderStatus: 'not yet delivered'
     });
-    // console.log("new order ",newOrder);
+
     const savedOrder = await newOrder.save();
-    // console.log("saved order: ", savedOrder)
     res.status(201).json(savedOrder);
   } catch (err) {
     res.status(500).json({ message: 'Server error', error: err });
@@ -69,35 +75,28 @@ exports.updateOrder = async (req, res) => {
       { new: true }
     )
     .populate({
-      path: 'userId', // Populating user details
-      select: 'name emailAddress phoneNumber address', // Select specific fields
+      path: 'userId',
+      select: 'name emailAddress phoneNumber address',
     })
     .populate({
-      path: 'products.productId', // Populating product details
-      select: 'name salePrice', // Select specific fields
+      path: 'products.productId',
+      select: 'name salePrice',
     });
-
-    console.log("Updated order: ", updatedOrder);
 
     if (!updatedOrder) return res.status(404).json({ message: 'Order not found' });
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'maheshkarrifake@gmail.com', // Your email
-        pass: 'tqsl iqju cwlk eaur', // Your email password or App Password
+        user: 'maheshkarrifake@gmail.com',
+        pass: 'tqsl iqju cwlk eaur',
       },
     });
 
-    // Check if paymentStatus is 'done' and send email to Mahesh
     if (paymentStatus === 'done') {
-      // Create the email transporter
-
-
-      // Prepare email content
       const mailOptions = {
-        from: 'maheshkarrifake@gmail.com', // Sender's email
-        to: 'maheshkarri2222@gmail.com', // Recipient's email
+        from: 'maheshkarrifake@gmail.com',
+        to: 'maheshkarri2222@gmail.com',
         subject: `Order Payment Status: ${paymentStatus}`,
         html: `
           <h2>Order Payment Details</h2>
@@ -110,17 +109,15 @@ exports.updateOrder = async (req, res) => {
           <p><strong>Transaction ID:</strong> ${updatedOrder.transactionId}</p>
           <p><strong>Payment Status:</strong> ${updatedOrder.paymentStatus}</p>
           <p><strong>Order Status:</strong> ${updatedOrder.orderStatus}</p>
-          
           <h3>Products in the order:</h3>
           <ul>
             ${updatedOrder.products.map(product => {
-              return `<li>${product.productId.name} - ${product.productId.salePrice} (Quantity: ${product.quantity})</li>`;
+              return `<li>${product.productName} - ${product.productBill} (Quantity: ${product.quantity})</li>`;
             }).join('')}
           </ul>
         `,
       };
 
-      // Send email
       transporter.sendMail(mailOptions, (err, info) => {
         if (err) {
           console.log("Error sending email: ", err);
@@ -130,7 +127,6 @@ exports.updateOrder = async (req, res) => {
       });
     }
 
-    // If paymentStatus is 'verified', send an email to the user
     if (paymentStatus === 'verified') {
       const userMailOptions = {
         from: 'maheshkarrifake@gmail.com',

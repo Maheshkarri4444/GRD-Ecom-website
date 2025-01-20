@@ -19,6 +19,7 @@ import UsersAdmin from './components/Admin/UsersAdmin';
 import AnalysisAdmin from './components/Admin/AnalysisAdmin';
 import AiChat from './components/User/AiChat';
 import { ProtectedRoute, AdminRoute, UserRoute } from './PrivateRoute';
+import NotFound from './components/NotFound';
 
 createRoot(document.getElementById('root')).render(
   <MyProvider>
@@ -63,6 +64,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="blobs" element={<BlobsAdmin />} />
             <Route path="analysis" element={<AnalysisAdmin />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
     </StrictMode>

@@ -44,7 +44,19 @@ const orderSchema = new Schema(
           ref: 'Product',
           required: true
         },
+        productName: {
+          type: String,
+          required: true
+        },
+        images: {
+          type: [String], // Array of image links
+          required: false // Optional
+        },
         quantity: {
+          type: Number,
+          required: true
+        },
+        productBill: {
           type: Number,
           required: true
         }

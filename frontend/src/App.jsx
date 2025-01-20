@@ -127,12 +127,12 @@ function App() {
                       </Link>
                     </div>
                     <div className="mt-3 sm:mt-0 sm:ml-3">
-                      <a
-                        href="#"
+                      <Link
+                        to="/blobs"
                         className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-green-700 bg-green-100 border border-transparent rounded-md hover:bg-green-200 md:py-4 md:text-lg md:px-10"
                       >
                         Learn More
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -157,9 +157,9 @@ function App() {
               <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
               <ul className="space-y-2">
                 <li><a href="#" className="text-green-100 hover:text-white">About Us</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Products</a></li>
+                <li><Link to="/shop" className="text-green-100 hover:text-white">Products</Link></li>
                 <li><a href="#" className="text-green-100 hover:text-white">Contact</a></li>
-                <li><a href="#" className="text-green-100 hover:text-white">Blog</a></li>
+
               </ul>
             </div>
             <div>

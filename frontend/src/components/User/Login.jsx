@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { LogIn, Mail, Lock, ArrowLeft, User, Phone, MapPin } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import grdcirclelogo from "../../assets/logos/grdlogo.png";
@@ -9,6 +9,7 @@ function Login() {
   const navigate = useNavigate();
   const { updateUser } = useMyContext(); 
   const [isLogin, setIsLogin] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phoneNumber: '',
@@ -24,6 +25,20 @@ function Login() {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Load remembered credentials on component mount
+  useEffect(() => {
+    const rememberedCredentials = localStorage.getItem('rememberedCredentials');
+    if (rememberedCredentials) {
+      const { emailAddress, password } = JSON.parse(rememberedCredentials);
+      setFormData(prev => ({
+        ...prev,
+        emailAddress,
+        password
+      }));
+      setRememberMe(true);
+    }
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,6 +78,18 @@ function Login() {
         throw new Error(data.message || `${isLogin ? 'Login' : 'Signup'} failed`);
       }
   
+      // Handle remember me
+      if (isLogin) {
+        if (rememberMe) {
+          localStorage.setItem('rememberedCredentials', JSON.stringify({
+            emailAddress: formData.emailAddress,
+            password: formData.password
+          }));
+        } else {
+          localStorage.removeItem('rememberedCredentials');
+        }
+      }
+
       // Store token and user data for both login and signup
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
@@ -97,6 +124,7 @@ function Login() {
         state: ''
       }
     });
+    setRememberMe(false);
   };
 
   return (
@@ -280,17 +308,13 @@ function Login() {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
                     className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
                   />
                   <label htmlFor="remember-me" className="block ml-2 text-sm text-gray-400">
                     Remember me
                   </label>
-                </div>
-
-                <div className="text-sm">
-                  <a href="#" className="font-medium text-green-600 hover:text-green-500">
-                    Forgot your password?
-                  </a>
                 </div>
               </div>
             )}
