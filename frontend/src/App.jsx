@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Leaf, User,ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
+import { Leaf, User, ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
 import { FiShoppingCart } from 'react-icons/fi';
 import grdcirclelogo from "../src/assets/logos/grdlogo.png";
 import { useMyContext } from './utils/MyContext.jsx';
@@ -26,6 +26,11 @@ function App() {
     { path: '/blobs', icon: Droplets, label: 'Blobs' },
     { path: '/aichat', icon: Brain, label: 'AI' },
   ];
+
+  // Function to close menu
+  const handleNavigation = () => {
+    setIsMenuOpen(false);
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-green-50">
@@ -57,7 +62,7 @@ function App() {
               {user ? (
                 <Link to="/profile">
                   <div className="flex items-center px-3 py-2 text-sm font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
-                  <User className='w-5 h-5 mr-2 '/>
+                    <User className='w-5 h-5 mr-2'/>
                     <Profile className="w-4 h-4 mr-1" />
                   </div>
                 </Link>
@@ -89,7 +94,11 @@ function App() {
               {menuItems.map((item) => {
                 const isActive = location.pathname === item.path;
                 return (
-                  <Link key={item.path} to={item.path}>
+                  <Link 
+                    key={item.path} 
+                    to={item.path}
+                    onClick={handleNavigation}
+                  >
                     <div className={`flex items-center px-3 py-2 rounded-md transition duration-100 text-base font-medium ${
                       isActive
                         ? 'text-green-700 bg-green-50'
@@ -102,14 +111,20 @@ function App() {
                 );
               })}
               {user ? (
-                <Link to="/profile">
+                <Link 
+                  to="/profile"
+                  onClick={handleNavigation}
+                >
                   <div className="flex items-center px-2 py-2 text-base font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
-                  <User className='w-5 h-5 mr-2 text-white'/>
+                    <User className='w-5 h-5 mr-2 text-white'/>
                     <Profile className="w-4 h-4 mr-2" />
                   </div>
                 </Link>
               ) : (
-                <Link to="/login">
+                <Link 
+                  to="/login"
+                  onClick={handleNavigation}
+                >
                   <div className="flex items-center px-3 py-2 text-base font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
                     <LogIn className="w-4 h-4 mr-2" />Login
                   </div>
