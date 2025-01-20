@@ -211,13 +211,6 @@ const Checkout = () => {
   return (
     <div className="min-h-screen p-6 bg-green-50">
       <div className="max-w-4xl mx-auto">
-        <Link
-          to="/"
-          className="inline-flex items-center px-4 py-2 mb-5 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-lg top-4 left-4 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-        >
-          <Home className="w-5 h-5 mr-2" />
-          <span className="font-medium">Back to Home</span>
-        </Link>
         
         {/* Toggle View */}
         <div className="flex mb-6 space-x-4">

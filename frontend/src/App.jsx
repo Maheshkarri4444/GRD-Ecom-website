@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Leaf, ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Leaf, User,ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
 import { FiShoppingCart } from 'react-icons/fi';
 import grdcirclelogo from "../src/assets/logos/grdlogo.png";
-import grdfulllogo from "../src/assets/logos/grdfulllogo.png";
-import { Link } from 'react-router-dom';
 import { useMyContext } from './utils/MyContext.jsx';
+import Home from './components/User/Home';
 
 function Profile() {
   return (
@@ -17,38 +17,55 @@ function Profile() {
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useMyContext();
+  const location = useLocation();
+
+  const menuItems = [
+    { path: '/', icon: Leaf, label: 'Home' },
+    { path: '/shop', icon: ShoppingBag, label: 'Shop' },
+    { path: '/checkout', icon: FiShoppingCart, label: 'Checkout' },
+    { path: '/blobs', icon: Droplets, label: 'Blobs' },
+    { path: '/aichat', icon: Brain, label: 'AI' },
+  ];
 
   return (
-    <div className="flex flex-col w-full min-h-screen bg-green-50">
-      {/* Navbar */}
+    <div className="flex flex-col min-h-screen bg-green-50">
+      {/* Fixed Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-green-700 shadow-md">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-          <div className="flex items-center p-2 bg-green-50" style={{ boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)' }}>
-            <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
-          </div>
+            <div className="flex items-center p-2">
+              <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
+            </div>
+
             {/* Desktop Navigation */}
-            <div className="hidden space-x-8 md:flex">
-              <NavLink active><Leaf className="w-4 h-4 mr-1" />Home</NavLink>
-              <Link to="/shop">
-                <NavLink><ShoppingBag className="w-4 h-4 mr-1" />Shop</NavLink>
-              </Link>
-              <Link to="/checkout">
-                <NavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</NavLink>
-              </Link>
-              <Link to="/blobs">
-                <NavLink><Droplets className="w-4 h-4 mr-1" />Blobs</NavLink>
-              </Link>
-              <Link to="/aichat">
-              <NavLink><Brain className="w-4 h-4 mr-1" />AI</NavLink>
-              </Link>
+            <div className="hidden space-x-4 md:flex">
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link key={item.path} to={item.path}>
+                    <div className={`flex items-center px-3 py-2 rounded-md transition duration-100 text-sm font-medium ${
+                      isActive
+                        ? 'text-green-700 bg-green-50'
+                        : 'text-white hover:text-green-700 hover:bg-green-50'
+                    }`}>
+                      <item.icon className="w-4 h-4 mr-1" />
+                      {item.label}
+                    </div>
+                  </Link>
+                );
+              })}
               {user ? (
                 <Link to="/profile">
-                  <NavLink><Profile className="w-4 h-4 mr-1" /></NavLink>
+                  <div className="flex items-center px-3 py-2 text-sm font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
+                  <User className='w-5 h-5 mr-2 '/>
+                    <Profile className="w-4 h-4 mr-1" />
+                  </div>
                 </Link>
               ) : (
                 <Link to="/login">
-                  <NavLink><LogIn className="w-4 h-4 mr-1" />Login</NavLink>
+                  <div className="flex items-center px-3 py-2 text-sm font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
+                    <LogIn className="w-4 h-4 mr-1" />Login
+                  </div>
                 </Link>
               )}
             </div>
@@ -69,26 +86,33 @@ function App() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-              <MobileNavLink active><Leaf className="w-4 h-4 mr-2" />Home</MobileNavLink>
-              <Link to="/shop">
-                <MobileNavLink><ShoppingBag className="w-4 h-4 mr-2" />Shop</MobileNavLink>
-              </Link>
-              <Link to="/checkout">
-                <MobileNavLink><FiShoppingCart className="w-4 h-4 mr-1" />Checkout</MobileNavLink>
-              </Link>
-              <Link to="/blobs">
-                <MobileNavLink><Droplets className="w-4 h-4 mr-2" />Blobs</MobileNavLink>
-              </Link>
-              <Link to="/aichat">
-                <MobileNavLink><Brain className="w-4 h-4 mr-2" />AI</MobileNavLink>
-              </Link>
+              {menuItems.map((item) => {
+                const isActive = location.pathname === item.path;
+                return (
+                  <Link key={item.path} to={item.path}>
+                    <div className={`flex items-center px-3 py-2 rounded-md transition duration-100 text-base font-medium ${
+                      isActive
+                        ? 'text-green-700 bg-green-50'
+                        : 'text-white hover:text-green-700 hover:bg-green-50'
+                    }`}>
+                      <item.icon className="w-4 h-4 mr-2" />
+                      {item.label}
+                    </div>
+                  </Link>
+                );
+              })}
               {user ? (
                 <Link to="/profile">
-                  <MobileNavLink><Profile className="w-4 h-4 mr-2" /></MobileNavLink>
+                  <div className="flex items-center px-2 py-2 text-base font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
+                  <User className='w-5 h-5 mr-2 text-white'/>
+                    <Profile className="w-4 h-4 mr-2" />
+                  </div>
                 </Link>
               ) : (
                 <Link to="/login">
-                  <MobileNavLink><LogIn className="w-4 h-4 mr-2" />Login</MobileNavLink>
+                  <div className="flex items-center px-3 py-2 text-base font-medium text-white transition duration-100 rounded-md hover:text-green-700 hover:bg-green-50">
+                    <LogIn className="w-4 h-4 mr-2" />Login
+                  </div>
                 </Link>
               )}
             </div>
@@ -96,50 +120,9 @@ function App() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <main className="flex-grow mt-10">
-        <div className="relative overflow-hidden bg-green-50">
-          <div className="mx-auto max-w-7xl">
-            <div className="relative z-10 pb-8 bg-green-50 sm:pb-16 md:pb-20 lg:w-full lg:pb-28 xl:pb-32">
-              <div className="px-4 mx-auto mt-10 max-w-7xl sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                <div className="text-center">
-                  <img
-                    src={grdfulllogo}
-                    alt="GRD Naturals Full Logo"
-                    className="w-full max-w-md mx-auto mb-8"
-                  />
-                  <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
-                    <span className="block text-green-700">Nature's Finest</span>
-                    <span className="block text-orange-500">Products for You</span>
-                  </h1>
-                  <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
-                    Discover our range of premium natural products, sourced from the purest ingredients
-                    and crafted with care. From essential oils to organic supplements, we bring nature's
-                    goodness directly to you.
-                  </p>
-                  <div className="mt-5 sm:mt-8 sm:flex sm:justify-center ">
-                    <div className="rounded-md shadow">
-                      <Link
-                        to="/shop"
-                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white bg-green-700 border border-transparent rounded-md hover:bg-green-800 md:py-4 md:text-lg md:px-10"
-                      >
-                        Shop Now
-                      </Link>
-                    </div>
-                    <div className="mt-3 sm:mt-0 sm:ml-3">
-                      <Link
-                        to="/blobs"
-                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-green-700 bg-green-100 border border-transparent rounded-md hover:bg-green-200 md:py-4 md:text-lg md:px-10"
-                      >
-                        Learn More
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* Main Content */}
+      <main className="flex-grow mt-16">
+        {location.pathname === '/' ? <Home /> : <Outlet />}
       </main>
 
       {/* Footer */}
@@ -159,7 +142,6 @@ function App() {
                 <li><a href="#" className="text-green-100 hover:text-white">About Us</a></li>
                 <li><Link to="/shop" className="text-green-100 hover:text-white">Products</Link></li>
                 <li><a href="#" className="text-green-100 hover:text-white">Contact</a></li>
-
               </ul>
             </div>
             <div>
@@ -179,30 +161,5 @@ function App() {
     </div>
   );
 }
-
-// Navigation Components
-const NavLink = ({ children, active = false }) => (
-  <div
-    className={`flex items-center px-3 py-2 rounded-md transition duration-100 text-sm font-medium ${
-      active
-        ? 'text-green-700 bg-green-50'
-        : 'text-white hover:text-green-700 hover:bg-green-50'
-    }`}
-  >
-    {children}
-  </div>
-);
-
-const MobileNavLink = ({ children, active = false }) => (
-  <div
-    className={`flex items-center px-3 py-2 rounded-md transition duration-100  text-base font-medium ${
-      active
-        ? 'text-green-700 bg-green-50'
-        : 'text-white hover:text-green-700 hover:bg-green-50'
-    }`}
-  >
-    {children}
-  </div>
-);
 
 export default App;

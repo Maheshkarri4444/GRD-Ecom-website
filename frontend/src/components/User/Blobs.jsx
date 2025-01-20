@@ -165,7 +165,7 @@ const Blobs = () => {
     };
 
     return (
-      <div className="fixed inset-0 z-40 flex items-center justify-center bg-green-50/90">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-600/50">
         <div className="relative w-full max-w-3xl p-6 mx-4 bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto border border-green-100">
           <button
             onClick={onClose}
@@ -210,15 +210,15 @@ const Blobs = () => {
             </div>
           )}
 
-          <h2 className="mb-4 text-2xl font-bold text-green-900">{blob.title}</h2>
+          <h2 className="mb-4 text-2xl font-bold text-gray-900">{blob.title}</h2>
           
           <div className="space-y-6">
             {blob.content.map((section, index) => (
-              <div key={index} className="p-4 border border-green-100 rounded-lg bg-green-50">
-                <h3 className="mb-2 text-xl font-semibold text-green-800">
+              <div key={index} className="p-4 bg-gray-100 border border-green-100 rounded-lg">
+                <h3 className="mb-2 text-xl font-semibold text-gray-800">
                   {section.heading}
                 </h3>
-                <p className="text-green-700 whitespace-pre-line">{section.paragraph}</p>
+                <p className="text-gray-700 whitespace-pre-line">{section.paragraph}</p>
               </div>
             ))}
           </div>
@@ -312,13 +312,6 @@ const Blobs = () => {
 
   return (
     <div className="min-h-screen p-6 bg-green-50">
-    <Link 
-        to="/" 
-        className="inline-flex items-center px-4 py-2 mb-6 text-lg font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700"
-      >
-        <ChevronLeft className="w-6 h-6 mr-2" />
-        Back to Home
-      </Link>
 
       {/* Categories Section */}
       <section className="mb-12">

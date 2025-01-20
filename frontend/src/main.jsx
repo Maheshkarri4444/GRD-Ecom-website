@@ -20,36 +20,38 @@ import AnalysisAdmin from './components/Admin/AnalysisAdmin';
 import AiChat from './components/User/AiChat';
 import { ProtectedRoute, AdminRoute, UserRoute } from './PrivateRoute';
 import NotFound from './components/NotFound';
+import Home from './components/User/Home';
 
 createRoot(document.getElementById('root')).render(
   <MyProvider>
     <StrictMode>
       <Router>
         <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<App />} />
+          {/* Public and User Routes wrapped in App layout */}
+          <Route element={<App />}>
+            {/* Public Routes */}
+            <Route index element={<Home />} />
+            <Route path="/shop" element={<Shop />} />
+            <Route path="/blobs" element={<Blobs />} />
+            <Route path="/aichat" element={<AiChat />} />
+            
+            {/* Protected User Routes */}
+            <Route path="/profile" element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            } />
+            <Route path="/checkout" element={
+              <ProtectedRoute>
+                <Checkout />
+              </ProtectedRoute>
+            } />
+          </Route>
+
+          {/* Login page (outside App layout) */}
           <Route path="/login" element={<Login />} />
-          <Route path="/shop" element={<Shop />} />
 
-          {/* User Only Routes */}
-          <Route path="/blobs" element={
-              <Blobs />
-          } />
-          <Route path="/profile" element={
-            <ProtectedRoute>
-              <Profile />
-            </ProtectedRoute>
-          } />
-          <Route path="/checkout" element={
-            <ProtectedRoute>
-              <Checkout />
-            </ProtectedRoute>
-          } />
-          <Route path="/aichat" element={
-              <AiChat />
-          } />
-
-          {/* Admin Only Routes */}
+          {/* Admin Routes */}
           <Route path="/admin" element={
             <AdminRoute>
               <AdminLayout />
@@ -64,6 +66,8 @@ createRoot(document.getElementById('root')).render(
             <Route path="blobs" element={<BlobsAdmin />} />
             <Route path="analysis" element={<AnalysisAdmin />} />
           </Route>
+
+          {/* 404 Page */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>

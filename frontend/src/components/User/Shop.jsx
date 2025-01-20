@@ -316,18 +316,9 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-green-50">
-      <nav className="fixed top-0 left-0 right-0 z-50 shadow-md bg-green-50">
-        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
+      <nav className="z-50 shadow-md bg-green-50">
+        <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-4">
           <div className="flex items-center justify-between h-16">
-            <div className="items-center hidden sm:flex">
-              <img src={grdcirclelogo} alt="GRD Naturals" className="w-auto h-12" />
-            </div>
-            <Link
-              to="/"
-              className="inline-flex items-center px-1.5 py-1.5 text-sm font-medium text-green-700 bg-green-50 rounded-md shadow-lg left-2 hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-            >
-              <Home className="relative w-8 h-8" />
-            </Link>
 
             <div className="flex-1 max-w-xl mx-4">
               <div className="relative">
@@ -353,7 +344,7 @@ const Shop = () => {
                 </button>
                 
                 {isFilterOpen && (
-                  <div className="absolute right-0 w-48 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <div className="absolute right-0 z-40 w-48 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg">
                     <div className="py-1">
                       <button
                         onClick={() => {
@@ -478,7 +469,7 @@ const Shop = () => {
         </>
       )}
 
-      <div className="pt-16">
+      <div className="pt-3">
         <div className="relative w-full overflow-hidden bg-black">
           <div 
             className="flex transition-transform duration-500 ease-in-out"

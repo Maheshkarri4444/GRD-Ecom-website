@@ -171,7 +171,7 @@ function Login() {
                         name="name"
                         type="text"
                         required={!isLogin}
-                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                         placeholder="Full Name"
                         value={formData.name}
                         onChange={handleChange}
@@ -187,7 +187,7 @@ function Login() {
                         name="phoneNumber"
                         type="tel"
                         required={!isLogin}
-                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                         placeholder="Phone Number"
                         value={formData.phoneNumber}
                         onChange={handleChange}
@@ -207,7 +207,7 @@ function Login() {
                     type="email"
                     autoComplete="email"
                     required
-                    className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                    className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                     placeholder="Email address"
                     value={formData.emailAddress}
                     onChange={handleChange}
@@ -225,7 +225,7 @@ function Login() {
                     type="password"
                     autoComplete={isLogin ? "current-password" : "new-password"}
                     required
-                    className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                    className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                     placeholder="Password"
                     value={formData.password}
                     onChange={handleChange}
@@ -241,7 +241,7 @@ function Login() {
                       name="address.doorNo"
                       type="text"
                       required={!isLogin}
-                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                       placeholder="Door No"
                       value={formData.address.doorNo}
                       onChange={handleChange}
@@ -253,7 +253,7 @@ function Login() {
                       name="address.street"
                       type="text"
                       required={!isLogin}
-                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                       placeholder="Street"
                       value={formData.address.street}
                       onChange={handleChange}
@@ -266,7 +266,7 @@ function Login() {
                         name="address.city"
                         type="text"
                         required={!isLogin}
-                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                         placeholder="City"
                         value={formData.address.city}
                         onChange={handleChange}
@@ -278,7 +278,7 @@ function Login() {
                         name="address.pincode"
                         type="text"
                         required={!isLogin}
-                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                        className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                         placeholder="Pincode"
                         value={formData.address.pincode}
                         onChange={handleChange}
@@ -291,7 +291,7 @@ function Login() {
                       name="address.state"
                       type="text"
                       required={!isLogin}
-                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-200 placeholder-gray-500 border border-gray-300 rounded-md appearance-none focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
+                      className="relative block w-full px-3 py-2 pl-3 text-sm text-gray-700 placeholder-gray-500 border border-gray-300 rounded-md appearance-none bg-slate-50 focus:outline-none focus:ring-green-500 focus:border-green-500 focus:z-10 sm:text-base"
                       placeholder="State"
                       value={formData.address.state}
                       onChange={handleChange}

@@ -84,14 +84,7 @@ const AiChat = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-5 bg-green-100 sm:px-6 lg:px-8">
-      <Link
-        to="/"
-        className="inline-flex items-center px-4 py-2 mb-8 text-green-700 transition-colors bg-white border border-green-100 rounded-lg shadow-sm hover:bg-green-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-      >
-        <Home className="w-5 h-5 mr-2" />
-        <span className="font-medium">Back to Home</span>
-      </Link>
+    <div className="min-h-screen px-4 py-5 bg-green-50 sm:px-6 lg:px-8">
 
       <div className="max-w-3xl mx-auto">
         <div className="mb-8 text-center">
