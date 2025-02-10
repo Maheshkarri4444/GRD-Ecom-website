@@ -5,10 +5,12 @@ import { diseaseProtocols } from "./protocols_updated";
 function App() {
   const [selectedDisease, setSelectedDisease] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [selectedType, setSelectedType] = useState(null);
 
   // Get unique types from protocols
   const types = [...new Set(Object.values(diseaseProtocols).map(protocol => protocol.type))];
+
+  
+  const [selectedType, setSelectedType] = useState(types[0]);
 
   // Filter diseases by selected type
   const filteredDiseases = selectedType
