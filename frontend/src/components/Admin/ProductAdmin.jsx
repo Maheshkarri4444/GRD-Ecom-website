@@ -268,6 +268,7 @@ const ProductsAdmin = () => {
 
   // Handle edit mode
   const handleEdit = (product) => {
+    console.log("product edit : ",product)
     setIsEditing(true);
     setEditingProduct(product);
     setFormData({
@@ -275,8 +276,8 @@ const ProductsAdmin = () => {
       mrp: product.mrp,
       salePrice: product.salePrice,
       description: product.description,
-      category: product.category._id,
-      blobId: product.blobId._id || '',
+      category: product.category._id ,
+      blobId: product.blobId?._id || '',
       images: product.images || []
     });
     setPreviewUrls([]);
