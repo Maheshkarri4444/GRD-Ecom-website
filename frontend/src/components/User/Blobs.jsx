@@ -166,7 +166,7 @@ const Blobs = () => {
 
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-600/50">
-        <div className="relative w-full max-w-3xl p-6 mx-4 bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto border border-green-100">
+        <div className="relative w-full max-w-3xl p-6 mx-4 bg-white rounded-lg shadow-xl max-h-[90vh] overflow-y-auto scrollbar-none border border-green-100">
           <button
             onClick={onClose}
             className="absolute z-50 p-2 text-green-700 rounded-full hover:bg-green-50 top-4 right-4"

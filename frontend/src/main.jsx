@@ -21,6 +21,7 @@ import AiChat from './components/User/AiChat';
 import { ProtectedRoute, AdminRoute, UserRoute } from './PrivateRoute';
 import NotFound from './components/NotFound';
 import Home from './components/User/Home';
+import Protocols from './components/User/Protocols';
 
 createRoot(document.getElementById('root')).render(
   <MyProvider>
@@ -34,6 +35,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/shop" element={<Shop />} />
             <Route path="/blobs" element={<Blobs />} />
             <Route path="/aichat" element={<AiChat />} />
+            <Route path="/protocols" element={<Protocols />} />
             
             {/* Protected User Routes */}
             <Route path="/profile" element={

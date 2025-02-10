@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Leaf, User, ShoppingBag, Droplets, Brain, LogIn, Menu, X } from 'lucide-react';
+import { Leaf, User, ShoppingBag, Droplets, Brain,Heart, LogIn, Menu, X } from 'lucide-react';
 import { FiShoppingCart } from 'react-icons/fi';
 import grdcirclelogo from "../src/assets/logos/grdlogo.png";
 import { useMyContext } from './utils/MyContext.jsx';
@@ -23,6 +23,7 @@ function App() {
     { path: '/', icon: Leaf, label: 'Home' },
     { path: '/shop', icon: ShoppingBag, label: 'Shop' },
     { path: '/checkout', icon: FiShoppingCart, label: 'Checkout' },
+    { path: '/protocols', icon: Heart, label: 'Protocols' },
     { path: '/blobs', icon: Droplets, label: 'Blobs' },
     { path: '/aichat', icon: Brain, label: 'AI' },
   ];
