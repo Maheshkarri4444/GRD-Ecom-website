@@ -44,7 +44,7 @@ function Home() {
                 />
                 <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 
-                  <span className="block text-orange-500">గోరంత దీపం నాచురల్స్ </span>
+                  <span className="block text-orange-600">గోరంత దీపం నాచురల్స్ </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
                   Discover our range of premium natural products, sourced from the purest ingredients
