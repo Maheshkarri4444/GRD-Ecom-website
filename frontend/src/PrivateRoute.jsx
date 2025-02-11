@@ -1,22 +1,27 @@
 import { Navigate } from 'react-router-dom';
-import { useMyContext } from './utils/MyContext';
+import { useMyContext } from './utils/MyContext'; // Import the function
+import { checkAndRemoveExpiredToken } from './components/checkAndRemoveExpiredToken';
 
-// Route that requires authentication
 export const ProtectedRoute = ({ children }) => {
+  checkAndRemoveExpiredToken() // Check and remove expired token
+
   const { user } = useMyContext();
-  
-  if (!user) {
+  const token = localStorage.getItem('token'); // Get token after possible removal
+
+  if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
 
   return <>{children}</>;
 };
 
-// Route only accessible to admin users
 export const AdminRoute = ({ children }) => {
+  checkAndRemoveExpiredToken(); 
+
   const { user } = useMyContext();
-  
-  if (!user) {
+  const token = localStorage.getItem('token');
+
+  if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
 
@@ -27,11 +32,13 @@ export const AdminRoute = ({ children }) => {
   return <>{children}</>;
 };
 
-// Route only accessible to regular users
 export const UserRoute = ({ children }) => {
+  checkAndRemoveExpiredToken(); 
+
   const { user } = useMyContext();
-  
-  if (!user) {
+  const token = localStorage.getItem('token');
+
+  if (!user || !token) {
     return <Navigate to="/login" replace />;
   }
 

@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import grdcirclelogo from "../../assets/logos/grdlogo.png";
 import Allapi from '../../common';
 import { useMyContext } from '../../utils/MyContext.jsx';
+import { checkAndRemoveExpiredToken } from '../checkAndRemoveExpiredToken.js';
 
 function Login() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ function Login() {
 
   // Load remembered credentials on component mount
   useEffect(() => {
+    checkAndRemoveExpiredToken()
     const rememberedCredentials = localStorage.getItem('rememberedCredentials');
     if (rememberedCredentials) {
       const { emailAddress, password } = JSON.parse(rememberedCredentials);
@@ -65,6 +67,7 @@ function Login() {
     setLoading(true);
   
     try {
+      
       const endpoint = isLogin ? Allapi.login.url : Allapi.signup.url;
       const response = await fetch(endpoint, { 
         method: 'POST', 

@@ -7,7 +7,7 @@ import Allapi from '../../common';
 const Profile = () => {
   const navigate = useNavigate();
   const { user, updateUser } = useMyContext();
-  console.log(" user data : ", user)
+  // console.log(" user data : ", user)
   const [isEditing, setIsEditing] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');

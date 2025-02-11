@@ -1140,12 +1140,7 @@ export const diseaseProtocols = {
     "Nerves Problems": {
         "title": "Nerves Problems Protocol",
         "categories": {
-            "Nerves Problems": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1221,12 +1216,7 @@ export const diseaseProtocols = {
     "Vertigo and Migraine": {
         "title": "Vertigo and Migraine Protocol",
         "categories": {
-            "Vertigo and Migraine": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1302,12 +1292,7 @@ export const diseaseProtocols = {
     "Snoring": {
         "title": "Snoring Protocol",
         "categories": {
-            "Snoring": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1383,12 +1368,7 @@ export const diseaseProtocols = {
     "Stammering": {
         "title": "Stammering Protocol",
         "categories": {
-            "Stammering": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1464,12 +1444,7 @@ export const diseaseProtocols = {
     "Sweating in palm or feet": {
         "title": "Sweating in palm or feet Protocol",
         "categories": {
-            "Sweating in palm or feet": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1545,12 +1520,7 @@ export const diseaseProtocols = {
     "Migraine": {
         "title": "Migraine Protocol",
         "categories": {
-            "Migraine": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -1628,12 +1598,7 @@ export const diseaseProtocols = {
     "Obesity or weight loss": {
         "title": "Obesity or weight loss Protocol",
         "categories": {
-            "Obesity or weight loss": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -1692,12 +1657,7 @@ export const diseaseProtocols = {
     "Under weight or weight gain": {
         "title": "Under weight or weight gain Protocol",
         "categories": {
-            "Under weight / Weight Gain": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Safflower oil",
@@ -1767,12 +1727,7 @@ export const diseaseProtocols = {
     "B.P": {
         "title": "B.P Protocol",
         "categories": {
-            "B.P": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -1828,12 +1783,7 @@ export const diseaseProtocols = {
     "Heart related": {
         "title": "Heart related Protocol",
         "categories": {
-            "Heart related": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -1889,12 +1839,7 @@ export const diseaseProtocols = {
     "Tachy cardia": {
         "title": "Tachy cardia Protocol",
         "categories": {
-            "Tachy cardia": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -1954,12 +1899,7 @@ export const diseaseProtocols = {
     "After Heart attack": {
         "title": "After Heart attack Protocol",
         "categories": {
-            "After Heart attack": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -2019,12 +1959,7 @@ export const diseaseProtocols = {
     "Hole in the Heart": {
         "title": "Hole in the Heart Protocol",
         "categories": {
-            "Hole in the Heart": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -2084,12 +2019,7 @@ export const diseaseProtocols = {
     "Cholesterol": {
         "title": "Cholesterol Protocol",
         "categories": {
-            "Cholesterol": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -2145,12 +2075,7 @@ export const diseaseProtocols = {
     "Triglycerides": {
         "title": "Triglycerides Protocol",
         "categories": {
-            "Triglycerides": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -2206,12 +2131,7 @@ export const diseaseProtocols = {
     "Angina Pectoris": {
         "title": "Angina Pectoris Protocol",
         "categories": {
-            "Angina Pectoris": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little Millet (Samalu)",
@@ -2267,12 +2187,7 @@ export const diseaseProtocols = {
     "Albumin Urea": {
         "title": "Albumin Urea Protocol",
         "categories": {
-            "Albumin Urea": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Samalu",
@@ -2327,12 +2242,7 @@ export const diseaseProtocols = {
     "Gout": {
         "title": "Gout Protocol",
         "categories": {
-            "Gout": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Samalu",
@@ -2387,12 +2297,7 @@ export const diseaseProtocols = {
     "Dialsis": {
         "title": "Dialsis Protocol",
         "categories": {
-            "Dialsis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Samalu",
@@ -2448,12 +2353,7 @@ export const diseaseProtocols = {
     "Asthma": {
         "title": "Asthma Protocol",
         "categories": {
-            "Asthma": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -2520,12 +2420,7 @@ export const diseaseProtocols = {
     "T.B": {
         "title": "T.B Protocol",
         "categories": {
-            "T.B": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -2611,12 +2506,7 @@ export const diseaseProtocols = {
     "Pneumonia": {
         "title": "Pneumonia Protocol",
         "categories": {
-            "Pneumonia": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -2683,12 +2573,7 @@ export const diseaseProtocols = {
     "Sinusitis": {
         "title": "Sinusitis Protocol",
         "categories": {
-            "Sinusitis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -2755,12 +2640,7 @@ export const diseaseProtocols = {
     "Respiratory related issues": {
         "title": "Respiratory related issues Protocol",
         "categories": {
-            "Respiratory related issues": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -2827,12 +2707,7 @@ export const diseaseProtocols = {
     "Parkinson’s": {
         "title": "Parkinson’s Protocol",
         "categories": {
-            "Parkinson’s": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -2918,12 +2793,7 @@ export const diseaseProtocols = {
     "Fits": {
         "title": "Fits Protocol",
         "categories": {
-            "Fits": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -3009,12 +2879,7 @@ export const diseaseProtocols = {
     "Paralysis": {
         "title": "Paralysis Protocol",
         "categories": {
-            "Paralysis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -3100,12 +2965,7 @@ export const diseaseProtocols = {
     "Kidney stones": {
         "title": "Kidney stones Protocol",
         "categories": {
-            "Kidney stones": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -3175,12 +3035,7 @@ export const diseaseProtocols = {
     "Gall bladder stones": {
         "title": "Gall bladder stones Protocol",
         "categories": {
-            "Gall bladder stones": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -3250,12 +3105,7 @@ export const diseaseProtocols = {
     "Pancreas stones": {
         "title": "Pancreas stones Protocol",
         "categories": {
-            "Pancreas stones": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Niger seed oil",
@@ -3325,12 +3175,7 @@ export const diseaseProtocols = {
     "Gastric Problems": {
         "title": "Gastric Problems Protocol",
         "categories": {
-            "Gastric Problems": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -3389,12 +3234,7 @@ export const diseaseProtocols = {
     "Acidity": {
         "title": "Acidity Protocol",
         "categories": {
-            "Acidity": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -3453,12 +3293,7 @@ export const diseaseProtocols = {
     "Gastro esophagealreflex disease": {
         "title": "Gastro esophagealreflex disease Protocol",
         "categories": {
-            "Gastro esophagealreflex disease": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -3517,12 +3352,7 @@ export const diseaseProtocols = {
     "Eye problems -Glycoma": {
         "title": "Eye problems -Glycoma Protocol",
         "categories": {
-            "Eye problems -Glycoma": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -3611,12 +3441,7 @@ export const diseaseProtocols = {
     "Ulcer": {
         "title": "Ulcer Protocol",
         "categories": {
-            "Ulcer": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Korralu",
@@ -3673,12 +3498,7 @@ export const diseaseProtocols = {
     "Liver": {
         "title": "Liver Protocol",
         "categories": {
-            "Liver": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Barnyard millet (Udalu)",
@@ -3737,12 +3557,7 @@ export const diseaseProtocols = {
     "Kidney": {
         "title": "Kidney Protocol",
         "categories": {
-            "Kidney": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Barnyard millet (Udalu)",
@@ -3802,12 +3617,7 @@ export const diseaseProtocols = {
     "Pancreas": {
         "title": "Pancreas Protocol",
         "categories": {
-            "Pancreas": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Barnyard millet (Udalu)",
@@ -3866,12 +3676,7 @@ export const diseaseProtocols = {
     "Hepatitis A and B": {
         "title": "Hepatitis A and B Protocol",
         "categories": {
-            "Hepatitis A and B": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Barnyard millet (Udalu)",
@@ -3930,12 +3735,7 @@ export const diseaseProtocols = {
     "Thyroid treatment": {
         "title": "Thyroid treatment Protocol",
         "categories": {
-            "Thyroid issues": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -4013,12 +3813,7 @@ export const diseaseProtocols = {
     "P.C.O.D": {
         "title": "P.C.O.D Protocol",
         "categories": {
-            "P.C.O.D": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -4096,12 +3891,7 @@ export const diseaseProtocols = {
     "Hormonals Imbalance": {
         "title": "Hormonals Imbalance Protocol",
         "categories": {
-            "Hormonals Imbalance": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -4179,12 +3969,7 @@ export const diseaseProtocols = {
     "Endometriosis": {
         "title": "Endometriosis Protocol",
         "categories": {
-            "Endometriosis": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -4262,12 +4047,7 @@ export const diseaseProtocols = {
     "Fibroid": {
         "title": "Fibroid Protocol",
         "categories": {
-            "Fibroid": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -4345,12 +4125,7 @@ export const diseaseProtocols = {
     "C4, C5": {
         "title": "C4, C5 Protocol",
         "categories": {
-            "C4, C5": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -4425,12 +4200,7 @@ export const diseaseProtocols = {
     "L4, L5": {
         "title": "L4, L5 Protocol",
         "categories": {
-            "L4L5": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -4505,12 +4275,7 @@ export const diseaseProtocols = {
     "Sciatica": {
         "title": "Sciatica Protocol",
         "categories": {
-            "Sciatica": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -4577,12 +4342,7 @@ export const diseaseProtocols = {
     "Varicose veins": {
         "title": "Varicose veins Protocol",
         "categories": {
-            "Varicose veins": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4653,12 +4413,7 @@ export const diseaseProtocols = {
     "Varicocele, Hydrocele": {
         "title": "Varicocele, Hydrocele Protocol",
         "categories": {
-            "Varicocele, Hydrocele": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4728,12 +4483,7 @@ export const diseaseProtocols = {
     "Increasing platelets": {
         "title": "Increasing platelets Protocol",
         "categories": {
-            "Increasing platelets": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4792,12 +4542,7 @@ export const diseaseProtocols = {
     "Dengue fever": {
         "title": "Dengue fever Protocol",
         "categories": {
-            "Dengue fever": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4856,12 +4601,7 @@ export const diseaseProtocols = {
     "Decreasing platelets": {
         "title": "Decreasing platelets Protocol",
         "categories": {
-            "Decreasing platelets": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4920,12 +4660,7 @@ export const diseaseProtocols = {
     "Decreasing WBC": {
         "title": "Decreasing WBC Protocol",
         "categories": {
-            "Decreasing WBC": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -4984,12 +4719,7 @@ export const diseaseProtocols = {
     "Infertility": {
         "title": "Infertility Protocol",
         "categories": {
-            "Infertility": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -5063,12 +4793,7 @@ export const diseaseProtocols = {
     "Increasing Sperm count": {
         "title": "Increasing Sperm count Protocol",
         "categories": {
-            "Increasing Sperm count": [
-                {
-                    "name": "Name",
-                    "duration": "Dosage"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -5142,12 +4867,7 @@ export const diseaseProtocols = {
     "Constipation": {
         "title": "Constipation Protocol",
         "categories": {
-            "Constipation": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -5206,12 +4926,7 @@ export const diseaseProtocols = {
     "Piles": {
         "title": "Piles Protocol",
         "categories": {
-            "Piles": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -5270,12 +4985,7 @@ export const diseaseProtocols = {
     "Fistula": {
         "title": "Fistula Protocol",
         "categories": {
-            "Fistula": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -5334,12 +5044,7 @@ export const diseaseProtocols = {
     "Fissures": {
         "title": "Fissures Protocol",
         "categories": {
-            "Fissures": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -5398,12 +5103,7 @@ export const diseaseProtocols = {
     "Urine infection": {
         "title": "Urine infection Protocol",
         "categories": {
-            "Urine infection": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -5473,12 +5173,7 @@ export const diseaseProtocols = {
     "Prostrate (Men)": {
         "title": "Prostrate (Men) Protocol",
         "categories": {
-            "Prostrate (Men)": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -5547,12 +5242,7 @@ export const diseaseProtocols = {
     "HIV": {
         "title": "HIV Protocol",
         "categories": {
-            "HIV": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -5626,12 +5316,7 @@ export const diseaseProtocols = {
     "Skin problems": {
         "title": "Skin problems Protocol",
         "categories": {
-            "Skin problems": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -5706,12 +5391,7 @@ export const diseaseProtocols = {
     "Psoriasis": {
         "title": "Psoriasis Protocol",
         "categories": {
-            "Psoriasis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -5786,12 +5466,7 @@ export const diseaseProtocols = {
     "Eczema dry or weeping": {
         "title": "Eczema dry or weeping Protocol",
         "categories": {
-            "Eczema dry or weeping": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -5866,12 +5541,7 @@ export const diseaseProtocols = {
     "Vitiligo": {
         "title": "Vitiligo Protocol",
         "categories": {
-            "Vitiligo": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -5946,12 +5616,7 @@ export const diseaseProtocols = {
     "Ichthyosis": {
         "title": "Ichthyosis Protocol",
         "categories": {
-            "Ichthyosis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Sesame oil",
@@ -6026,12 +5691,7 @@ export const diseaseProtocols = {
     "E.S.R": {
         "title": "E.S.R Protocol",
         "categories": {
-            "E.S.R": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6100,12 +5760,7 @@ export const diseaseProtocols = {
     "Urticaria": {
         "title": "Urticaria Protocol",
         "categories": {
-            "Urticaria": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6174,12 +5829,7 @@ export const diseaseProtocols = {
     "I.B.S": {
         "title": "I.B.S Protocol",
         "categories": {
-            "I.B.S": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -6234,12 +5884,7 @@ export const diseaseProtocols = {
     "Colitis": {
         "title": "Colitis Protocol",
         "categories": {
-            "Colitis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -6294,12 +5939,7 @@ export const diseaseProtocols = {
     "Crohn’s disease": {
         "title": "Crohn’s disease Protocol",
         "categories": {
-            "Crohn’s disease": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -6354,12 +5994,7 @@ export const diseaseProtocols = {
     "Anemia": {
         "title": "Anemia Protocol",
         "categories": {
-            "Anemia": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6420,12 +6055,7 @@ export const diseaseProtocols = {
     "Dental Problems": {
         "title": "Dental Problems Protocol",
         "categories": {
-            "Dental Problems": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6477,12 +6107,7 @@ export const diseaseProtocols = {
     "Gum problems": {
         "title": "Gum problems Protocol",
         "categories": {
-            "Gum problems": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6534,12 +6159,7 @@ export const diseaseProtocols = {
     "Bleeding gums": {
         "title": "Bleeding gums Protocol",
         "categories": {
-            "Bleeding gums": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6591,12 +6211,7 @@ export const diseaseProtocols = {
     "Gums pain": {
         "title": "Gums pain Protocol",
         "categories": {
-            "Gums pain": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6648,12 +6263,7 @@ export const diseaseProtocols = {
     "Tooth pain": {
         "title": "Tooth pain Protocol",
         "categories": {
-            "Tooth pain": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6705,12 +6315,7 @@ export const diseaseProtocols = {
     "Lupus": {
         "title": "Lupus Protocol",
         "categories": {
-            "Lupus": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oill.",
@@ -6776,12 +6381,7 @@ export const diseaseProtocols = {
     "Chikungunya": {
         "title": "Chikungunya Protocol",
         "categories": {
-            "Chikungunya": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -6840,12 +6440,7 @@ export const diseaseProtocols = {
     "H1 N1": {
         "title": "H1 N1 Protocol",
         "categories": {
-            "H1 N1": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6880,12 +6475,7 @@ export const diseaseProtocols = {
     "H5 N1": {
         "title": "H5 N1 Protocol",
         "categories": {
-            "H5 N1": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Kodo millet (Arikalu)",
@@ -6920,12 +6510,7 @@ export const diseaseProtocols = {
     "Malaria": {
         "title": "Malaria Protocol",
         "categories": {
-            "Malaria": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -6976,12 +6561,7 @@ export const diseaseProtocols = {
     "Typhoid": {
         "title": "Typhoid Protocol",
         "categories": {
-            "Typhoid": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -7032,12 +6612,7 @@ export const diseaseProtocols = {
     "Fatty liver": {
         "title": "Fatty liver Protocol",
         "categories": {
-            "Fatty liver": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oill.",
@@ -7107,12 +6682,7 @@ export const diseaseProtocols = {
     "Spleen": {
         "title": "Spleen Protocol",
         "categories": {
-            "Spleen": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oill.",
@@ -7182,12 +6752,7 @@ export const diseaseProtocols = {
     "Pancreatitis": {
         "title": "Pancreatitis Protocol",
         "categories": {
-            "Pancreatitis": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oill.",
@@ -7257,12 +6822,7 @@ export const diseaseProtocols = {
     "Differently abled": {
         "title": "Differently abled Protocol",
         "categories": {
-            "Differently abled": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -7412,12 +6972,7 @@ export const diseaseProtocols = {
     "Autism": {
         "title": "Autism Protocol",
         "categories": {
-            "Autism": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -7567,12 +7122,7 @@ export const diseaseProtocols = {
     "Cerebral palsy": {
         "title": "Cerebral palsy Protocol",
         "categories": {
-            "Cerebral palsy": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -7722,12 +7272,7 @@ export const diseaseProtocols = {
     "Polio": {
         "title": "Polio Protocol",
         "categories": {
-            "Polio": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -7877,12 +7422,7 @@ export const diseaseProtocols = {
     "Physically disabled": {
         "title": "Physically disabled Protocol",
         "categories": {
-            "Physically disabled": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Oils*": [
                 {
                     "name": "Coconut oil",
@@ -8032,12 +7572,7 @@ export const diseaseProtocols = {
     "During Pregnancy": {
         "title": "During Pregnancy Protocol",
         "categories": {
-            "During Pregnancy": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Foxtail millet (Korralu)",
@@ -8088,12 +7623,7 @@ export const diseaseProtocols = {
     "After delivery": {
         "title": "After delivery Protocol",
         "categories": {
-            "After delivery": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "Millets": [
                 {
                     "name": "Little millet (Samalu)",
@@ -8167,12 +7697,7 @@ export const diseaseProtocols = {
     "Mentally disabled": {
         "title": "Mentally disabled Protocol",
         "categories": {
-            "Mentally disabled": [
-                {
-                    "name": "Name",
-                    "duration": "Duration"
-                }
-            ],
+            
             "oils": [
                 {
                     "name": "Coconut oil",

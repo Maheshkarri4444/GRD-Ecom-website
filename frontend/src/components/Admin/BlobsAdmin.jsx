@@ -44,7 +44,7 @@ const BlobsAdmin = () => {
         }
       });
       const data = await response.json();
-      console.log("categories in blob",data)
+      // console.log("categories in blob",data)
       if (response.ok) {
         setCategories(data.categories);
       }

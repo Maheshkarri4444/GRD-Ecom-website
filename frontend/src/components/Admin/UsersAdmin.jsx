@@ -19,7 +19,7 @@ const UsersAdmin = () => {
           'Content-Type': 'application/json'
         }
       });
-      console.log("data get users",response)
+      // console.log("data get users",response)
       if (!response.ok) throw new Error('Failed to fetch users');
       const data = await response.json();
       

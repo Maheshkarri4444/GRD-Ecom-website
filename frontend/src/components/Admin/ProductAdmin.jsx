@@ -268,7 +268,7 @@ const ProductsAdmin = () => {
 
   // Handle edit mode
   const handleEdit = (product) => {
-    console.log("product edit : ",product)
+    // console.log("product edit : ",product)
     setIsEditing(true);
     setEditingProduct(product);
     setFormData({
@@ -632,8 +632,8 @@ const ProductsAdmin = () => {
                   {product.blobId && (
                     <button
                       onClick={() => {
-                        console.log("blobs are",displayingBlobs);
-                        console.log("product blob id: ", product.blobId._id);
+                        // console.log("blobs are",displayingBlobs);
+                        // console.log("product blob id: ", product.blobId._id);
                         const blob = displayingBlobs.find(b => b._id === product.blobId._id);                        
                         if (blob) {
                           setSelectedBlob(blob);

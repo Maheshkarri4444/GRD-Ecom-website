@@ -3,6 +3,7 @@ import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, Chevro
 import { Link, useNavigate } from 'react-router-dom';
 import grdcirclelogo from '../../assets/logos/grdlogo.png';
 import Allapi from '../../common';
+import { checkAndRemoveExpiredToken } from '../checkAndRemoveExpiredToken';
 
 const Shop = () => {
   const [products, setProducts] = useState([]);
@@ -23,6 +24,7 @@ const Shop = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    checkAndRemoveExpiredToken(); 
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token);
   }, []);
