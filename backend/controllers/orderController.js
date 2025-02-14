@@ -88,14 +88,14 @@ exports.updateOrder = async (req, res) => {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        user: 'maheshkarrifake@gmail.com',
-        pass: 'tqsl iqju cwlk eaur',
+        user: 'gooranthadveepamnaturals@gmail.com',
+        pass: 'ujbe dksu lcnb toqx',
       },
     });
 
     if (paymentStatus === 'done') {
       const mailOptions = {
-        from: 'maheshkarrifake@gmail.com',
+        from: 'gooranthadveepamnaturals@gmail.com',
         to: 'maheshkarri2222@gmail.com',
         subject: `Order Payment Status: ${paymentStatus}`,
         html: `
@@ -129,7 +129,7 @@ exports.updateOrder = async (req, res) => {
 
     if (paymentStatus === 'verified') {
       const userMailOptions = {
-        from: 'maheshkarrifake@gmail.com',
+        from: 'gooranthadveepamnaturals@gmail.com',
         to: updatedOrder.userId.emailAddress, // User's email
         subject: 'Payment Verified',
         html: `
@@ -153,7 +153,7 @@ exports.updateOrder = async (req, res) => {
     // If orderStatus is 'delivered', send an email to the user
     if (orderStatus === 'delivered') {
       const deliveryMailOptions = {
-        from: 'maheshkarrifake@gmail.com',
+        from: 'gooranthadveepamnaturals@gmail.com',
         to: updatedOrder.userId.emailAddress, // User's email
         subject: 'Product Delivered',
         html: `

@@ -97,11 +97,11 @@ const BlobsAdmin = () => {
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'grd-website-ecommerce');
+    formData.append('upload_preset', 'GRDNATURALS');
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dcpxmuyvp/image/upload`,
+        `https://api.cloudinary.com/v1_1/diseea76x/image/upload`,
         {
           method: 'POST',
           body: formData,
