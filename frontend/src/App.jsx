@@ -163,8 +163,9 @@ function App() {
             <div>
               <h3 className="mb-4 text-lg font-semibold">Contact Us</h3>
               <ul className="space-y-2 text-green-100">
-                <li>Email: info@grdnaturals.com</li>
-                <li>Phone: (555) 123-4567</li>
+                <li>Name: Dr T Karunakara Reddy</li>
+                <li>Email: grdnaturals@gmail.com</li>
+                <li>Phone: +91 9849141105</li>
                 <li>Address: 123 Nature Way, Green City</li>
               </ul>
             </div>

@@ -96,7 +96,7 @@ exports.updateOrder = async (req, res) => {
     if (paymentStatus === 'done') {
       const mailOptions = {
         from: 'gooranthadveepamnaturals@gmail.com',
-        to: 'maheshkarri2222@gmail.com',
+        to: 'tkarunakareddy@gmail.com',
         subject: `Order Payment Status: ${paymentStatus}`,
         html: `
           <h2>Order Payment Details</h2>
