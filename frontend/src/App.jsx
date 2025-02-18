@@ -166,7 +166,7 @@ function App() {
                 <li>Name: Dr T Karunakara Reddy</li>
                 <li>Email: grdnaturals@gmail.com</li>
                 <li>Phone: +91 9849141105</li>
-                <li>Address: 123 Nature Way, Green City</li>
+                <li>Address: Vijayawada, Andhra Pradesh</li>
               </ul>
             </div>
           </div>
