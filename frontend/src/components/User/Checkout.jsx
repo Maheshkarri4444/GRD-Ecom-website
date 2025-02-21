@@ -254,7 +254,7 @@ const Checkout = () => {
                 <div className="flex items-center p-4 space-x-3 rounded-lg bg-green-50">
                   <FaWhatsapp className="w-6 h-6 text-green-600" />
                   <span className="text-green-800">
-                    Contact for discount: +91 9876543210
+                    Contact for discount: +91 9849141105
                   </span>
                 </div>
 
