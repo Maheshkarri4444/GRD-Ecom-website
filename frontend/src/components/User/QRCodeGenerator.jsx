@@ -6,8 +6,8 @@ const QRCodeGenerator = ({ amount: initialAmount }) => {
   const [isEditing, setIsEditing] = useState(false);
   
   // Replace with your actual PhonePe UPI ID
-  const upiId = "8008791096@axl";
-  const merchantName = "Mahesh Karri";
+  const upiId = "9849141105@ybl";
+  const merchantName = "Karunakar Reddy T";
   
   const upiPaymentLink = `upi://pay?pa=${upiId}&pn=${merchantName}&am=${amount}&cu=INR`;
 

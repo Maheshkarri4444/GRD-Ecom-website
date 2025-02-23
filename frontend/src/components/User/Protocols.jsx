@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { diseaseProtocols } from "./protocols_updated";
 
-function App() {
+function Protocols() {
   const [selectedDisease, setSelectedDisease] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
   // Get unique types from protocols
   const types = [...new Set(Object.values(diseaseProtocols).map(protocol => protocol.type))];
-
   
   const [selectedType, setSelectedType] = useState(types[0]);
 
@@ -25,6 +24,10 @@ function App() {
   const closeModal = () => {
     setShowModal(false);
     setSelectedDisease(null);
+  };
+
+  const shouldDisplayCategory = (category, items) => {
+    return items.length > 0 && (category.length >= 20 || items.some(item => item.name || item.duration));
   };
 
   const ProtocolModal = ({ disease }) => {
@@ -48,52 +51,62 @@ function App() {
             {/* Desktop Table View */}
             <div className="hidden md:block">
               {Object.entries(protocol.categories).map(([category, items]) => (
-                <div key={category} className="mb-8">
-                  <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="bg-green-50">
-                        <th className="p-3 text-left border border-green-200">Name</th>
-                        <th className="p-3 text-left border border-green-200">Duration</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {items.map((item, index) => (
-                        <tr key={index} className="hover:bg-green-50">
-                          <td className="p-3 border border-green-200">{item.name}</td>
-                          <td className="p-3 border border-green-200">{item.duration}</td>
+                shouldDisplayCategory(category, items) && (
+                  <div key={category} className="mb-8">
+                    {category.length >= 20 && (
+                      <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
+                    )}
+                    <table className="w-full border-collapse">
+                      <thead>
+                        <tr className="bg-green-50">
+                          <th className="p-3 text-left border border-green-200">Name</th>
+                          <th className="p-3 text-left border border-green-200">Duration</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      </thead>
+                      <tbody>
+                        {items.map((item, index) => (
+                          <tr key={index} className="hover:bg-green-50">
+                            <td className="p-3 border border-green-200">{item.name}</td>
+                            <td className="p-3 border border-green-200">{item.duration}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )
               ))}
             </div>
 
             {/* Mobile Content View */}
             <div className="md:hidden">
               {Object.entries(protocol.categories).map(([category, items]) => (
-                <div key={category} className="mb-8">
-                  <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
-                  {items.map((item, index) => (
-                    <div key={index} className="p-4 mb-3 rounded-lg bg-green-50">
-                      <h4 className="font-medium text-green-700">{item.name}</h4>
-                      <p className="mt-1 text-gray-600">Duration: {item.duration}</p>
-                    </div>
-                  ))}
-                </div>
+                shouldDisplayCategory(category, items) && (
+                  <div key={category} className="mb-8">
+                    {category.length >= 20 && (
+                      <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
+                    )}
+                    {items.map((item, index) => (
+                      <div key={index} className="p-4 mb-3 rounded-lg bg-green-50">
+                        <h4 className="font-medium text-green-700">{item.name}</h4>
+                        <p className="mt-1 text-gray-600">Duration: {item.duration}</p>
+                      </div>
+                    ))}
+                  </div>
+                )
               ))}
             </div>
 
             {/* Best Practices */}
-            <div className="mt-8">
-              <h3 className="mb-4 text-xl font-semibold text-green-600">Best Practices</h3>
-              <ul className="pl-5 space-y-2 list-disc">
-                {protocol.bestPractices.map((practice, index) => (
-                  <li key={index} className="text-gray-700">{practice}</li>
-                ))}
-              </ul>
-            </div>
+            {protocol.bestPractices && protocol.bestPractices.length > 0 && (
+              <div className="mt-8">
+                <h3 className="mb-4 text-xl font-semibold text-green-600">Best Practices</h3>
+                <ul className="pl-5 space-y-2 list-disc">
+                  {protocol.bestPractices.map((practice, index) => (
+                    <li key={index} className="text-gray-700">{practice}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -150,4 +163,4 @@ function App() {
   );
 }
 
-export default App;
+export default Protocols;
