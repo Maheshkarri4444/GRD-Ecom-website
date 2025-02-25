@@ -10,7 +10,8 @@ import {
   ChevronLeft,
   Menu,
   Grid,
-  LogOut
+  LogOut,
+  GalleryHorizontalEnd
 } from 'lucide-react';
 import grdcirclelogo from "../../assets/logos/grdlogo.png";
 import Allapi from "../../common";
@@ -40,6 +41,7 @@ const AdminLayout = () => {
   const menuItems = [
     { path: '/admin/orders', icon: ShoppingBag, label: 'Orders' },
     { path: '/admin/categories', icon: Grid, label: 'Categories' },
+    { path: '/admin/promotions', icon: GalleryHorizontalEnd, label: 'Gallery' },
     { path: '/admin/products', icon: Package, label: 'Products' },
     { path: '/admin/users', icon: Users, label: 'Users' },
     { path: '/admin/blobs', icon: Droplets, label: 'Blobs' },

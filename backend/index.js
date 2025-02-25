@@ -14,11 +14,11 @@ const blobRoutes = require("./routes/blobRoutes");
 const orderRoutes =require("./routes/orderRoutes");
 const analysisRoutes = require("./routes/analysisRoutes");
 const chatRoutes = require("./routes/chat");
-
+const promotionRoutes = require("./routes/promotionRoutes");
 
 app.use(cors());
 app.use(cors({
-  origin: 'http://localhost:5173', // Replace with the origin of your frontend
+  origin: 'http://localhost:5173',
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
@@ -31,6 +31,7 @@ app.use("/api",userRoutes)
 app.use("/api/cart",cartRoutes);
 app.use("/api/order",orderRoutes)
 app.use("/api/chat",chatRoutes)
+app.use("/api/promotion",promotionRoutes)
 
 app.use("/api/admin/category",categoryRoutes)
 app.use("/api/admin/product",productRoutes);

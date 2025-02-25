@@ -22,6 +22,8 @@ import { ProtectedRoute, AdminRoute, UserRoute } from './PrivateRoute';
 import NotFound from './components/NotFound';
 import Home from './components/User/Home';
 import Protocols from './components/User/Protocols';
+import PromotionsAdmin from './components/Admin/PromotionsAdmin';
+import Promotions from './components/User/Promotions';
 
 createRoot(document.getElementById('root')).render(
   <MyProvider>
@@ -36,6 +38,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="/blobs" element={<Blobs />} />
             <Route path="/aichat" element={<AiChat />} />
             <Route path="/protocols" element={<Protocols />} />
+            <Route path="/promotions" element={<Promotions/>} />
             
             {/* Protected User Routes */}
             <Route path="/profile" element={
@@ -67,6 +70,7 @@ createRoot(document.getElementById('root')).render(
             <Route path="banners" element={<BannersAdmin />} />
             <Route path="blobs" element={<BlobsAdmin />} />
             <Route path="analysis" element={<AnalysisAdmin />} />
+            <Route path="promotions" element={<PromotionsAdmin/>} />
           </Route>
 
           {/* 404 Page */}

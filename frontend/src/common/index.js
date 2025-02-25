@@ -136,7 +136,19 @@ const Allapi = {
     aiChat:{
       url: `${backapi}/api/chat`,
       method: "POST"
-    }
+    },
+    getPromotions:{
+      url: `${backapi}/api/promotion`,
+      method: "GET"
+    },
+    createPromotion:{
+      url: `${backapi}/api/promotion`,
+      method: "POST"
+    },
+    deletePromotion:{
+      url:(id)=> `${backapi}/api/promotion/${id}`,
+      method:"DELETE",
+    },
 }
 
 export default Allapi;
