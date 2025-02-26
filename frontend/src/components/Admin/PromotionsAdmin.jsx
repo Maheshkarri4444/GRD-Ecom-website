@@ -140,12 +140,14 @@ function PromotionsAdmin() {
                     id="image-upload"
                   />
                   {imagePreview ? (
-                    <div className="w-full space-y-4">
-                      <img
-                        src={imagePreview}
-                        alt="Preview"
-                        className="object-cover w-full h-48 rounded-lg"
-                      />
+                    <div className="w-full max-w-[200px] mx-auto space-y-4">
+                      <div className="relative pt-[100%] w-full">
+                        <img
+                          src={imagePreview}
+                          alt="Preview"
+                          className="absolute inset-0 object-cover w-full h-full rounded-lg"
+                        />
+                      </div>
                       <div className="flex items-center justify-between">
                         <span className="text-sm text-gray-600">{file.name}</span>
                         <button
@@ -175,7 +177,7 @@ function PromotionsAdmin() {
               </div>
             ) : (
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-700 ">
+                <label className="block mb-2 text-sm font-medium text-gray-700">
                   YouTube URL
                 </label>
                 <input
@@ -213,14 +215,16 @@ function PromotionsAdmin() {
             {/* Images */}
             <div>
               <h3 className="mb-4 text-lg font-medium text-gray-700">Images</h3>
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 ">
+              <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
                 {promotions.filter(p => p.type === 'image').map((promotion) => (
-                  <div key={promotion._id} className="relative group">
-                    <img
-                      src={promotion.link}
-                      alt="Promotion"
-                      className="object-cover w-full h-48 rounded-lg"
-                    />
+                  <div key={promotion._id} className="relative group w-full max-w-[200px] mx-auto">
+                    <div className="relative pt-[100%]">
+                      <img
+                        src={promotion.link}
+                        alt="Promotion"
+                        className="absolute inset-0 object-cover w-full h-full rounded-lg"
+                      />
+                    </div>
                     <button
                       onClick={() => handleDelete(promotion._id)}
                       className="absolute p-2 text-white transition-opacity bg-red-500 rounded-full opacity-0 top-2 right-2 group-hover:opacity-100"

@@ -39,17 +39,19 @@ function Promotions() {
         {images.length > 0 && (
           <section>
             <h2 className="mb-6 text-2xl font-bold text-gray-900">Featured Images</h2>
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
+            <div className="grid grid-cols-2 gap-6 sm:grid-cols-3">
               {images.map((promotion) => (
                 <div
                   key={promotion._id}
-                  className="overflow-hidden transition-transform bg-white rounded-lg shadow-md hover:scale-105"
+                  className="overflow-hidden transition-transform bg-white rounded-lg shadow-md hover:scale-105 w-full max-w-[300px] mx-auto"
                 >
-                  <img
-                    src={promotion.link}
-                    alt="Promotion"
-                    className="object-cover w-full h-64"
-                  />
+                  <div className="relative pt-[100%]">
+                    <img
+                      src={promotion.link}
+                      alt="Promotion"
+                      className="absolute inset-0 object-cover w-full h-full"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
