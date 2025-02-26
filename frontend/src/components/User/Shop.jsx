@@ -342,7 +342,7 @@ const Shop = () => {
                   className="flex items-center px-3 py-2 text-sm font-medium text-gray-700 bg-white border border-green-400 rounded-lg hover:text-green-700 hover:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-500"
                 >
                   <Filter className="w-4 h-4 mr-2" />
-                  Filter
+                  Products
                 </button>
                 
                 {isFilterOpen && (

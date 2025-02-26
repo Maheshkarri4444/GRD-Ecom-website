@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Leaf, Heart, Sprout, ShoppingBag } from 'lucide-react';
 import grdfulllogo from "../../assets/logos/grdfulllogo.png";
+import img1 from "../../assets/img1.png"
+import img2 from "../../assets/img2.png"
+import img3 from "../../assets/img3.jpg"
+
 import Allapi from '../../common';
 
 function Home() {
@@ -44,7 +48,7 @@ function Home() {
                 />
                 <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl">
                 
-                  <span className="block text-orange-600">గోరంత దీపం నాచురల్స్ </span>
+                  <span className="block text-orange-600">గోరంత దీపం నేచురల్స్ </span>
                 </h1>
                 <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl">
                   Discover our range of premium natural products, sourced from the purest ingredients
@@ -138,24 +142,24 @@ function Home() {
             <div className="relative group">
               <div className="relative w-full overflow-hidden bg-white rounded-lg h-80 group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                 <img
-                  src="https://images.unsplash.com/photo-1564149504298-00c351fd7f16?ixlib=rb-4.0.3"
-                  alt="Herbal Products"
+                  src={img1}
+                  alt="Bull Driven Oils"
                   className="object-cover object-center w-full h-full"
                 />
               </div>
               <h3 className="mt-6 text-xl font-semibold text-gray-900">
                 <Link to="/shop" className="hover:text-green-700">
                   <span className="absolute inset-0" />
-                  Herbal Products
+                  Bull Driven Oils
                 </Link>
               </h3>
-              <p className="text-base text-gray-500">Natural remedies and supplements for your wellbeing.</p>
+              <p className="text-base text-gray-500">Traditional cold-pressed oils, rich in nutrients and free from chemicals for a healthier lifestyle.</p>
             </div>
 
             <div className="relative group">
               <div className="relative w-full overflow-hidden bg-white rounded-lg h-80 group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                 <img
-                  src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?ixlib=rb-4.0.3"
+                  src={img2}
                   alt="Organic Groceries"
                   className="object-cover object-center w-full h-full"
                 />
@@ -163,16 +167,16 @@ function Home() {
               <h3 className="mt-6 text-xl font-semibold text-gray-900">
                 <Link to="/shop" className="hover:text-green-700">
                   <span className="absolute inset-0" />
-                  Organic Groceries
+                  Millets
                 </Link>
               </h3>
-              <p className="text-base text-gray-500">Fresh, organic produce and pantry essentials.</p>
+              <p className="text-base text-gray-500">Wholesome super grains packed with fiber, protein, and essential minerals.</p>
             </div>
 
             <div className="relative group">
               <div className="relative w-full overflow-hidden bg-white rounded-lg h-80 group-hover:opacity-75 sm:aspect-w-2 sm:aspect-h-1 sm:h-64 lg:aspect-w-1 lg:aspect-h-1">
                 <img
-                  src="https://images.unsplash.com/photo-1601049676869-702ea24cfd58?ixlib=rb-4.0.3"
+                  src={img3}
                   alt="Natural Skincare"
                   className="object-cover object-center w-full h-full"
                 />
@@ -180,10 +184,10 @@ function Home() {
               <h3 className="mt-6 text-xl font-semibold text-gray-900">
                 <Link to="/shop" className="hover:text-green-700">
                   <span className="absolute inset-0" />
-                  Natural Skincare
+                  Healthy Snacks
                 </Link>
               </h3>
-              <p className="text-base text-gray-500">Clean, natural products for radiant skin.</p>
+              <p className="text-base text-gray-500">Guilt-free, natural snacks crafted for taste and nutrition in every bite.</p>
             </div>
           </div>
         </div>
