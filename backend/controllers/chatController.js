@@ -3,12 +3,12 @@ const { GoogleGenerativeAI, HarmCategory, HarmBlockThreshold } = require('@googl
 // Chat function to handle AI interactions
 async function runChat(userInput, chatHistory) {
   const apiKey = process.env.GEMINI_API_KEY;
-
+  console.log("api key, ",apiKey)
   // Initialize Google Generative AI client
   const genAI = new GoogleGenerativeAI(apiKey);
 
   // Load the generative model
-  const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   // Configuration for AI generation
   const generationConfig = {
@@ -65,3 +65,5 @@ const getChatResponse = async (req, res) => {
 };
 
 module.exports = { getChatResponse };
+
+
