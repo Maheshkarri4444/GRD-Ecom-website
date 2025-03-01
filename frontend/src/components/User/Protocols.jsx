@@ -85,7 +85,7 @@ Preparation:
     const content = howToContent[type];
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-green-700">{content.title}</h2>
@@ -112,7 +112,7 @@ Preparation:
 
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-        <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-green-700">{protocol.title}</h2>
@@ -120,6 +120,8 @@ Preparation:
                 <X className="w-6 h-6 text-gray-500" />
               </button>
             </div>
+            
+            {/* Desktop view - Table format */}
             <div className="hidden md:block">
               {Object.entries(protocol.categories).map(([category, items]) => (
                 items.length > 0 && (
@@ -141,6 +143,25 @@ Preparation:
                         ))}
                       </tbody>
                     </table>
+                  </div>
+                )
+              ))}
+            </div>
+            
+            {/* Mobile view - Card format */}
+            <div className="block md:hidden">
+              {Object.entries(protocol.categories).map(([category, items]) => (
+                items.length > 0 && (
+                  <div key={category} className="mb-8">
+                    <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
+                    <div className="space-y-4">
+                      {items.map((item, index) => (
+                        <div key={index} className="p-4 rounded-lg bg-green-50">
+                          <h4 className="font-medium text-green-700">{item.name}</h4>
+                          <p className="mt-2 text-sm text-gray-600">Duration: {item.duration}</p>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )
               ))}

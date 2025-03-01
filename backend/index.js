@@ -39,6 +39,11 @@ app.use("/api/admin/banner",bannerRoutes);
 app.use("/api/admin/blob",blobRoutes);
 app.use("/api/admin/analysis",analysisRoutes);
 
+app.get("/ping", (req, res) => {
+  res.status(200).send("pong");
+});
+
+
 
 database().then(
     app.listen(process.env.PORT, () => {
