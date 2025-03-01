@@ -181,11 +181,11 @@ const ProductsAdmin = () => {
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'GRDNATURALS');
+    formData.append('upload_preset', 'grd-website-ecommerce');
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/diseea76x/image/upload`,
+        `https://api.cloudinary.com/v1_1/dcpxmuyvp/image/upload`,
         {
           method: 'POST',
           body: formData,
@@ -194,6 +194,7 @@ const ProductsAdmin = () => {
       const data = await response.json();
       return data.secure_url;
     } catch (err) {
+      // console.error('Cloudinary upload error:', err);
       throw new Error('Failed to upload image');
     }
   };
