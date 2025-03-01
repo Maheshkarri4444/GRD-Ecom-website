@@ -1,4 +1,4 @@
-![Screenshot (151)](https://github.com/user-attachments/assets/9413695d-75b5-4e72-a667-9625d70a2bc8)![Screenshot (150)](https://github.com/user-attachments/assets/41485930-9482-4f13-89b0-b3121ce6bdd5)# 🌿 GRD Naturals - E-Commerce & Business Website
+# 🌿 GRD Naturals - E-Commerce & Business Website
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
