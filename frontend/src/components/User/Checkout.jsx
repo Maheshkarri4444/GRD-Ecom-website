@@ -4,6 +4,7 @@ import { Phone } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import Allapi from '../../common/index.js';
 import QRCodeGenerator from './QRCodeGenerator';
+import toast,{Toaster} from "react-hot-toast";
 import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
 import { User } from 'lucide-react';

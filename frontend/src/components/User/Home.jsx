@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Leaf, Heart, Sprout, ShoppingBag } from 'lucide-react';
 import grdfulllogo from "../../assets/logos/grdfulllogo.png";
 import img1 from "../../assets/img1.png"
-import img2 from "../../assets/img2.png"
+import img2 from "../../assets/millets.jpg"
 import img3 from "../../assets/img3.jpg"
 
 import Allapi from '../../common';

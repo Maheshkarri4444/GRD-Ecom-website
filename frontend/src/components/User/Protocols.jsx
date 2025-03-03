@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { diseaseProtocols } from "./protocols_updated";
+import KhaderVali from "../../assets/KhaderVali2.jpg";
+import Ambali from "../../assets/ambali.jpg"
+import Decoction from "../../assets/decotion.jpg"
 
 function Protocols() {
   const [selectedDisease, setSelectedDisease] = useState(null);
@@ -15,7 +18,7 @@ function Protocols() {
   const howToContent = {
     milletPorridge: {
       title: "Millet Porridge (Ambali)",
-      content: `Ambali is an elixir for humans health, says by Dr. Khadar Valli.
+      content: `Ambali is an elixir for humans health, says by Dr. Khadar Vali.
 
 Off late everyone seems to have macro & micronutrient deficiencies like Vitamin B12 deficiency - one of the reasons being the lack of a good colony of pro-biotic bacteria in the gut.
 
@@ -23,14 +26,15 @@ A simple solution is to consume fermented porridge regularly & here is the recip
 
 If you are suffering from any serious chronic health condition, eating fermented porridge / ambali / Khameer for all 3 meals for 6 - 9 weeks will help you to speed up your recovery.
 
-If you are just beginning your millet journey, this would be the best way to start.
-
-Strict rules to follow to prepare Ambali for best health benefits:
-• Use structured water for soaking and cooking
-• Soak the millets for 6 to 8 hours
-• 6 to 10 glasses of water for 1 glass of millets
-• Do not add the salt or any other ingredients while preparing. It kills the good bacteria and fermentation process will not take properly
-• Once cooked and before leaving for fermentation process, tie or cover it with cotton or Khadi cloth`
+If you are just beginning your millet journey, this would be the best way to start.`,
+      steps: [
+        "Use structured water for soaking and cooking",
+        "Soak the millets for 6 to 8 hours",
+        "6 to 10 glasses of water for 1 glass of millets",
+        "Do not add the salt or any other ingredients while preparing. It kills the good bacteria and fermentation process will not take properly",
+        "Once cooked and before leaving for fermentation process, tie or cover it with cotton or Khadi cloth"
+      ],
+      image: Ambali,
     },
     decoctions: {
       title: "Immunity Boosting Decoctions",
@@ -47,18 +51,19 @@ Strict rules to follow to prepare Ambali for best health benefits:
 As a preventive medicine before starting rainy season one can use the above cycle to avoid seasonal diseases.
 Pandemic and Endemic: use the above Decoctions 2 days each in the same order for 14 days.
 Age limit: this can be used from 9 months baby. Even pregnant ladies and after delivery also this Decoctions can be used.
-Normal healthy people can practice 1 leaf for one week in this Process. Your cycle would be completed in 49 days.
-
-Preparation:
-1. Take half a handful of small leaves such as Tulsi, Pudina, Manthi, Kothitamira, Curry leaves
-2. If they are big leaves, make them into small and take half a handful of leaves
-3. Pour 150-200 ml of water on the pan, add the leaves and let them boil for 2-3 minutes. After that, put the lid on for 2-3 minutes, strain the leaves with a filter and drink it warm or cold
-4. Optional ingredients: Mustard ½ tsp/ Cumin 1 tsp/ Mantulu ½ tsp/ Organic Psuppa ½ tsp/ Dalina Chekaka 2" ground/ Pepper ½ tsp/ Cloves 2/ Alum ½" ground/ Sambar Ulupaya 4-5/ Aloe Vera Gujuja(white gel) 2 tbsp
-5. For banana pulp/boda/oosa infusion: Add 150-200 ml of water to 100g organic banana pulp and boil for 2-3 minutes
-6. You can mix a little bit of palm jaggery into decoction if desired`
+Normal healthy people can practice 1 leaf for one week in this Process. Your cycle would be completed in 49 days.`,
+      steps: [
+        "Take half a handful of small leaves such as Tulsi, Pudina, Manthi, Kothitamira, Curry leaves",
+        "If they are big leaves, make them into small and take half a handful of leaves",
+        "Pour 150-200 ml of water on the pan, add the leaves and let them boil for 2-3 minutes. After that, put the lid on for 2-3 minutes, strain the leaves with a filter and drink it warm or cold",
+        "Optional ingredients: Mustard ½ tsp/ Cumin 1 tsp/ Mantulu ½ tsp/ Organic Psuppa ½ tsp/ Dalina Chekaka 2\" ground/ Pepper ½ tsp/ Cloves 2/ Alum ½\" ground/ Sambar Ulupaya 4-5/ Aloe Vera Gujuja(white gel) 2 tbsp",
+        "For banana pulp/boda/oosa infusion: Add 150-200 ml of water to 100g organic banana pulp and boil for 2-3 minutes",
+        "You can mix a little bit of palm jaggery into decoction if desired"
+      ],
+      image: Decoction,
     }
   };
-
+ 
   // Filter diseases by selected type
   const filteredDiseases = selectedType
     ? Object.keys(diseaseProtocols).filter(disease => diseaseProtocols[disease].type === selectedType)
@@ -93,12 +98,36 @@ Preparation:
                 <X className="w-6 h-6 text-gray-500" />
               </button>
             </div>
+            
+            {/* Image */}
+            <div className="flex justify-center mb-6 ">
+              <img 
+                src={content.image} 
+                alt={content.title} 
+                className="object-cover w-64 h-64 rounded-lg"
+              />
+            </div>
+            
             <div className="prose max-w-none">
               {content.content.split('\n\n').map((paragraph, index) => (
                 <p key={index} className="mb-4 text-gray-700">
                   {paragraph}
                 </p>
               ))}
+              
+              {/* Steps with proper formatting */}
+              {content.steps && (
+                <div className="mt-6">
+                  <h3 className="mb-4 text-xl font-semibold text-green-600">
+                    {type === 'milletPorridge' ? 'Strict rules to follow to prepare Ambali for best health benefits:' : 'Preparation:'}
+                  </h3>
+                  <ul className="pl-5 space-y-2 list-disc">
+                    {content.steps.map((step, index) => (
+                      <li key={index} className="text-gray-700">{step}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -109,6 +138,34 @@ Preparation:
   const ProtocolModal = ({ disease }) => {
     const protocol = diseaseProtocols[disease];
     if (!protocol) return null;
+
+    // Function to check if a category should be displayed
+    const shouldDisplayCategory = (categoryName, items) => {
+      // If items is an empty array, don't display
+      if (Array.isArray(items) && items.length === 0) {
+        return false;
+      }
+      
+      // If items is an empty array and category name is less than 10 characters, don't display
+      if (categoryName.length < 10 && Array.isArray(items) && items.length === 0) {
+        return false;
+      }
+      
+      return true;
+    };
+
+    // Get all the notes (keys with empty array values)
+    const getNotes = () => {
+      const notes = [];
+      Object.entries(protocol.categories).forEach(([key, value]) => {
+        if (Array.isArray(value) && value.length === 0 && key.length >= 10) {
+          notes.push(key);
+        }
+      });
+      return notes;
+    };
+
+    const notes = getNotes();
 
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
@@ -124,7 +181,7 @@ Preparation:
             {/* Desktop view - Table format */}
             <div className="hidden md:block">
               {Object.entries(protocol.categories).map(([category, items]) => (
-                items.length > 0 && (
+                shouldDisplayCategory(category, items) && Array.isArray(items) && items.length > 0 && (
                   <div key={category} className="mb-8">
                     <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
                     <table className="w-full border-collapse">
@@ -151,7 +208,7 @@ Preparation:
             {/* Mobile view - Card format */}
             <div className="block md:hidden">
               {Object.entries(protocol.categories).map(([category, items]) => (
-                items.length > 0 && (
+                shouldDisplayCategory(category, items) && Array.isArray(items) && items.length > 0 && (
                   <div key={category} className="mb-8">
                     <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
                     <div className="space-y-4">
@@ -166,6 +223,30 @@ Preparation:
                 )
               ))}
             </div>
+            
+            {/* Important Notes Section */}
+            {notes.length > 0 && (
+              <div className="mt-8">
+                <h3 className="mb-4 text-xl font-semibold text-green-600">Important Notes</h3>
+                <ul className="pl-5 space-y-2 list-disc">
+                  {notes.map((note, index) => (
+                    <li key={index} className="text-gray-700">{note}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {/* Best Practices Section */}
+            {protocol.bestPractices && protocol.bestPractices.length > 0 && (
+              <div className="mt-8">
+                <h3 className="mb-4 text-xl font-semibold text-green-600">Best Practices</h3>
+                <ul className="pl-5 space-y-2 list-disc">
+                  {protocol.bestPractices.map((practice, index) => (
+                    <li key={index} className="text-gray-700">{practice}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -177,9 +258,9 @@ Preparation:
       {/* Hero Section */}
       <div className="mb-12 text-center">
         <img
-          src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+          src={KhaderVali}
           alt="Dr. Khader Vali Inspiration"
-          className="object-cover w-48 h-48 mx-auto mb-6 rounded-lg"
+          className="object-cover w-48 mx-auto mb-6 rounded-lg h-57"
         />
         <blockquote className="mb-8 text-xl italic text-gray-700">
           "Inspired by Dr.Khadar Vali"

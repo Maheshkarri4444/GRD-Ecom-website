@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, ChevronRight, Bot } from 'lucide-react';
+import { ShoppingCart, Search, Filter, X, Plus, Minus, Home, ChevronLeft, ChevronRight, Bot, Loader2 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
 import grdcirclelogo from '../../assets/logos/grdlogo.png';
 import Allapi from '../../common';
 import { checkAndRemoveExpiredToken } from '../checkAndRemoveExpiredToken';
@@ -21,6 +22,7 @@ const Shop = () => {
   const [showBlobModal, setShowBlobModal] = useState(false);
   const [selectedBlob, setSelectedBlob] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loadingProductId, setLoadingProductId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -165,6 +167,7 @@ const Shop = () => {
     }
 
     try {
+      setLoadingProductId(product._id);
       const token = localStorage.getItem('token');
       const existingItem = cart.find(item => item.productId._id === product._id);
       const quantity = existingItem ? existingItem.quantity + 1 : 1;
@@ -188,10 +191,26 @@ const Shop = () => {
       const data = await response.json();
       if (response.ok) {
         await fetchCart();
+        toast.success(`${product.name} added to cart!`, {
+          duration: 3000,
+          position: 'top-center',
+          style: {
+            background: '#10B981',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+          icon: '🛒',
+        });
       }
     } catch (err) {
       console.error('Add to cart error:', err);
       setError('Failed to add to cart');
+      toast.error('Failed to add item to cart', {
+        duration: 3000,
+        position: 'top-center',
+      });
+    } finally {
+      setLoadingProductId(null);
     }
   };
 
@@ -318,6 +337,7 @@ const Shop = () => {
 
   return (
     <div className="min-h-screen bg-green-50">
+      <Toaster />
       <nav className="z-50 shadow-md bg-green-50">
         <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-4">
           <div className="flex items-center justify-between h-16">
@@ -609,9 +629,21 @@ const Shop = () => {
                       <div>
                         <button
                           onClick={() => addToCart(product)}
-                          className="px-4 py-2 text-sm font-medium text-white transition-colors bg-green-600 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                          disabled={loadingProductId === product._id}
+                          className={`px-4 py-2 text-sm font-medium text-white transition-colors rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 ${
+                            loadingProductId === product._id 
+                              ? 'bg-green-500 cursor-not-allowed' 
+                              : 'bg-green-600 hover:bg-green-700'
+                          }`}
                         >
-                          Add to Cart
+                          {loadingProductId === product._id ? (
+                            <span className="flex items-center">
+                              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                              Adding...
+                            </span>
+                          ) : (
+                            'Add to Cart'
+                          )}
                         </button>
                       </div>
                     </div>
