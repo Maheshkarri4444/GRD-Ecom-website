@@ -1,19 +1,17 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
-import { diseaseProtocols } from "./protocols_updated";
+import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import KhaderVali from "../../assets/KhaderVali2.jpg";
-import Ambali from "../../assets/ambali.jpg"
-import Decoction from "../../assets/decotion.jpg"
+import Ambali from "../../assets/ambali2.jpg";
+import Decoction from "../../assets/decotion.jpg";
+import { diseaseData, cancerData } from './data';
 
 function Protocols() {
   const [selectedDisease, setSelectedDisease] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [showHowToModal, setShowHowToModal] = useState(false);
   const [selectedHowTo, setSelectedHowTo] = useState(null);
-
-  // Get unique types from protocols
-  const types = [...new Set(Object.values(diseaseProtocols).map(protocol => protocol.type))];
-  const [selectedType, setSelectedType] = useState(types[0]);
+  const [activeTab, setActiveTab] = useState('autoimmune');
+  const [expandedCategories, setExpandedCategories] = useState({});
 
   const howToContent = {
     milletPorridge: {
@@ -63,11 +61,13 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
       image: Decoction,
     }
   };
- 
-  // Filter diseases by selected type
-  const filteredDiseases = selectedType
-    ? Object.keys(diseaseProtocols).filter(disease => diseaseProtocols[disease].type === selectedType)
-    : [];
+
+  const toggleCategory = (category) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
 
   const handleDiseaseClick = (disease) => {
     setSelectedDisease(disease);
@@ -104,7 +104,7 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
               <img 
                 src={content.image} 
                 alt={content.title} 
-                className="object-cover w-64 h-64 rounded-lg"
+                className="object-cover h-64 rounded-lg w-100"
               />
             </div>
             
@@ -136,115 +136,64 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
   };
 
   const ProtocolModal = ({ disease }) => {
-    const protocol = diseaseProtocols[disease];
+    const isAutoimmune = activeTab === 'autoimmune';
+    const data = isAutoimmune ? diseaseData.diseases : cancerData.diseases;
+    const protocol = data.find(d => d.name === disease);
+    
     if (!protocol) return null;
-
-    // Function to check if a category should be displayed
-    const shouldDisplayCategory = (categoryName, items) => {
-      // If items is an empty array, don't display
-      if (Array.isArray(items) && items.length === 0) {
-        return false;
-      }
-      
-      // If items is an empty array and category name is less than 10 characters, don't display
-      if (categoryName.length < 10 && Array.isArray(items) && items.length === 0) {
-        return false;
-      }
-      
-      return true;
-    };
-
-    // Get all the notes (keys with empty array values)
-    const getNotes = () => {
-      const notes = [];
-      Object.entries(protocol.categories).forEach(([key, value]) => {
-        if (Array.isArray(value) && value.length === 0 && key.length >= 10) {
-          notes.push(key);
-        }
-      });
-      return notes;
-    };
-
-    const notes = getNotes();
 
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
         <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto" style={{ scrollbarWidth: 'none' }}>
           <div className="p-6">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-green-700">{protocol.title}</h2>
+              <h2 className="text-2xl font-bold text-green-700">{protocol.name}</h2>
               <button onClick={closeModal} className="p-2 rounded-full hover:bg-gray-100">
                 <X className="w-6 h-6 text-gray-500" />
               </button>
             </div>
             
-            {/* Desktop view - Table format */}
-            <div className="hidden md:block">
-              {Object.entries(protocol.categories).map(([category, items]) => (
-                shouldDisplayCategory(category, items) && Array.isArray(items) && items.length > 0 && (
-                  <div key={category} className="mb-8">
-                    <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
-                    <table className="w-full border-collapse">
-                      <thead>
-                        <tr className="bg-green-50">
-                          <th className="p-3 text-left border border-green-200">Name</th>
-                          <th className="p-3 text-left border border-green-200">Duration</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {items.map((item, index) => (
-                          <tr key={index} className="hover:bg-green-50">
-                            <td className="p-3 border border-green-200">{item.name}</td>
-                            <td className="p-3 border border-green-200">{item.duration}</td>
+            {protocol.categories.map((category, index) => (
+              <div key={index} className="mb-8">
+
+                {(expandedCategories[`${disease}-${category.category}`] || true) && (
+                  <>
+                    <div className="overflow-x-auto">
+                      <table className="w-full border-collapse">
+                        <thead>
+                          <tr className="bg-green-50">
+                            <th className="p-3 text-left border border-green-200">Name</th>
+                            <th className="p-3 text-left border border-green-200">Duration</th>
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )
-              ))}
-            </div>
-            
-            {/* Mobile view - Card format */}
-            <div className="block md:hidden">
-              {Object.entries(protocol.categories).map(([category, items]) => (
-                shouldDisplayCategory(category, items) && Array.isArray(items) && items.length > 0 && (
-                  <div key={category} className="mb-8">
-                    <h3 className="mb-4 text-xl font-semibold text-green-600">{category}</h3>
-                    <div className="space-y-4">
-                      {items.map((item, index) => (
-                        <div key={index} className="p-4 rounded-lg bg-green-50">
-                          <h4 className="font-medium text-green-700">{item.name}</h4>
-                          <p className="mt-2 text-sm text-gray-600">Duration: {item.duration}</p>
-                        </div>
-                      ))}
+                        </thead>
+                        <tbody>
+                          {category.items.map((item, idx) => (
+                            <tr key={idx} className="hover:bg-green-50">
+                              <td className="p-3 border border-green-200">{item.name}</td>
+                              <td className="p-3 border border-green-200">{item.duration}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                  </div>
-                )
-              ))}
-            </div>
+                    
+                    {category.best_practices && (
+                      <div className="p-4 mt-4 rounded-lg bg-green-50">
+                        <h4 className="mb-2 font-medium text-green-700">Best Practices:</h4>
+                        <p className="text-gray-700">{category.best_practices}</p>
+                      </div>
+                    )}
+                  </>
+                )}
+              </div>
+            ))}
             
-            {/* Important Notes Section */}
-            {notes.length > 0 && (
+            {protocol.notes && protocol.notes.trim() !== "" && (
               <div className="mt-8">
                 <h3 className="mb-4 text-xl font-semibold text-green-600">Important Notes</h3>
-                <ul className="pl-5 space-y-2 list-disc">
-                  {notes.map((note, index) => (
-                    <li key={index} className="text-gray-700">{note}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            
-            {/* Best Practices Section */}
-            {protocol.bestPractices && protocol.bestPractices.length > 0 && (
-              <div className="mt-8">
-                <h3 className="mb-4 text-xl font-semibold text-green-600">Best Practices</h3>
-                <ul className="pl-5 space-y-2 list-disc">
-                  {protocol.bestPractices.map((practice, index) => (
-                    <li key={index} className="text-gray-700">{practice}</li>
-                  ))}
-                </ul>
+                <div className="p-4 rounded-lg bg-yellow-50">
+                  <p className="text-gray-700">{protocol.notes}</p>
+                </div>
               </div>
             )}
           </div>
@@ -291,46 +240,50 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
         </div>
       </div>
 
-      {/* Type Selection */}
+      {/* Tab Selection */}
       <div className="mb-8">
-        <h2 className="mb-4 text-xl font-semibold text-green-700">Select Category</h2>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {types.map((type) => (
-            <button
-              key={type}
-              onClick={() => setSelectedType(type)}
-              className={`p-4 rounded-lg text-left transition-colors ${
-                selectedType === type
-                  ? 'bg-green-600 text-white'
-                  : 'bg-white hover:bg-green-50'
-              }`}
-            >
-              {type.charAt(0).toUpperCase() + type.slice(1)}
-            </button>
-          ))}
+        <div className="flex border-b border-gray-200">
+          <button
+            className={`py-2 px-4 font-medium ${
+              activeTab === 'autoimmune'
+                ? 'text-green-600 border-b-2 border-green-600'
+                : 'text-gray-500 hover:text-green-500'
+            }`}
+            onClick={() => setActiveTab('autoimmune')}
+          >
+            Autoimmune Diseases
+          </button>
+          <button
+            className={`py-2 px-4 font-medium ${
+              activeTab === 'cancer'
+                ? 'text-green-600 border-b-2 border-green-600'
+                : 'text-gray-500 hover:text-green-500'
+            }`}
+            onClick={() => setActiveTab('cancer')}
+          >
+            Cancer Protocols
+          </button>
         </div>
       </div>
 
       {/* Disease List */}
-      {selectedType && (
-        <div>
-          <h2 className="mb-6 text-2xl font-bold text-green-700">
-            {selectedType.charAt(0).toUpperCase() + selectedType.slice(1)} Protocols
-          </h2>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {filteredDiseases.map((disease) => (
-              <button
-                key={disease}
-                onClick={() => handleDiseaseClick(disease)}
-                className="p-6 text-left transition-shadow duration-200 bg-white rounded-lg shadow-md hover:shadow-lg"
-              >
-                <h3 className="text-xl font-semibold text-green-700">{disease}</h3>
-                <p className="mt-2 text-gray-600">Click to view protocol details</p>
-              </button>
-            ))}
-          </div>
+      <div>
+        <h2 className="mb-6 text-2xl font-bold text-green-700">
+          {activeTab === 'autoimmune' ? 'Autoimmune Disease Protocols' : 'Cancer Protocols'}
+        </h2>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {(activeTab === 'autoimmune' ? diseaseData.diseases : cancerData.diseases).map((disease) => (
+            <button
+              key={disease.name}
+              onClick={() => handleDiseaseClick(disease.name)}
+              className="p-6 text-left transition-shadow duration-200 bg-white rounded-lg shadow-md hover:shadow-lg"
+            >
+              <h3 className="text-xl font-semibold text-green-700">{disease.name}</h3>
+              <p className="mt-2 text-gray-600">Click to view protocol details</p>
+            </button>
+          ))}
         </div>
-      )}
+      </div>
 
       {showModal && selectedDisease && <ProtocolModal disease={selectedDisease} />}
       {showHowToModal && selectedHowTo && <HowToModal type={selectedHowTo} />}
