@@ -3,7 +3,7 @@ import { ChevronDown, ChevronUp, X } from 'lucide-react';
 import KhaderVali from "../../assets/KhaderVali2.jpg";
 import Ambali from "../../assets/ambali2.jpg";
 import Decoction from "../../assets/decotion.jpg";
-import { diseaseData, cancerData } from './data';
+import { diseaseData, cancerData, preventiveData } from './data';
 
 function Protocols() {
   const [selectedDisease, setSelectedDisease] = useState(null);
@@ -136,8 +136,20 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
   };
 
   const ProtocolModal = ({ disease }) => {
-    const isAutoimmune = activeTab === 'autoimmune';
-    const data = isAutoimmune ? diseaseData.diseases : cancerData.diseases;
+    const getDataSource = () => {
+      switch (activeTab) {
+        case 'autoimmune':
+          return diseaseData.diseases;
+        case 'cancer':
+          return cancerData.diseases;
+        case 'preventive':
+          return preventiveData.diseases;
+        default:
+          return [];
+      }
+    };
+    
+    const data = getDataSource();
     const protocol = data.find(d => d.name === disease);
     
     if (!protocol) return null;
@@ -155,7 +167,6 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
             
             {protocol.categories.map((category, index) => (
               <div key={index} className="mb-8">
-
                 {(expandedCategories[`${disease}-${category.category}`] || true) && (
                   <>
                     <div className="overflow-x-auto">
@@ -263,16 +274,35 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
           >
             Cancer Protocols
           </button>
+          <button
+            className={`py-2 px-4 font-medium ${
+              activeTab === 'preventive'
+                ? 'text-green-600 border-b-2 border-green-600'
+                : 'text-gray-500 hover:text-green-500'
+            }`}
+            onClick={() => setActiveTab('preventive')}
+          >
+            Preventive Measures
+          </button>
         </div>
       </div>
 
       {/* Disease List */}
       <div>
         <h2 className="mb-6 text-2xl font-bold text-green-700">
-          {activeTab === 'autoimmune' ? 'Autoimmune Disease Protocols' : 'Cancer Protocols'}
+          {activeTab === 'autoimmune' 
+            ? 'Autoimmune Disease Protocols' 
+            : activeTab === 'cancer'
+            ? 'Cancer Protocols'
+            : 'Preventive Health Measures'}
         </h2>
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {(activeTab === 'autoimmune' ? diseaseData.diseases : cancerData.diseases).map((disease) => (
+          {(activeTab === 'autoimmune' 
+            ? diseaseData.diseases 
+            : activeTab === 'cancer'
+            ? cancerData.diseases
+            : preventiveData.diseases
+          ).map((disease) => (
             <button
               key={disease.name}
               onClick={() => handleDiseaseClick(disease.name)}
