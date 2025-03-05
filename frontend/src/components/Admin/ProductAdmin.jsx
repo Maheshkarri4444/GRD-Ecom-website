@@ -54,7 +54,7 @@ const ProductsAdmin = () => {
 
   useEffect(() => {
     return () => {
-      previewUrls.forEach(url => URL.revokeObjectURL(url));
+      previewUrls.forEach(url => URL.revoObjectURL(url));
     };
   }, [previewUrls]);
 
@@ -115,14 +115,13 @@ const ProductsAdmin = () => {
       });
       const data = await response.json();
       if (response.ok) {
-        // console.log("displaying blobs: ",data)
         setDisplayingBlobs(data);
       }
     }catch(err){
       setError('Failed to fetch blobs');
     }
-
   }
+
   const fetchBlobsByCategory = async (categoryId) => {
     try {
       const response = await fetch(Allapi.getAllBlobs.url, {
@@ -169,7 +168,7 @@ const ProductsAdmin = () => {
       
       if (data.success) {
         const excludedCategories = ["Non Product Category", "Protocols"];
-        const filteredCategories = data.categories.filter(  category => !excludedCategories.includes(category.name));
+        const filteredCategories = data.categories.filter(category => !excludedCategories.includes(category.name));
         setCategories(filteredCategories);
       }
     } catch (err) {
@@ -181,11 +180,11 @@ const ProductsAdmin = () => {
   const uploadToCloudinary = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'grd-website-ecommerce');
+    formData.append('upload_preset', 'GRDNATURALS');
 
     try {
       const response = await fetch(
-        `https://api.cloudinary.com/v1_1/dcpxmuyvp/image/upload`,
+        `https://api.cloudinary.com/v1_1/diseea76x/image/upload`,
         {
           method: 'POST',
           body: formData,
@@ -194,7 +193,6 @@ const ProductsAdmin = () => {
       const data = await response.json();
       return data.secure_url;
     } catch (err) {
-      // console.error('Cloudinary upload error:', err);
       throw new Error('Failed to upload image');
     }
   };
@@ -269,7 +267,7 @@ const ProductsAdmin = () => {
 
   // Handle edit mode
   const handleEdit = (product) => {
-    // console.log("product edit : ",product)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
     setIsEditing(true);
     setEditingProduct(product);
     setFormData({
@@ -277,7 +275,7 @@ const ProductsAdmin = () => {
       mrp: product.mrp,
       salePrice: product.salePrice,
       description: product.description,
-      category: product.category._id ,
+      category: product.category._id,
       blobId: product.blobId?._id || '',
       images: product.images || []
     });
@@ -633,8 +631,6 @@ const ProductsAdmin = () => {
                   {product.blobId && (
                     <button
                       onClick={() => {
-                        // console.log("blobs are",displayingBlobs);
-                        // console.log("product blob id: ", product.blobId._id);
                         const blob = displayingBlobs.find(b => b._id === product.blobId._id);                        
                         if (blob) {
                           setSelectedBlob(blob);

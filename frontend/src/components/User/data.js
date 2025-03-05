@@ -639,6 +639,46 @@ export const diseaseData = {
 export const preventiveData = {
   "diseases": [
     {
+      "name": "Healthy People",
+      "categories": [
+        {
+          "category": "Oils",
+          "best_practices": "Consume all above mentioned oils one week each and repeat the cycle. Take 2 to 3 spoons of oil and maintain gap of 30 mins between oils and decoctions",
+          "items": [
+            { "name": "Coconut oil (5ml)", "duration": "1 Week" },
+            { "name": "Kusuma oil (5ml)", "duration": "1 Week" },
+            { "name": "Verry nuvvulu (5ml)", "duration": "1 Week" },
+            { "name": "Nuvvulu (5ml)", "duration": "1 Week" }
+          ]
+        },
+        {
+          "category": "Millets",
+          "best_practices": "Best way to consume millets in the form of Fermented porridge for 1st Cycle",
+          "items": [
+            { "name": "Andukorralu ", "duration": "3 days" },
+            { "name": "Korralu", "duration": "3 days" },
+            { "name": "Samalu", "duration": "1 day" },
+            { "name": "Udalu", "duration": "1 day" },
+            { "name": "Aaarikalu", "duration": "1 day" }
+          ]
+        },
+        {
+          "category": "Decoctions (Kashyam)",
+          "best_practices": "Total 28 days - boost the Immunity power in the body, Repeat the cycle for everry 4 months",
+          "items": [
+            { "name": "Garika (Bermuda Grass, Dhub, Cynodon dactylon)", "duration": "4 days" },
+            { "name": "Tulasi (Holy Basil, Ocium tenuiflorum, Ocimim Sanctum)", "duration": "4 days" },
+            { "name": "Tippateega ( Gaduchi, Amrutavalli, Tinospora Cordifolia)", "duration": "4 days" },
+            { "name": "Bilwa pathram ( Bael or Bili or Bhel, Aegle Marmelos)", "duration": "4 days" },
+            { "name": "Kanuga (Pongamia pinnata)", "duration": "4 days" },
+            { "name": "Vypa (Neem, Azadirachta Indica)", "duration": "4 days" },
+            { "name": "Ravi (Peepal, Aswatta, Ficus religiosa)", "duration": "4 days" }
+          ]
+        }
+      ],
+      "notes": "Take these Kashayas in the above mentioned order for 4 days each in case of viral feevers, 7 days each leaf if you are in normal condition. Sprouted legumes such as green gram, Bengal gram, cowpea, groundnuts should be taken each variety per week. Sprouts should first be steamed for 4to7minutes and then be tempered. Just two tea spoonsful of one type of steamed and tempered sprouts should be taken once a week along with one teaspoon of fenugreek/methi sprouts. That means every week the type of legume used for sprouting changes, but fenugreek seed sprouts remains constant"
+    },
+    {
       "name": "Nerves Problems",
       "categories": [
         {
