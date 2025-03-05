@@ -166,38 +166,54 @@ Normal healthy people can practice 1 leaf for one week in this Process. Your cyc
             </div>
             
             {protocol.categories.map((category, index) => (
-              <div key={index} className="mb-8">
-                {(expandedCategories[`${disease}-${category.category}`] || true) && (
+  <div key={index} className="mb-8">
+    {(expandedCategories[`${disease}-${category.category}`] || true) && (
+      <>
+        <div className="overflow-x-auto">
+          <h1 className="text-green-700">{category.category}</h1>
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-green-50">
+                {category.items.some(item => item.name) && (
                   <>
-                    <div className="overflow-x-auto">
-                      <table className="w-full border-collapse">
-                        <thead>
-                          <tr className="bg-green-50">
-                            <th className="p-3 text-left border border-green-200">Name</th>
-                            <th className="p-3 text-left border border-green-200">Duration</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {category.items.map((item, idx) => (
-                            <tr key={idx} className="hover:bg-green-50">
-                              <td className="p-3 border border-green-200">{item.name}</td>
-                              <td className="p-3 border border-green-200">{item.duration}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                    
-                    {category.best_practices && (
-                      <div className="p-4 mt-4 rounded-lg bg-green-50">
-                        <h4 className="mb-2 font-medium text-green-700">Best Practices:</h4>
-                        <p className="text-gray-700">{category.best_practices}</p>
-                      </div>
-                    )}
+                    <th className="p-3 text-left border border-green-200">Name</th>
+                    <th className="p-3 text-left border border-green-200">Duration</th>
                   </>
                 )}
-              </div>
-            ))}
+                {category.items.some(item => item.note) && (
+                  <th className="p-3 text-left border border-green-200">Note</th>
+                )}
+              </tr>
+            </thead>
+            <tbody>
+              {category.items.map((item, idx) => (
+                <tr key={idx} className="hover:bg-green-50">
+                  {item.name && (
+                    <>
+                      <td className="p-3 border border-green-200">{item.name}</td>
+                      <td className="p-3 border border-green-200">{item.duration}</td>
+                    </>
+                  )}
+                  {item.note && (
+                    <td className="p-3 border border-green-200" colSpan={2}>{item.note}</td>
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {category.best_practices && (
+          <div className="p-4 mt-4 rounded-lg bg-green-50">
+            <h4 className="mb-2 font-medium text-green-700">Best Practices:</h4>
+            <p className="text-gray-700">{category.best_practices}</p>
+          </div>
+        )}
+      </>
+    )}
+  </div>
+))}
+
             
             {protocol.notes && protocol.notes.trim() !== "" && (
               <div className="mt-8">
