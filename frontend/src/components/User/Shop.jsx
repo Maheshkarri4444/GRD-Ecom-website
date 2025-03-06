@@ -608,7 +608,10 @@ const Shop = () => {
                   </p>
                   <div className="flex flex-col justify-between mb-4">
                     <div>
+                      {/* <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span> */}
+                      {product.category?.name !== 'Oils' && (
                       <span className="text-sm text-gray-500 line-through">₹{product.mrp}</span>
+                    )}
                       <span className="ml-2 text-lg font-bold text-green-600">₹{product.salePrice}</span>
                     </div>
 

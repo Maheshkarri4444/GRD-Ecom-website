@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useMyContext } from '../../utils/MyContext.jsx';
-import { Phone } from 'lucide-react';
+import { Phone, Loader2 } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 import Allapi from '../../common/index.js';
 import QRCodeGenerator from './QRCodeGenerator';
-import toast,{Toaster} from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { Home } from 'lucide-react';
 import { User } from 'lucide-react';
@@ -17,6 +17,7 @@ const Checkout = () => {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [currentOrder, setCurrentOrder] = useState(null);
   const [cart, setCart] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [paymentDetails, setPaymentDetails] = useState({
     amountPaid: '',
     transactionId: ''
@@ -24,6 +25,7 @@ const Checkout = () => {
 
   // Fetch cart
   const fetchCart = async () => {
+    setIsLoading(true);
     try {
       const token = localStorage.getItem('token');
       if (!token) {
@@ -48,6 +50,8 @@ const Checkout = () => {
       }
     } catch (err) {
       console.error('Fetch cart error:', err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -136,19 +140,45 @@ const Checkout = () => {
       if (response.ok) {
         setCurrentOrder(data);
         setShowPaymentForm(true);
+        toast.success("Place Order", {
+          duration: 3000,
+          position: 'top-center',
+          style: {
+            background: '#10B981',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+          icon: '🛒',
+        });
         fetchCart();
       } else {
         throw new Error(data.message || 'Failed to place order');
       }
     } catch (error) {
       console.error('Error placing order:', error);
-      alert('Failed to place order. Please try again.');
+      toast.error("Please try again", {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#10B981',
+          color: '#fff',
+          fontWeight: 'bold',
+        },
+      });
     }
   };
 
   const handlePaymentSubmit = async () => {
     if (!paymentDetails.amountPaid || !paymentDetails.transactionId) {
-      alert('Please fill in all payment details');
+      toast.error(`Fill Everything`, {
+        duration: 3000,
+        position: 'top-center',
+        style: {
+          background: '#10B981',
+          color: '#fff',
+          fontWeight: 'bold',
+        },
+      });
       return;
     }
 
@@ -168,7 +198,16 @@ const Checkout = () => {
 
       const data = await response.json();
       if (response.ok) {
-        alert('Payment details submitted successfully');
+        toast.success(`Payment Submitted`, {
+          duration: 3000,
+          position: 'top-center',
+          style: {
+            background: '#10B981',
+            color: '#fff',
+            fontWeight: 'bold',
+          },
+          icon: '🛒',
+        });
         setShowPaymentForm(false);
         setCurrentOrder(null);
         setSelectedProducts({});
@@ -211,6 +250,7 @@ const Checkout = () => {
 
   return (
     <div className="min-h-screen p-6 bg-green-50">
+    <Toaster/>
       <div className="max-w-4xl mx-auto">
         
         {/* Toggle View */}
@@ -255,7 +295,7 @@ const Checkout = () => {
                 <div className="flex items-center p-4 space-x-3 rounded-lg bg-green-50">
                   <FaWhatsapp className="w-6 h-6 text-green-600" />
                   <span className="text-green-800">
-                    Contact for discount: +91 9849141105
+                    Contact for any Queries : +91 9849141105
                   </span>
                 </div>
 
@@ -307,36 +347,42 @@ const Checkout = () => {
                 <h2 className="mb-4 text-xl font-semibold text-gray-800">
                   Select Products to Order
                 </h2>
-                <div className="space-y-4">
-                  {cart.map((item) => (
-                    <div 
-                      key={item.productId._id}
-                      className="flex items-center p-4 border rounded-lg"
-                    >
-                      <input
-                        type="checkbox"
-                        checked={selectedProducts[item.productId._id] || false}
-                        onChange={() => handleProductSelect(item.productId._id)}
-                        className="w-5 h-5 mr-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
-                      />
-                      <img
-                        src={item.productId.images[0]}
-                        alt={item.productId.name}
-                        className="object-cover w-16 h-16 mr-4 rounded"
-                      />
-                      <div className="flex-1">
-                        <h3 className="font-medium">{item.productId.name}</h3>
-                        <p className="text-sm text-gray-500">
-                          Quantity: {item.quantity} × ₹{item.productId.salePrice}
-                        </p>
+                {isLoading ? (
+                  <div className="flex items-center justify-center p-8">
+                    <Loader2 className="w-8 h-8 text-green-600 animate-spin" />
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {cart.map((item) => (
+                      <div 
+                        key={item.productId._id}
+                        className="flex items-center p-4 border rounded-lg"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={selectedProducts[item.productId._id] || false}
+                          onChange={() => handleProductSelect(item.productId._id)}
+                          className="w-5 h-5 mr-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                        />
+                        <img
+                          src={item.productId.images[0]}
+                          alt={item.productId.name}
+                          className="object-cover w-16 h-16 mr-4 rounded"
+                        />
+                        <div className="flex-1">
+                          <h3 className="font-medium">{item.productId.name}</h3>
+                          <p className="text-sm text-gray-500">
+                            Quantity: {item.quantity} × ₹{item.productId.salePrice}
+                          </p>
+                        </div>
+                        <span className="font-semibold">
+                          ₹{item.quantity * item.productId.salePrice}
+                        </span>
                       </div>
-                      <span className="font-semibold">
-                        ₹{item.quantity * item.productId.salePrice}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {cart.length > 0 && (
+                    ))}
+                  </div>
+                )}
+                {cart.length > 0 && !isLoading && (
                   <div className="mt-6">
                     <div className="flex justify-between mb-4 text-lg font-semibold">
                       <span>Total:</span>
